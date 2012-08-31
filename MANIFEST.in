@@ -1,0 +1,3 @@
+include *.rst
+recursive-include stores/templates *.txt *.html
+recursive-include stores/static *

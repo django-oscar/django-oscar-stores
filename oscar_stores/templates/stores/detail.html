@@ -1,0 +1,100 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load currency_filters %}
+{% load thumbnail %}
+{% load promotion_tags %}
+{% load chocolatebox_category_tags %}
+
+{% block layout %}
+    {% chocolatebox_category_tree depth=2 as categories %}
+
+    {% include "partials/brand.html" %}
+    {% block promobanner %}
+    {% include "promotions/text.html" %}
+    {% endblock promobanner %}
+
+    <div class="container-fluid page">
+        <div class="page_inner">
+            {% include "partials/alert_messages.html" %}
+            {% block breadcrumbs %}
+                <ul class="breadcrumb hidden-phone">
+                    <li>
+                        <a href="{% url promotions:home %}">{% trans "Home" %}</a>
+                        <span class="divider">/</span>
+                    </li>
+                    <li>
+                        <a href="/stores/">Stores</a>
+                        <span class="divider">/</span>
+                    </li>
+                    <li class="active">
+                        <a href=".">{{ store.name }}</a>
+                    </li>
+                </ul>
+            {% endblock %}
+        
+            <section class="stores-list">
+                <div class="row-fluid">
+                    <h1>{{ store.name }} <small class="pull-right"><a href="/stores/" title=">View all stores" class="secondary">View all stores &rarr;</a></small></h1> 
+                </div>
+                
+            	<div class="row-fluid store-section">
+                    <map>
+                        <div class='store-map' style="width: 720px; height:450px;"></div>
+                	</map>
+                    <div class="store-individual">
+
+                        {% include "stores/partials/store_address.html" %}
+
+                        <div class='sub-header'>
+                        	<h5>Opening Hours</h5>
+                        </div>
+                            <table class='table table-bordered table-striped opening-hours'>
+    	                    <tbody>
+    	                    {% for ot_item in store.opening_times.all %}
+    	                        <tr><td>{{ ot_item.title|capfirst }}</td><td>{{ ot_item.time }}</td></tr>
+    	                    {% endfor %}
+    	                    </tbody>
+    	                </table>
+    				</div>
+    			</div>
+    		</section>
+
+                {% if store.image or store.description %}
+    		<section class="store-details">
+    			<div class="sub-header">
+    				<h2>Store Details</h2>
+    			</div>
+    			<div class="row-fluid">
+    				{% if store.image %}
+    				<div class="span6">
+        				{% thumbnail store.image "250x400" upscale=False as thumb %}
+                            <div class="image_container">
+                                <img src="{{ thumb.url }}" alt="Picture of the {{ store.name }} store." />
+                            </div>
+        				{% endthumbnail %}    
+    				</div>
+    				{% endif %}
+    				<div class="span6">
+    					<div class="sub-header">
+                            <h4>Welcome to our {{ store.name }} store</h4>
+                            {{ store.description|linebreaks }}
+    					</div>
+    				</div>
+    			</div>
+    		</section>
+                {% endif %}
+
+    		{% for promotion in promotions_page %}
+    	        {% render_promotion promotion %}
+    	    {% endfor %}
+        </div>
+    </div>
+	{% include "partials/newsletter.html" %}
+    {% include "partials/footer.html" %}
+{% endblock %}
+
+{% block onbodyload %}
+$('.store-map').each(function(elem) {
+    chocolatebox.maps.createIndividualMap(this, $('.store-individual address'), 16);
+});
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'dashboard/layout.html' %}
+{% load i18n %}
+
+{% block body_class %}stores{% endblock %}
+{% block title %}
+{% trans "Store management" %} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+    <li>
+        <a href="{% url dashboard:index %}">{% trans "Dashboard" %}</a>
+        <span class="divider">/</span>
+    </li>
+    <li class="active"><a href=".">{% trans "Stores" %}</a></li>
+</ul>
+{% endblock %}
+
+{% block header %}
+<div class="page-header">
+<h1>{% trans "Store Management" %}</h1>
+</div>
+{% endblock header %}
+
+{% block dashboard_content %}
+
+<div class="well well-info">
+    <a href="{% url dashboard:store-create %}">
+        <button class="btn btn-primary">{% trans "Create new store" %}</button>
+    </a>
+</div>
+
+<div class="sub-header">
+    <h2>{{ queryset_description }}</h2>
+</div>
+
+{% if store_list.count %}
+<form action="." method="post" class="order_table">
+    {% csrf_token %}
+    <table class="table table-striped table-bordered">
+        <tr>
+            {# <th></th> #}
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Street Address 1" %}</th>
+            <th>{% trans "Street Address 2" %}</th>
+            <th>{% trans "City" %}</th>
+            <th>{% trans "Post Code" %}</th>
+            <th>{% trans "State" %}</th>
+            <th>{% trans "Country" %}</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for store in store_list %}
+        <tr>
+            {# <td><input type="checkbox" name="selected_order" class="selected_order" value="{{ order.id }}"/> #}
+            <td>{{ store.name }}</td>
+            <td>{{ store.line1 }}</td>
+            <td>{{ store.line2 }}</td>
+            <td>{{ store.city }}</td>
+            <td>{{ store.postcode }}</td>
+            <td>{{ store.state }}</td>
+            <td>{{ store.country }}</td>
+            <td>
+            {% if store.is_pickup_store %}
+                <span class="label label-success">{% trans "Yes" %}</span> 
+            {% else %}
+                <span class="label label-danger">{% trans "No" %}</span> 
+            {% endif %}
+            {% if store.is_active %}
+                <span class="label label-success">{% trans "Active" %}</span> 
+            {% else %}
+                <span class="label label-danger">{% trans "Inactive" %}</span> 
+            {% endif %}
+            </td>
+            <td>
+                <a class="btn btn-info" href="{% url dashboard:store-update store.id %}">{% trans "Edit" %}</a>
+                <a class="btn btn-danger" href="{% url dashboard:store-delete store.id %}">{% trans "Delete" %}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if page_obj %}
+        {% include "catalogue/partials/pagination.html" %}
+    {% endif %}
+</form>
+
+{% else %}
+    <p>{% trans "No stores found." %}</p>
+{% endif %}
+
+{% endblock dashboard_content %}
