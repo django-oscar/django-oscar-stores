@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from extra_views import (CreateWithInlinesView, UpdateWithInlinesView,
                          InlineFormSet)
 
-from chocolatebox.dashboard.stores import forms
+from stores.dashboard import forms
 
 Store = get_model('stores', 'store')
 StoreGroup = get_model('stores', 'storegroup')
@@ -14,7 +14,7 @@ OpeningTime = get_model('stores', 'openingtime')
 
 class StoreListView(generic.ListView):
     model = Store
-    template_name = "dashboard/stores/store_list.html"
+    template_name = "stores/dashboard/store_list.html"
     context_object_name = "store_list"
 
 
@@ -27,7 +27,7 @@ class OpeningTimeInline(InlineFormSet):
 
 class StoreCreateView(CreateWithInlinesView):
     model = Store
-    template_name = "dashboard/stores/store_update.html"
+    template_name = "stores/dashboard/store_update.html"
     inlines = [OpeningTimeInline]
     form_class = forms.StoreForm
 
@@ -37,7 +37,7 @@ class StoreCreateView(CreateWithInlinesView):
 
 class StoreUpdateView(UpdateWithInlinesView):
     model = Store
-    template_name = "dashboard/stores/store_update.html"
+    template_name = "stores/dashboard/store_update.html"
     inlines = [OpeningTimeInline]
     form_class = forms.StoreForm
 
@@ -47,7 +47,7 @@ class StoreUpdateView(UpdateWithInlinesView):
 
 class StoreDeleteView(generic.DeleteView):
     model = Store
-    template_name = "dashboard/stores/store_delete.html"
+    template_name = "stores/dashboard/store_delete.html"
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -62,12 +62,12 @@ class StoreDeleteView(generic.DeleteView):
 class StoreGroupListView(generic.ListView):
     model = StoreGroup
     context_object_name = 'group_list'
-    template_name = "dashboard/stores/store_group_list.html"
+    template_name = "stores/dashboard/store_group_list.html"
 
 
 class StoreGroupCreateView(generic.CreateView):
     model = StoreGroup
-    template_name = "dashboard/stores/store_group_update.html"
+    template_name = "stores/dashboard/store_group_update.html"
 
     def get_success_url(self):
         return reverse('dashboard:store-group-list')
@@ -75,7 +75,7 @@ class StoreGroupCreateView(generic.CreateView):
 
 class StoreGroupUpdateView(generic.UpdateView):
     model = StoreGroup
-    template_name = "dashboard/stores/store_group_update.html"
+    template_name = "stores/dashboard/store_group_update.html"
 
     def get_success_url(self):
         return reverse('dashboard:store-group-list')
@@ -83,7 +83,7 @@ class StoreGroupUpdateView(generic.UpdateView):
 
 class StoreGroupDeleteView(generic.DeleteView):
     model = StoreGroup
-    template_name = "dashboard/stores/store_group_delete.html"
+    template_name = "stores/dashboard/store_group_delete.html"
 
     def get_success_url(self):
         return reverse('dashboard:store-group-list')

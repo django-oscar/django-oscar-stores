@@ -21,7 +21,7 @@
         <span class="divider">/</span>
     </li>
     <li>
-    <a href="{% url dashboard:store-group-list %}">{% trans "Store Groups" %}</a>
+    <a href="{% url stores-dashboard:store-group-list %}">{% trans "Store Groups" %}</a>
         <span class="divider">/</span>
     </li>
     <li class="active"><a href=".">{{ object.name }}</a></li>
@@ -77,7 +77,7 @@
 
     <div class="control-group">
         <div class="pull-right">
-            <a href="{% url dashboard:store-group-list %}">{% trans "Cancel" %}</a>
+            <a href="{% url stores-dashboard:store-group-list %}">{% trans "Cancel" %}</a>
             or
             <button class="btn btn-primary btn-large" type="submit">{% trans "Save store group" %}</button>
         </div>

@@ -1,5 +1,5 @@
-from django.db.models import get_model
 from django.views import generic
+from django.db.models import get_model
 
 Store = get_model('stores', 'store')
 

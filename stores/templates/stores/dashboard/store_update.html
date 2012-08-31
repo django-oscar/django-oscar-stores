@@ -3,6 +3,10 @@
 
 {% block body_class %}stores{% endblock %}
 
+{% block extrahead %}
+<style>map img { max-width: none; }</style>
+{% endblock %}
+
 {% block title %}
 {% if store %}
     {% blocktrans with store_name=store.name %}
@@ -21,7 +25,7 @@
         <span class="divider">/</span>
     </li>
     <li>
-    <a href="{% url dashboard:store-list %}">{% trans "Stores" %}</a>
+    <a href="{% url stores-dashboard:store-list %}">{% trans "Stores" %}</a>
         <span class="divider">/</span>
     </li>
     <li class="active"><a href=".">{{ store.name }}</a></li>
@@ -125,7 +129,7 @@
 
     <div class="control-group">
         <div class="pull-right">
-            <a href="{% url dashboard:store-list %}">{% trans "Cancel" %}</a>
+            <a href="{% url stores-dashboard:store-list %}">{% trans "Cancel" %}</a>
             or
             <button class="btn btn-primary btn-large" type="submit">{% trans "Save Store" %}</button>
         </div>
@@ -136,9 +140,10 @@
 
 {% block extrascripts %}
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/stores.js"></script>
 {{ block.super }}
 {% endblock %}
 
 {% block onbodyload %}
-chocolatebox.dashboard.stores.init();
+stores.dashboard.init();
 {% endblock onbodyload %}

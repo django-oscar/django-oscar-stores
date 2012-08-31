@@ -1,0 +1,61 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load currency_filters %}
+
+{% block extrahead %}
+<style>map img { max-width: none; }</style>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid page">
+        <div class="page_inner">
+            <section class="stores-list">
+                <h1 class="hidden-phone">View our stores</h1>
+                <div class='row-fluid'>
+                    <map class='span12'>
+                        <div class='store-map' style="width: 880px; height: 380px;"></div>
+                    </map>
+    	        </div>
+                {% for group in store_group_list %}
+                <ul class="store-section {{ group.name }}">
+                {% for store in group.stores.all %}
+                    {% if forloop.first %}
+        		<li>
+                            <div class="sub-header">
+                                <h3>{{ group.name }}</h3>
+                             </div>
+        		</li>
+                    {% endif %}
+                    <li>
+                        {% include "stores/partials/store_address.html" %}
+                        <div class='sub-header'>
+                            <h5>Opening Hours</h5>
+                        </div>
+        		<table class='table table-bordered table-striped'>
+                            <tbody>
+                                {% for ot_item in store.opening_times.all %}
+                                    <tr><td>{{ ot_item.title|capfirst }}</td><td>{{ ot_item.time }}</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </li>
+                {% if forloop.counter|divisibleby:4 %}
+                </ul>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endfor %}
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrascripts %}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/stores.js"></script>
+{{ block.super }}
+{% endblock %}
+
+{% block onbodyload %}
+stores.maps.createOverviewMap();
+{% endblock %}

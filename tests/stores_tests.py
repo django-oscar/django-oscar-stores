@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from django_dynamic_fixture import get
 
-from chocolatebox.stores.models import Store
+from stores.models import Store
 
 
 class StoreTests(TestCase):

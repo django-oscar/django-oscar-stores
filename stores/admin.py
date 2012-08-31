@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from chocolatebox.stores.models import Store, StoreGroup, OpeningTime
+from stores.models import Store, StoreGroup, OpeningTime
 
 
 admin.site.register(Store)

@@ -3,15 +3,12 @@
 {% load currency_filters %}
 {% load thumbnail %}
 {% load promotion_tags %}
-{% load chocolatebox_category_tags %}
+{% load category_tags %}
 
 {% block layout %}
-    {% chocolatebox_category_tree depth=2 as categories %}
+    {% category_tree depth=2 as categories %}
 
     {% include "partials/brand.html" %}
-    {% block promobanner %}
-    {% include "promotions/text.html" %}
-    {% endblock promobanner %}
 
     <div class="container-fluid page">
         <div class="page_inner">
@@ -23,7 +20,7 @@
                         <span class="divider">/</span>
                     </li>
                     <li>
-                        <a href="/stores/">Stores</a>
+                        <a href="{% url stores:index %}">Stores</a>
                         <span class="divider">/</span>
                     </li>
                     <li class="active">
@@ -89,12 +86,10 @@
     	    {% endfor %}
         </div>
     </div>
-	{% include "partials/newsletter.html" %}
-    {% include "partials/footer.html" %}
 {% endblock %}
 
 {% block onbodyload %}
 $('.store-map').each(function(elem) {
-    chocolatebox.maps.createIndividualMap(this, $('.store-individual address'), 16);
+    stores.maps.createIndividualMap(this, $('.store-individual address'), 16);
 });
 {% endblock %}

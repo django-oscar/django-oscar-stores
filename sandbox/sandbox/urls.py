@@ -1,17 +1,15 @@
+from django.contrib import admin
 from django.conf.urls import patterns, include, url
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from oscar.app import shop
+from stores.app import application as stores_app
+from stores.dashboard.app import application as dashboard_app
+
+admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'sandbox.views.home', name='home'),
-    # url(r'^sandbox/', include('sandbox.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'', include(shop.urls)),
+    url(r'^dashboard/stores/', include(dashboard_app.urls)),
+    url(r'^stores/', include(stores_app.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 )

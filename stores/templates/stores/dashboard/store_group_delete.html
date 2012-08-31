@@ -8,7 +8,7 @@
         <span class="divider">/</span>
     </li>
     <li>
-        <a href="{% url dashboard:store-list %}">{% trans "Store groups" %}</a>
+        <a href="{% url stores-dashboard:store-list %}">{% trans "Store groups" %}</a>
         <span class="divider">/</span>
     </li>
     <li class="active"><a href=".">{% trans "Delete store group?" %}</a></li>
@@ -29,7 +29,7 @@
     {% endblocktrans %}
     <div class="form-actions">
         <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
-        {% trans "or" %} <a href="{% url dashboard:store-group-list %}">{% trans "cancel" %}</a>
+        {% trans "or" %} <a href="{% url stores-dashboard:store-group-list %}">{% trans "cancel" %}</a>
     </div>
 </form>
 {% endblock %}

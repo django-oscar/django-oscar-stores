@@ -25,7 +25,7 @@
 {% block dashboard_content %}
 
 <div class="well well-info">
-    <a href="{% url dashboard:store-group-create %}">
+    <a href="{% url stores-dashboard:store-group-create %}">
         <button class="btn btn-primary">{% trans "Create new store group" %}</button>
     </a>
 </div>
@@ -64,8 +64,8 @@
                 <td>{{ store.country }}</td>
                 {% if forloop.first %}
                 <td rowspan="{{ group.stores.all|length }}">
-                    <a class="btn btn-info" href="{% url dashboard:store-group-update group.id %}">{% trans "Edit" %}</a>
-                    <a class="btn btn-danger" href="{% url dashboard:store-group-delete group.id %}">{% trans "Delete" %}</a>
+                    <a class="btn btn-info" href="{% url stores-dashboard:store-group-update group.id %}">{% trans "Edit" %}</a>
+                    <a class="btn btn-danger" href="{% url stores-dashboard:store-group-delete group.id %}">{% trans "Delete" %}</a>
                 </td>
                 {% endif%}
             </tr>
@@ -74,8 +74,8 @@
                 <td>{{ group.name }}</td>
                 <td colspan="7">{% trans "No stores assigned to this group." %}</td>
                 <td rowspan="{{ group.stores.all|length }}">
-                    <a class="btn btn-info" href="{% url dashboard:store-group-update group.id %}">{% trans "Edit" %}</a>
-                    <a class="btn btn-danger" href="{% url dashboard:store-group-delete group.id %}">{% trans "Delete" %}</a>
+                    <a class="btn btn-info" href="{% url stores-dashboard:store-group-update group.id %}">{% trans "Edit" %}</a>
+                    <a class="btn btn-danger" href="{% url stores-dashboard:store-group-delete group.id %}">{% trans "Delete" %}</a>
                 </td>
             </tr>
             {% endfor %}

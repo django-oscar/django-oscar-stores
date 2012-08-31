@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url
 
 from oscar.core.application import Application
 
-from chocolatebox.stores import views
+from stores import views
 
 
 class StoresApplication(Application):
