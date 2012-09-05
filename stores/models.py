@@ -6,8 +6,8 @@ from model_utils.managers import PassThroughManager
 
 
 class StoreGroup(models.Model):
-    name = models.CharField(_('name'), max_length=100, unique=True)
-    slug = models.SlugField(_('slug'), max_length=100, unique=True, blank=True)
+    name = models.CharField(_('Name'), max_length=100, unique=True)
+    slug = models.SlugField(_('Slug'), max_length=100, unique=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -25,8 +25,8 @@ class StoreQuerySet(models.query.QuerySet):
 
 
 class Store(models.Model):
-    name = models.CharField(_('name'), max_length=100)
-    slug = models.SlugField(_('slug'), max_length=100, unique=True, null=True)
+    name = models.CharField(_('Name'), max_length=100)
+    slug = models.SlugField(_('Slug'), max_length=100, unique=True, null=True)
 
     line1 = models.CharField(_("First line of address"), max_length=255)
     line2 = models.CharField(
