@@ -10,12 +10,20 @@ from stores.dashboard import forms
 Store = get_model('stores', 'store')
 StoreGroup = get_model('stores', 'storegroup')
 OpeningTime = get_model('stores', 'openingtime')
+StoreAddress = get_model('stores', 'storeaddress')
 
 
 class StoreListView(generic.ListView):
     model = Store
     template_name = "stores/dashboard/store_list.html"
     context_object_name = "store_list"
+
+
+class StoreAddressInline(InlineFormSet):
+    extra = 1
+    max_num = 1
+    model = StoreAddress
+    #form_class = forms.OpeningTimeForm
 
 
 class OpeningTimeInline(InlineFormSet):
@@ -28,7 +36,7 @@ class OpeningTimeInline(InlineFormSet):
 class StoreCreateView(CreateWithInlinesView):
     model = Store
     template_name = "stores/dashboard/store_update.html"
-    inlines = [OpeningTimeInline]
+    inlines = [OpeningTimeInline, StoreAddressInline]
     form_class = forms.StoreForm
 
     def get_success_url(self):

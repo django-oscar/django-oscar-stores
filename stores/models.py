@@ -4,6 +4,12 @@ from django.template.defaultfilters import slugify
 
 from model_utils.managers import PassThroughManager
 
+from oscar.apps.address.abstract_models import AbstractAddress
+
+
+class StoreAddress(AbstractAddress):
+    store = models.OneToOneField('stores.Store', verbose_name=_("Store"), related_name="address")
+
 
 class StoreGroup(models.Model):
     name = models.CharField(_('Name'), max_length=100, unique=True)
@@ -28,17 +34,18 @@ class Store(models.Model):
     name = models.CharField(_('Name'), max_length=100)
     slug = models.SlugField(_('Slug'), max_length=100, unique=True, null=True)
 
-    line1 = models.CharField(_("First line of address"), max_length=255)
-    line2 = models.CharField(
-        _("Second line of address"),
-        max_length=255,
-        blank=True,
-        null=True
-    )
-    city = models.CharField(_('City'), max_length=255)
-    postcode = models.CharField(_('Post Code'), max_length=4)
-    country = models.ForeignKey('address.Country', verbose_name=_("Country"))
-    state = models.CharField(_("State/County"), max_length=255)
+    #address = models.ForeignKey(StoreAddress, verbose_name=_("Store address"))
+    #line1 = models.CharField(_("First line of address"), max_length=255)
+    #line2 = models.CharField(
+    #    _("Second line of address"),
+    #    max_length=255,
+    #    blank=True,
+    #    null=True
+    #)
+    #city = models.CharField(_('City'), max_length=255)
+    #postcode = models.CharField(_('Post Code'), max_length=4)
+    #country = models.ForeignKey('address.Country', verbose_name=_("Country"))
+    #state = models.CharField(_("State/County"), max_length=255)
 
     phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
 

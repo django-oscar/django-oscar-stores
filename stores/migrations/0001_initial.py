@@ -8,6 +8,24 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
+        # Adding model 'StoreAddress'
+        db.create_table('stores_storeaddress', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True)),
+            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
+            ('line1', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('line2', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('line3', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('line4', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('state', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('postcode', self.gf('django.db.models.fields.CharField')(max_length=64)),
+            ('country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['address.Country'])),
+            ('search_text', self.gf('django.db.models.fields.CharField')(max_length=1000)),
+            ('store', self.gf('django.db.models.fields.related.OneToOneField')(related_name='address', unique=True, to=orm['stores.Store'])),
+        ))
+        db.send_create_signal('stores', ['StoreAddress'])
+
         # Adding model 'StoreGroup'
         db.create_table('stores_storegroup', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -21,12 +39,6 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('slug', self.gf('django.db.models.fields.SlugField')(max_length=100, unique=True, null=True, db_index=True)),
-            ('line1', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('line2', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('city', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('postcode', self.gf('django.db.models.fields.CharField')(max_length=4)),
-            ('country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['address.Country'])),
-            ('state', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('phone', self.gf('django.db.models.fields.CharField')(max_length=20, null=True, blank=True)),
             ('latitude', self.gf('django.db.models.fields.FloatField')()),
             ('longitude', self.gf('django.db.models.fields.FloatField')()),
@@ -51,6 +63,9 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         
+        # Deleting model 'StoreAddress'
+        db.delete_table('stores_storeaddress')
+
         # Deleting model 'StoreGroup'
         db.delete_table('stores_storegroup')
 
@@ -82,8 +97,6 @@ class Migration(SchemaMigration):
         },
         'stores.store': {
             'Meta': {'object_name': 'Store'},
-            'city': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['address.Country']"}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'group': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'stores'", 'null': 'True', 'to': "orm['stores.StoreGroup']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -91,14 +104,26 @@ class Migration(SchemaMigration):
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_pickup_store': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'latitude': ('django.db.models.fields.FloatField', [], {}),
-            'line1': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'line2': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'longitude': ('django.db.models.fields.FloatField', [], {}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'}),
-            'postcode': ('django.db.models.fields.CharField', [], {'max_length': '4'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100', 'unique': 'True', 'null': 'True', 'db_index': 'True'}),
-            'state': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100', 'unique': 'True', 'null': 'True', 'db_index': 'True'})
+        },
+        'stores.storeaddress': {
+            'Meta': {'object_name': 'StoreAddress'},
+            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['address.Country']"}),
+            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
+            'line1': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'line2': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'line3': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'line4': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'postcode': ('django.db.models.fields.CharField', [], {'max_length': '64'}),
+            'search_text': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
+            'state': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'store': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'address'", 'unique': 'True', 'to': "orm['stores.Store']"}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'})
         },
         'stores.storegroup': {
             'Meta': {'object_name': 'StoreGroup'},

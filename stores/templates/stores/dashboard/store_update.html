@@ -6,7 +6,6 @@
 {% block extrahead %}
 <style>map img { max-width: none; }</style>
 {% endblock %}
-
 {% block title %}
 {% if store %}
     {% blocktrans with store_name=store.name %}
@@ -49,6 +48,7 @@
 
         <span class="help-block">{{ form.non_field_errors }}</span>
         {% for field in form %}
+
             {% if field.is_hidden %}
                 {{ field }}
             {% endif %}
@@ -75,7 +75,39 @@
                 </div>
             {% endif %}
             </div>
+
+            {% if forloop.first %}
+                {# use the first formset which is the opening times #}
+                {% with formset=inlines.1 %}
+                    {{ formset.management_form }}
+                    {% for address_form in formset %}
+                    <div class='row-fluid' style="margin-bottom: 1em;">
+
+                        {% for field in address_form %}
+                        <div class="span2">
+                            {% if field.is_hidden %}
+                                {{ field }}
+                            {% else %}
+                                <span class="control-group {% if field.errors %}error{% endif %}">
+                                    {{ field.label_tag }}
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <ul class="help-block">
+                                            <li>{{ error|escape }}</li>
+                                        </ul>
+                                    {% endfor %}
+                                </span>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    {% endfor %}
+                {% endwith %}
+            {% endif %}
+            
         {% endfor %}
+
 
     </div>
 
@@ -91,39 +123,40 @@
         </div>
     </div>
 
+    {# use the first formset which is the opening times #}
+    {% with formset=inlines.0 %}
     <div class="well well-blank">
 
         <div class="sub-header">
             <h3>{% trans "Opening Hours" %}</h3>
         </div>
 
-        {% for formset in inlines %}
-            {{ formset.management_form }}
-            {% for form in formset %}
-            <div class='row-fluid' style="margin-bottom: 1em;">
+        {{ formset.management_form }}
+        {% for form in formset %}
+        <div class='row-fluid' style="margin-bottom: 1em;">
 
-                {% for field in form %}
-                <div class="span2">
-                    {% if field.is_hidden %}
+            {% for field in form %}
+            <div class="span2">
+                {% if field.is_hidden %}
+                    {{ field }}
+                {% else %}
+                    <span class="control-group {% if field.errors %}error{% endif %}">
+                        {{ field.label_tag }}
                         {{ field }}
-                    {% else %}
-                        <span class="control-group {% if field.errors %}error{% endif %}">
-                            {{ field.label_tag }}
-                            {{ field }}
-                            {% for error in field.errors %}
-                                <ul class="help-block">
-                                    <li>{{ error|escape }}</li>
-                                </ul>
-                            {% endfor %}
-                        </span>
-                    {% endif %}
-                </div>
-                {% endfor %}
-
+                        {% for error in field.errors %}
+                            <ul class="help-block">
+                                <li>{{ error|escape }}</li>
+                            </ul>
+                        {% endfor %}
+                    </span>
+                {% endif %}
             </div>
             {% endfor %}
+
+        </div>
         {% endfor %}
     </div>
+    {% endwith %}
 
     <hr/>
 
