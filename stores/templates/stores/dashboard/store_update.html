@@ -49,66 +49,22 @@
         <span class="help-block">{{ form.non_field_errors }}</span>
         {% for field in form %}
 
-            {% if field.is_hidden %}
-                {{ field }}
-            {% endif %}
-
-            <div class="control-group {% for error in field.errors %}error{% endfor %}">
-            {% if field.is_hidden %}
-                {{ field }}
-            {% else %}
-                <label for="{{ field.auto_id }}" class="control-label {% if field.field.required %}required{% endif %}">
-                    {{ field.label }}{% if field.field.required %} <span>*</span>{% endif %}
-                </label>
-                <div class="controls">
-                    {{ field }}
-                    {% for error in field.errors %}
-                        <span class="help-block">
-                        {{ error|escape }}
-                        </span>
-                    {% endfor %}
-                    {% if field.help_text %}
-                        <span class='help-block'>
-                            {{ field.help_text }}
-                        </span>
-                    {% endif %}
-                </div>
-            {% endif %}
-            </div>
+            {% include "partials/field.html" %}
 
             {% if forloop.first %}
                 {# use the first formset which is the opening times #}
                 {% with formset=inlines.1 %}
                     {{ formset.management_form }}
                     {% for address_form in formset %}
-                    <div class='row-fluid' style="margin-bottom: 1em;">
 
                         {% for field in address_form %}
-                        <div class="span2">
-                            {% if field.is_hidden %}
-                                {{ field }}
-                            {% else %}
-                                <span class="control-group {% if field.errors %}error{% endif %}">
-                                    {{ field.label_tag }}
-                                    {{ field }}
-                                    {% for error in field.errors %}
-                                        <ul class="help-block">
-                                            <li>{{ error|escape }}</li>
-                                        </ul>
-                                    {% endfor %}
-                                </span>
-                            {% endif %}
-                        </div>
+                            {% include "partials/field.html" %}
                         {% endfor %}
 
-                    </div>
                     {% endfor %}
                 {% endwith %}
             {% endif %}
-            
         {% endfor %}
-
-
     </div>
 
     <div class="well well-blank">
@@ -140,7 +96,7 @@
                 {% if field.is_hidden %}
                     {{ field }}
                 {% else %}
-                    <span class="control-group {% if field.errors %}error{% endif %}">
+                    <div class="control-group {% if field.errors %}error{% endif %}">
                         {{ field.label_tag }}
                         {{ field }}
                         {% for error in field.errors %}
@@ -148,7 +104,7 @@
                                 <li>{{ error|escape }}</li>
                             </ul>
                         {% endfor %}
-                    </span>
+                    </div>
                 {% endif %}
             </div>
             {% endfor %}

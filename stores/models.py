@@ -34,19 +34,6 @@ class Store(models.Model):
     name = models.CharField(_('Name'), max_length=100)
     slug = models.SlugField(_('Slug'), max_length=100, unique=True, null=True)
 
-    #address = models.ForeignKey(StoreAddress, verbose_name=_("Store address"))
-    #line1 = models.CharField(_("First line of address"), max_length=255)
-    #line2 = models.CharField(
-    #    _("Second line of address"),
-    #    max_length=255,
-    #    blank=True,
-    #    null=True
-    #)
-    #city = models.CharField(_('City'), max_length=255)
-    #postcode = models.CharField(_('Post Code'), max_length=4)
-    #country = models.ForeignKey('address.Country', verbose_name=_("Country"))
-    #state = models.CharField(_("State/County"), max_length=255)
-
     phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
 
     latitude = models.FloatField()

@@ -3,11 +3,18 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import get_model
 
 
+class StoreAddressForm(forms.ModelForm):
+
+    class Meta:
+        model = get_model('stores', 'storeaddress')
+        exclude = ('title', 'first_name', 'last_name', 'search_text')
+
+
 class StoreForm(forms.ModelForm):
 
     class Meta:
         model = get_model('stores', 'store')
-        exclude = ('slug', 'opening_hours')
+        exclude = ('slug',)
         widgets = {
             'latitude': forms.HiddenInput(),
             'longitude': forms.HiddenInput(),
@@ -17,10 +24,12 @@ class StoreForm(forms.ModelForm):
 class OpeningTimeForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
+        commit = kwargs.get('commit', True)
         kwargs['commit'] = False
         obj = super(OpeningTimeForm, self).save(*args, **kwargs)
         obj.display_order = self.get_display_order()
-        obj.save()
+        if commit:
+            obj.save()
         return obj
 
     def get_display_order(self):
