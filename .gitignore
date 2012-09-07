@@ -2,3 +2,7 @@
 *.sw[op]
 *.sqlite3
 *.db
+
+.tox/
+docs/_build/
+django_oscar_stores.egg-info/
