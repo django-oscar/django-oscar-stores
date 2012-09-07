@@ -8,7 +8,11 @@ from oscar.apps.address.abstract_models import AbstractAddress
 
 
 class StoreAddress(AbstractAddress):
-    store = models.OneToOneField('stores.Store', verbose_name=_("Store"), related_name="address")
+    store = models.OneToOneField(
+        'stores.Store',
+        verbose_name=_("Store"),
+        related_name="address"
+    )
 
 
 class StoreGroup(models.Model):
@@ -56,17 +60,6 @@ class Store(models.Model):
     is_active = models.BooleanField(default=True)
 
     objects = PassThroughManager.for_queryset_class(StoreQuerySet)()
-
-    def get_shipping_data(self):
-        return {
-            'line1': self.name,
-            'line2': self.line1,
-            'line3': self.line2,
-            'line4': self.city,
-            'postcode': self.postcode,
-            'country': self.country,
-            'state': self.state,
-        }
 
     def save(self, *args, **kwargs):
         if not self.slug:
