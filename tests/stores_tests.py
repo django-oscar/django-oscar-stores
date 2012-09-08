@@ -14,7 +14,7 @@ class TestStore(TestCase):
         store4 = G(Store, is_pickup_store=True)
 
         stores = Store.objects.pickup_stores()
-        self.assertItemsEqual(
-            stores,
-            [store1, store2, store4]
+        self.assertEquals(
+            sorted(stores),
+            sorted([store1, store2, store4])
         )
