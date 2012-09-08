@@ -73,6 +73,6 @@ customers.
 License
 =======
 
-Oscar is released under the permissive `New BSD license`_.
+``django-oscar-stores`` is released under the permissive `New BSD license`_.
 
 .. _`New BSD license`: http://github.com/tangentlabs/django-oscar-stores/blob/master/LICENSE
