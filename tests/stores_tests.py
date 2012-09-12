@@ -73,16 +73,40 @@ class TestASignedInUser(StoresWebTest):
 
         create_form['name'] = 'Sample Store'
         create_form['address-0-line1'] = '123 Invisible Street'
-        #create_form['address-0-line2'] = '
-        #create_form['address-0-line3
         create_form['address-0-line4'] = 'Awesometown'
         create_form['address-0-state'] = 'Victoria'
         create_form['address-0-postcode'] = '3456'
         create_form['address-0-country'] = 'AU'
+        create_form['longitude'] = 30.203332
+        create_form['latitude'] = 44.33333
 
         create_form['phone'] = '123456789'
         create_form['description'] = 'A short description of the store'
         create_form['is_pickup_store'] = False
         create_form['is_active'] = True
         page = create_form.submit()
-        print page
+
+        self.assertRedirects(page, reverse('stores-dashboard:store-list'))
+
+        self.assertEquals(Store.objects.count(), 1)
+
+        store = Store.objects.get(id=1)
+        self.assertEquals(store.name, 'Sample Store')
+        self.assertEquals(store.longitude, 30.203332)
+        self.assertEquals(store.latitude, 44.33333)
+        self.assertEquals(store.phone, '123456789')
+        self.assertEquals(
+            store.description,
+            'A short description of the store'
+        )
+        self.assertEquals(store.is_pickup_store, False)
+        self.assertEquals(store.is_active, True)
+
+        self.assertEquals(store.address.line1, '123 Invisible Street')
+        self.assertEquals(store.address.line4, 'Awesometown')
+        self.assertEquals(store.address.state, 'Victoria')
+        self.assertEquals(store.address.postcode, '3456')
+        self.assertEquals(store.address.country, self.country)
+
+        self.assertEquals(store.opening_periods.count(), 0)
+        self.assertEquals(store.opening_period_overrides.count(), 0)
