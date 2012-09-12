@@ -1,8 +1,9 @@
 from django.contrib import admin
 
-from stores.models import Store, StoreGroup, OpeningTime
+from stores import models
 
 
-admin.site.register(Store)
-admin.site.register(StoreGroup)
-admin.site.register(OpeningTime)
+admin.site.register(models.Store)
+admin.site.register(models.StoreGroup)
+admin.site.register(models.OpeningPeriod)
+admin.site.register(models.OpeningPeriodOverride)

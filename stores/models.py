@@ -70,19 +70,52 @@ class Store(models.Model):
         return self.name
 
 
-class OpeningTime(models.Model):
-    title = models.CharField(max_length=100, verbose_name=_("Description"))
-    time = models.CharField(max_length=100)
+class OpeningPeriod(models.Model):
+    store = models.ForeignKey('stores.Store', related_name='opening_periods')
 
-    # Use display_order to determine the order of times
-    display_order = models.PositiveIntegerField(_("Display Order"), default=0,
-            help_text=_("""An image with a display order of
-                        zero will be the primary image for a product"""))
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY = range(1, 8)
 
-    store = models.ForeignKey('stores.Store', related_name='opening_times')
+    weekday_choices = (
+        (MONDAY, _("Monday")),
+        (TUESDAY, _("Tuesday")),
+        (WEDNESDAY, _("Wednesday")),
+        (THURSDAY, _("Thursday")),
+        (FRIDAY, _("Friday")),
+        (SATURDAY, _("Saturday")),
+        (SUNDAY, _("Sunday")),
+    )
 
-    def __unicode__(self):
-        return _("%s opened %s: %s") % (self.store.name, self.title, self.time)
+    weekday = models.PositiveIntegerField(choices=weekday_choices)
+    start = models.TimeField()
+    end = models.TimeField()
 
     class Meta:
-        ordering = ["display_order"]
+        ordering = ['weekday']
+
+
+class OpeningPeriodOverride(models.Model):
+    """
+    Override the opening hours for a given date
+    """
+    store = models.ForeignKey(
+        'stores.Store',
+        related_name='opening_period_overrides'
+    )
+
+    name = models.CharField(max_length=100)
+    date = models.DateField()
+    start = models.TimeField()
+    end = models.TimeField()
+
+    # Explain why normal hours are being overridden
+    description = models.TextField()
+
+
+# To determine normal opening hours:
+# 1. fetch all WeekdayOpeningPeriods ordered by weekday
+# 2. fetch any OpeningHoursOverrides that occurs in the next x weeks
+# 3. render this information
+
+# To determine is a store is open at a given datetime:
+# 1. look for override for date in question that covers datetime
+# 2. if nothing, look for weekday opening for today

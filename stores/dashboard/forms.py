@@ -21,28 +21,12 @@ class StoreForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'cols': 40, 'rows': 15}),
         }
 
-class OpeningTimeForm(forms.ModelForm):
-
-    def save(self, *args, **kwargs):
-        commit = kwargs.get('commit', True)
-        kwargs['commit'] = False
-        obj = super(OpeningTimeForm, self).save(*args, **kwargs)
-        obj.display_order = self.get_display_order()
-        if commit:
-            obj.save()
-        return obj
-
-    def get_display_order(self):
-        return self.prefix.split('-').pop()
+class OpeningPeriodForm(forms.ModelForm):
 
     class Meta:
-        model = get_model('stores', 'openingtime')
-        exclude = ('display_order',)
+        model = get_model('stores', 'openingperiod')
         widgets = {
-            'title': forms.TextInput(
-                attrs={'placeholder': _("e.g. Friday or Monday - Friday")}
-            ),
-            'time': forms.TextInput(
-                attrs={'placeholder': _("e.g. 9am - 8pm")}
+            'name': forms.TextInput(
+                attrs={'placeholder': _("e.g. Christmas")}
             ),
         }

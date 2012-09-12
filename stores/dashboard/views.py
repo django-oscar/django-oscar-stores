@@ -1,7 +1,6 @@
 from django.views import generic
 from django.db.models import get_model
 from django.core.urlresolvers import reverse
-from django.forms.formsets import all_valid
 
 from extra_views import (CreateWithInlinesView, UpdateWithInlinesView,
                          InlineFormSet)
@@ -10,7 +9,7 @@ from stores.dashboard import forms
 
 Store = get_model('stores', 'store')
 StoreGroup = get_model('stores', 'storegroup')
-OpeningTime = get_model('stores', 'openingtime')
+OpeningPeriod = get_model('stores', 'openingperiod')
 StoreAddress = get_model('stores', 'storeaddress')
 
 
@@ -28,17 +27,17 @@ class StoreAddressInline(InlineFormSet):
     form_class = forms.StoreAddressForm
 
 
-class OpeningTimeInline(InlineFormSet):
+class OpeningPeriodInline(InlineFormSet):
     extra = 7
     max_num = 7
-    model = OpeningTime
-    form_class = forms.OpeningTimeForm
+    model = OpeningPeriod
+    form_class = forms.OpeningPeriodForm
 
 
 class StoreCreateView(CreateWithInlinesView):
     model = Store
     template_name = "stores/dashboard/store_update.html"
-    inlines = [OpeningTimeInline, StoreAddressInline]
+    inlines = [OpeningPeriodInline, StoreAddressInline]
     form_class = forms.StoreForm
 
     def get_success_url(self):
@@ -48,7 +47,7 @@ class StoreCreateView(CreateWithInlinesView):
 class StoreUpdateView(UpdateWithInlinesView):
     model = Store
     template_name = "stores/dashboard/store_update.html"
-    inlines = [OpeningTimeInline]
+    inlines = [OpeningPeriodInline]
     form_class = forms.StoreForm
 
     def get_success_url(self):
