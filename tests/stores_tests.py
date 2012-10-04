@@ -1,3 +1,5 @@
+from decimal import Decimal as D
+
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -13,10 +15,10 @@ from stores.models import Store
 class TestStore(TestCase):
 
     def test_querying_available_pickup_stores(self):
-        store1 = G(Store, is_pickup_store=True)
-        store2 = G(Store, is_pickup_store=True)
-        G(Store, is_pickup_store=False)
-        store4 = G(Store, is_pickup_store=True)
+        store1 = G(Store, is_pickup_store=True, location="88.39,11.02")
+        store2 = G(Store, is_pickup_store=True, location="88.39,11.02")
+        G(Store, is_pickup_store=False, location="88.39,11.02")
+        store4 = G(Store, is_pickup_store=True, location="88.39,11.02")
 
         stores = Store.objects.pickup_stores()
         self.assertItemsEqual(
@@ -77,8 +79,7 @@ class TestASignedInUser(StoresWebTest):
         create_form['address-0-state'] = 'Victoria'
         create_form['address-0-postcode'] = '3456'
         create_form['address-0-country'] = 'AU'
-        create_form['longitude'] = 30.203332
-        create_form['latitude'] = 44.33333
+        create_form['location'] = '30.203332,44.33333'
 
         create_form['phone'] = '123456789'
         create_form['description'] = 'A short description of the store'
@@ -92,8 +93,8 @@ class TestASignedInUser(StoresWebTest):
 
         store = Store.objects.get(id=1)
         self.assertEquals(store.name, 'Sample Store')
-        self.assertEquals(store.longitude, 30.203332)
-        self.assertEquals(store.latitude, 44.33333)
+        self.assertEquals(store.location.x, D('30.203332'))
+        self.assertEquals(store.location.y, D('44.33333'))
         self.assertEquals(store.phone, '123456789')
         self.assertEquals(
             store.description,
