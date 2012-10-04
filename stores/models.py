@@ -1,10 +1,13 @@
 from django.db import models
+from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import slugify
 
 from model_utils.managers import PassThroughManager
 
 from oscar.apps.address.abstract_models import AbstractAddress
+
+from stores.fields import PointField
 
 
 class StoreAddress(AbstractAddress):
@@ -40,8 +43,9 @@ class Store(models.Model):
 
     phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
 
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    #latitude = models.FloatField()
+    #longitude = models.FloatField()
+    location = PointField(null=True, blank=True)
 
     image = models.ImageField(
         _("Image"),
