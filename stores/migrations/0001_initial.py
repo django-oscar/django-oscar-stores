@@ -1,13 +1,13 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
         # Adding model 'StoreAddress'
         db.create_table('stores_storeaddress', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -30,7 +30,7 @@ class Migration(SchemaMigration):
         db.create_table('stores_storegroup', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(db_index=True, unique=True, max_length=100, blank=True)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=100, blank=True)),
         ))
         db.send_create_signal('stores', ['StoreGroup'])
 
@@ -38,10 +38,9 @@ class Migration(SchemaMigration):
         db.create_table('stores_store', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=100, unique=True, null=True, db_index=True)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=100, unique=True, null=True)),
             ('phone', self.gf('django.db.models.fields.CharField')(max_length=20, null=True, blank=True)),
-            ('latitude', self.gf('django.db.models.fields.FloatField')()),
-            ('longitude', self.gf('django.db.models.fields.FloatField')()),
+            ('location', self.gf('django.contrib.gis.db.models.fields.PointField')(null=True, blank=True)),
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
             ('group', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='stores', null=True, to=orm['stores.StoreGroup'])),
@@ -50,19 +49,30 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('stores', ['Store'])
 
-        # Adding model 'OpeningTime'
-        db.create_table('stores_openingtime', (
+        # Adding model 'OpeningPeriod'
+        db.create_table('stores_openingperiod', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('time', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('display_order', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
-            ('store', self.gf('django.db.models.fields.related.ForeignKey')(related_name='opening_times', to=orm['stores.Store'])),
+            ('store', self.gf('django.db.models.fields.related.ForeignKey')(related_name='opening_periods', to=orm['stores.Store'])),
+            ('weekday', self.gf('django.db.models.fields.PositiveIntegerField')()),
+            ('start', self.gf('django.db.models.fields.TimeField')()),
+            ('end', self.gf('django.db.models.fields.TimeField')()),
         ))
-        db.send_create_signal('stores', ['OpeningTime'])
+        db.send_create_signal('stores', ['OpeningPeriod'])
+
+        # Adding model 'OpeningPeriodOverride'
+        db.create_table('stores_openingperiodoverride', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('store', self.gf('django.db.models.fields.related.ForeignKey')(related_name='opening_period_overrides', to=orm['stores.Store'])),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('date', self.gf('django.db.models.fields.DateField')()),
+            ('start', self.gf('django.db.models.fields.TimeField')()),
+            ('end', self.gf('django.db.models.fields.TimeField')()),
+            ('description', self.gf('django.db.models.fields.TextField')()),
+        ))
+        db.send_create_signal('stores', ['OpeningPeriodOverride'])
 
 
     def backwards(self, orm):
-        
         # Deleting model 'StoreAddress'
         db.delete_table('stores_storeaddress')
 
@@ -72,8 +82,11 @@ class Migration(SchemaMigration):
         # Deleting model 'Store'
         db.delete_table('stores_store')
 
-        # Deleting model 'OpeningTime'
-        db.delete_table('stores_openingtime')
+        # Deleting model 'OpeningPeriod'
+        db.delete_table('stores_openingperiod')
+
+        # Deleting model 'OpeningPeriodOverride'
+        db.delete_table('stores_openingperiodoverride')
 
 
     models = {
@@ -87,13 +100,23 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'printable_name': ('django.db.models.fields.CharField', [], {'max_length': '128'})
         },
-        'stores.openingtime': {
-            'Meta': {'ordering': "['display_order']", 'object_name': 'OpeningTime'},
-            'display_order': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
+        'stores.openingperiod': {
+            'Meta': {'ordering': "['weekday']", 'object_name': 'OpeningPeriod'},
+            'end': ('django.db.models.fields.TimeField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'store': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'opening_times'", 'to': "orm['stores.Store']"}),
-            'time': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+            'start': ('django.db.models.fields.TimeField', [], {}),
+            'store': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'opening_periods'", 'to': "orm['stores.Store']"}),
+            'weekday': ('django.db.models.fields.PositiveIntegerField', [], {})
+        },
+        'stores.openingperiodoverride': {
+            'Meta': {'object_name': 'OpeningPeriodOverride'},
+            'date': ('django.db.models.fields.DateField', [], {}),
+            'description': ('django.db.models.fields.TextField', [], {}),
+            'end': ('django.db.models.fields.TimeField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'start': ('django.db.models.fields.TimeField', [], {}),
+            'store': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'opening_period_overrides'", 'to': "orm['stores.Store']"})
         },
         'stores.store': {
             'Meta': {'object_name': 'Store'},
@@ -103,11 +126,10 @@ class Migration(SchemaMigration):
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_pickup_store': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'latitude': ('django.db.models.fields.FloatField', [], {}),
-            'longitude': ('django.db.models.fields.FloatField', [], {}),
+            'location': ('django.contrib.gis.db.models.fields.PointField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100', 'unique': 'True', 'null': 'True', 'db_index': 'True'})
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100', 'unique': 'True', 'null': 'True'})
         },
         'stores.storeaddress': {
             'Meta': {'object_name': 'StoreAddress'},
@@ -129,7 +151,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'StoreGroup'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'db_index': 'True', 'unique': 'True', 'max_length': '100', 'blank': 'True'})
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'blank': 'True'})
         }
     }
 

@@ -3,7 +3,8 @@
 *.sqlite3
 *.db
 
+.vagrant
+
 .tox/
 docs/_build/
 django_oscar_stores.egg-info/
-.vagrant/

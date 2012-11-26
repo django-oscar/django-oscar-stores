@@ -1,7 +1,17 @@
 # Django settings for sandbox project.
 import os
+import sys
+
 PROJECT_DIR = os.path.dirname(__file__)
 location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), x)
+
+sys.path.insert(0, os.path.realpath(
+    os.path.join(
+        os.path.realpath(__file__),
+        '../..'
+    )
+))
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -14,12 +24,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'sandbox.sqlite3',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite',
+        'NAME': os.path.join(os.path.dirname(__file__), 'sandbox.sqlite3'),
     }
 }
 
@@ -109,6 +115,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django.contrib.gis',
 
     'django_extensions',
     'debug_toolbar',
@@ -130,6 +137,7 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = '/accounts/'
 APPEND_SLASH = True
 
+INTERNAL_IPS = ['127.0.0.1']
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False
 }

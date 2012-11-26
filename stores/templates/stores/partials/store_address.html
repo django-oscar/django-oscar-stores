@@ -1,11 +1,15 @@
-<address data-name="{{ store.name }}" data-lat="{{ store.latitude }}" data-lng="{{ store.longitude }}">
-	<h3><a href="{% url stores:detail store.slug %}" class="secondary">{{ store.name }}</a></h3>
-	<p>
-    {{ store.line1|wordwrap:20|linebreaksbr }}<br />
-    {% if store.line2 %}
-        {{ store.line2|wordwrap:20|linebreaksbr }}<br />
-    {% endif %}
-    {{ store.city }} {{ store.postcode }}</p>
-	<p><strong>Ph:</strong> {{ store.phone }}<br /></p>
-    <p class="view-store-details"><a href="{% url stores:detail store.slug %}" class="secondary">View store details</a></p>
+{% load i18n %}
+<address data-name="{{ store.name }}" data-lat="{{ store.location.x }}" data-lng="{{ store.location.y }}">
+    <p>
+        {{ store.line1|wordwrap:20|linebreaksbr }}<br />
+        {% if store.line2 %}
+            {{ store.line2|wordwrap:20|linebreaksbr }}<br />
+        {% endif %}
+        {{ store.city }} {{ store.postcode }}
+    </p>
+    <p class="view-store-details">
+        <a href="{% url stores:detail store.slug %}" class="secondary">
+            {% trans "View store details" %}
+        </a>
+    </p>
 </address>

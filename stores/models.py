@@ -1,13 +1,10 @@
 from django.db import models
-from django.conf import settings
+#from django.contrib.gis.geos.point import Point
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import slugify
-
-from model_utils.managers import PassThroughManager
+from django.contrib.gis.db.models import PointField, GeoManager
 
 from oscar.apps.address.abstract_models import AbstractAddress
-
-from stores.fields import PointField
 
 
 class StoreAddress(AbstractAddress):
@@ -31,20 +28,11 @@ class StoreGroup(models.Model):
         return self.name
 
 
-class StoreQuerySet(models.query.QuerySet):
-
-    def pickup_stores(self):
-        return self.filter(is_pickup_store=True, is_active=True)
-
-
 class Store(models.Model):
     name = models.CharField(_('Name'), max_length=100)
     slug = models.SlugField(_('Slug'), max_length=100, unique=True, null=True)
 
     phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
-
-    #latitude = models.FloatField()
-    #longitude = models.FloatField()
     location = PointField(null=True, blank=True)
 
     image = models.ImageField(
@@ -58,12 +46,13 @@ class Store(models.Model):
         blank=True, null=True
     )
 
-    group = models.ForeignKey(StoreGroup, related_name='stores', null=True, blank=True)
+    group = models.ForeignKey(StoreGroup, related_name='stores',
+                              name=_("Group"), null=True, blank=True)
 
-    is_pickup_store = models.BooleanField(default=True)
-    is_active = models.BooleanField(default=True)
+    is_pickup_store = models.BooleanField(_("Is pickup store"), default=True)
+    is_active = models.BooleanField(_("Is active"), default=True)
 
-    objects = PassThroughManager.for_queryset_class(StoreQuerySet)()
+    objects = GeoManager()
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -75,10 +64,10 @@ class Store(models.Model):
 
 
 class OpeningPeriod(models.Model):
-    store = models.ForeignKey('stores.Store', related_name='opening_periods')
+    store = models.ForeignKey('stores.Store', name=_("Store"),
+                              related_name='opening_periods')
 
     MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY = range(1, 8)
-
     weekday_choices = (
         (MONDAY, _("Monday")),
         (TUESDAY, _("Tuesday")),
@@ -88,13 +77,18 @@ class OpeningPeriod(models.Model):
         (SATURDAY, _("Saturday")),
         (SUNDAY, _("Sunday")),
     )
+    weekday = models.PositiveIntegerField(_("Weekday"),
+                                          choices=weekday_choices)
+    start = models.TimeField(_("Start"))
+    end = models.TimeField(_("End"))
 
-    weekday = models.PositiveIntegerField(choices=weekday_choices)
-    start = models.TimeField()
-    end = models.TimeField()
+    def __unicode__(self):
+        return "%s: %s to %s" % (self.weekday, self.start, self.end)
 
     class Meta:
         ordering = ['weekday']
+        verbose_name = _("Opening period")
+        verbose_name_plural = _("Opening periods")
 
 
 class OpeningPeriodOverride(models.Model):
@@ -103,16 +97,25 @@ class OpeningPeriodOverride(models.Model):
     """
     store = models.ForeignKey(
         'stores.Store',
+        name=_("Store"),
         related_name='opening_period_overrides'
     )
 
-    name = models.CharField(max_length=100)
-    date = models.DateField()
-    start = models.TimeField()
-    end = models.TimeField()
+    name = models.CharField(_("Name"), max_length=100)
+    date = models.DateField(_("Date"))
+    start = models.TimeField(_("Start"))
+    end = models.TimeField(_("End"))
 
     # Explain why normal hours are being overridden
-    description = models.TextField()
+    description = models.TextField(_("Description"))
+
+    def __unicode__(self):
+        return "%s: %s: %s to %s" % (self.name, self.weekday, self.start,
+                                     self.end)
+
+    class Meta:
+        verbose_name = _("Opening period override")
+        verbose_name_plural = _("Opening period overrides")
 
 
 # To determine normal opening hours:

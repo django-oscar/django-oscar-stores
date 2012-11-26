@@ -1,27 +1,45 @@
 var stores = stores || {};
 
 stores.dashboard = {
-    init: function () {
-        var latInit = document.getElementById('id_latitude').value,
-            lngInit = document.getElementById('id_longitude').value,
-            input = document.getElementById('searchTextField'),
-            autocomplete = new google.maps.places.Autocomplete(input),
-            zoom = 17,
-            latLng = new google.maps.LatLng(latInit, lngInit),
-            marker = null;
+    defaultLat: -37.8136111,
+    defaultLng: 144.9630555,
 
-        if (!latInit & !lngInit) {
-            latInit = -37.8136111;
-            lngInit = 144.9630555;
-            zoom = 10;
+    getLatLngFromGeoJSON: function (data) {
+        var point = jQuery.parseJSON(data);
 
-            latLng = new google.maps.LatLng(latInit, lngInit);
-            chocolatebox.dashboard.stores.updateMarkerPosition(latLng);
+        if (!point || point.type.toLowerCase() !== "point") {
+            return new google.maps.LatLng(
+                stores.dashboard.defaultLng,
+                stores.dashboard.defaultLat
+            );
         }
 
-        chocolatebox.dashboard.stores.geocoder = new google.maps.Geocoder();
+        return new google.maps.LatLng(
+            point.coordinates[0],
+            point.coordinates[1]
+        );
+    },
 
-        chocolatebox.dashboard.stores.map = new google.maps.Map(document.getElementById('storeMap'), {
+    getGeoJsonFromLatLng: function (data) {
+        return {
+            'type': 'Point',
+            'coordinates': [data.lat(), data.lng()]
+        };
+    },
+
+    init: function () {
+        var locationInput = jQuery('#id_location');
+        var latLng = stores.dashboard.getLatLngFromGeoJSON(locationInput.val());
+
+        var input = jQuery('#searchTextField'),
+            autocomplete = new google.maps.places.Autocomplete(input[0]),
+            zoom = 17,
+            marker = null;
+
+        stores.dashboard.updateMarkerPosition(latLng);
+        stores.dashboard.geocoder = new google.maps.Geocoder();
+
+        stores.dashboard.map = new google.maps.Map(document.getElementById('storeMap'), {
             zoom: zoom,
             center: latLng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -30,29 +48,29 @@ stores.dashboard = {
         marker = new google.maps.Marker({
             position: latLng,
             title: 'Image Location',
-            map: chocolatebox.dashboard.stores.map,
+            map: stores.dashboard.map,
             draggable: true
         });
 
-        chocolatebox.dashboard.stores.geocodePosition(latLng);
+        stores.dashboard.geocodePosition(latLng);
 
         google.maps.event.addListener(marker, 'drag', function () {
-            chocolatebox.dashboard.stores.updateMarkerPosition(marker.getPosition());
+            stores.dashboard.updateMarkerPosition(marker.getPosition());
         });
 
         google.maps.event.addListener(marker, 'dragend', function () {
-            chocolatebox.dashboard.stores.geocodePosition(marker.getPosition());
+            stores.dashboard.geocodePosition(marker.getPosition());
         });
 
         var update_timeout = null;
-        google.maps.event.addListener(chocolatebox.dashboard.stores.map, 'click', function (event) {
+        google.maps.event.addListener(stores.dashboard.map, 'click', function (event) {
             update_timeout = setTimeout(function () {
                 marker.setPosition(event.latLng);
-                chocolatebox.dashboard.stores.updateMarkerPosition(event.latLng);
+                stores.dashboard.updateMarkerPosition(event.latLng);
             }, 200);
         });
 
-        google.maps.event.addListener(chocolatebox.dashboard.stores.map, 'dblclick', function (event) {
+        google.maps.event.addListener(stores.dashboard.map, 'dblclick', function (event) {
             if (update_timeout !== null) {
                 clearTimeout(update_timeout);
             }
@@ -61,35 +79,37 @@ stores.dashboard = {
         google.maps.event.addListener(autocomplete, 'enter', function () {
             var place = autocomplete.getPlace();
             if (place.geometry.viewport) {
-                chocolatebox.dashboard.stores.map.fitBounds(place.geometry.viewport);
+                stores.dashboard.map.fitBounds(place.geometry.viewport);
             } else {
-                chocolatebox.dashboard.stores.map.setCenter(place.geometry.location);
-                chocolatebox.dashboard.stores.map.setZoom(17);  // Why 17? Because it looks good.
+                stores.dashboard.map.setCenter(place.geometry.location);
+                stores.dashboard.map.setZoom(17);  // Why 17? Because it looks good.
             }
 
             marker.setPosition(place.geometry.location);
-            chocolatebox.dashboard.stores.updateMarkerPosition(place.geometry.location);
+            stores.dashboard.updateMarkerPosition(place.geometry.location);
         });
 
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var place = autocomplete.getPlace();
             if (place.geometry.viewport) {
-                chocolatebox.dashboard.stores.map.fitBounds(place.geometry.viewport);
+                stores.dashboard.map.fitBounds(place.geometry.viewport);
             } else {
-                chocolatebox.dashboard.stores.map.setCenter(place.geometry.location);
-                chocolatebox.dashboard.stores.map.setZoom(17);  // Why 17? Because it looks good.
+                stores.dashboard.map.setCenter(place.geometry.location);
+                stores.dashboard.map.setZoom(17);  // Why 17? Because it looks good.
             }
 
             marker.setPosition(place.geometry.location);
-            chocolatebox.dashboard.stores.updateMarkerPosition(place.geometry.location);
+            stores.dashboard.updateMarkerPosition(place.geometry.location);
         });
     },
+
     updateMarkerPosition: function (latLng) {
-        document.getElementById('id_latitude').value = latLng.lat();
-        document.getElementById('id_longitude').value = latLng.lng();
+        var new_location = stores.dashboard.getGeoJsonFromLatLng(latLng);
+        jQuery('#id_location').val(JSON.stringify(new_location));
     },
+
     geocodePosition: function (pos) {
-        chocolatebox.dashboard.stores.geocoder.geocode({
+        stores.dashboard.geocoder.geocode({
             latLng: pos
         }, function (responses) {
             if (!responses || responses.length < 0) {
