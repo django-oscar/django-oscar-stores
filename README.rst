@@ -25,6 +25,13 @@ information: such as a picture and a description.
 Installation
 ============
 
+``django-oscar-store`` is using geodjango_ which is part of the
+regular Django installation but has additional installation
+requirements for a GIS-enabled database. GIS extensions are
+available for all the database backends shipped with Django (with
+some limitations) for more details on setting them up please
+refer to the `geodjango's installation guide`_.
+
 Setting up ``django-oscar-stores`` with Oscar_ is fairly simple and
 straight forward. If you don't have an Oscar project up and running
 please refer to its documentation_ to set it up. With your Oscar
@@ -63,11 +70,41 @@ project, you should now have access to the `store manager`_ in
 the dashboard as well as a overview_ page displayed to your
 customers.
 
+Setting up *spatialite* in Ubuntu
+---------------------------------
+
+I am using *spatialite* for local development and found the install
+instructions on geodjango_ a bit too much as most of the required
+libaries come packed for Ubuntu. In general, all you have to do
+to setup *spatialite* is run::
+
+    $ sudo apt-get install spatialite-bin libspatialite3 libgeos++-dev libgdal-dev libproj0
+
+I am assuming that you want to setup the actual python package
+`pysqlite`_ in ``virtualenv`` instead of installing globally. This
+is it a bit tricky because *pysqlite* has extension support
+disabled by default (installing through pip). One way is to download
+the source, enable the extension support and install it manually.
+The nicer solution is to use a *pysqlite* clone that has the support
+enabled by default and can be installed from github using pip. You
+can do it by either installing::
+
+    $ pip install git+git://github.com/tinio/pysqlite.git@extension-enabled#egg=pysqlite
+
+Or by installing all the development-specific requirements for
+``django-oscar-stores`` in the ``requirements.txt`` file in the
+project root::
+
+    $ pip install -r requirements.txt
+
 
 .. _Oscar: http://oscarcommerce.com
-.. _documentation: http://django-oscar.readthedocs.org/en/latest/
+.. _documentation: http://django-oscar.readthedocs.org/en/latest
 .. _`store manager`: http://localhost:8000/dashboard/stores
 .. _overview: http://localhost:8000/stores
+.. _geodjango: https://docs.djangoproject.com/en/1.4/ref/contrib/gis
+.. _`geodjango's installation guide`: https://docs.djangoproject.com/en/1.4/ref/contrib/gis/install
+.. _`pysqlite`: http://code.google.com/p/pysqlite
 
 
 License
