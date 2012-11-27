@@ -1,0 +1,5 @@
+.map {
+}
+#store-map img, .store-map img {
+    max-width: none;
+}

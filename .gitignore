@@ -2,9 +2,12 @@
 *.sw[op]
 *.sqlite3
 *.db
+*.egg-info
 
 .vagrant
+.coverage
 
 .tox/
+cover/
 docs/_build/
-django_oscar_stores.egg-info/
+sandbox/public/

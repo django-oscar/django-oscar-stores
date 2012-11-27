@@ -1,8 +1,8 @@
 var stores = stores || {};
 
 stores.dashboard = {
-    defaultLat: -37.8136111,
-    defaultLng: 144.9630555,
+    defaultLng: -37.82850537866209,
+    defaultLat: 144.9661415816081,
 
     getLatLngFromGeoJSON: function (data) {
         var point = jQuery.parseJSON(data);
@@ -14,16 +14,22 @@ stores.dashboard = {
             );
         }
 
+        // the GeoJSON format provides latitude and longitude
+        // in reverse order in the 'coordinates' list:
+        // [x, y] => [longitude, latitude]
         return new google.maps.LatLng(
-            point.coordinates[0],
-            point.coordinates[1]
+            point.coordinates[1],
+            point.coordinates[0]
         );
     },
 
     getGeoJsonFromLatLng: function (data) {
         return {
             'type': 'Point',
-            'coordinates': [data.lat(), data.lng()]
+            // the GeoJSON format provides latitude and longitude
+            // in reverse order in the 'coordinates' list:
+            // [x, y] => [longitude, latitude]
+            'coordinates': [data.lng(), data.lat()]
         };
     },
 
@@ -31,7 +37,7 @@ stores.dashboard = {
         var locationInput = jQuery('#id_location');
         var latLng = stores.dashboard.getLatLngFromGeoJSON(locationInput.val());
 
-        var input = jQuery('#searchTextField'),
+        var input = jQuery('#search-text-field'),
             autocomplete = new google.maps.places.Autocomplete(input[0]),
             zoom = 17,
             marker = null;
@@ -39,7 +45,7 @@ stores.dashboard = {
         stores.dashboard.updateMarkerPosition(latLng);
         stores.dashboard.geocoder = new google.maps.Geocoder();
 
-        stores.dashboard.map = new google.maps.Map(document.getElementById('storeMap'), {
+        stores.dashboard.map = new google.maps.Map(document.getElementById('store-map'), {
             zoom: zoom,
             center: latLng,
             mapTypeId: google.maps.MapTypeId.ROADMAP

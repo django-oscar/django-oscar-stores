@@ -1,0 +1,15 @@
+{% with contact=store.contact_details %}
+    {% if contact.manager_name %}
+        {{ contact.manager_name }}<br />
+    {% endif %}
+    {% if contact.phone %}
+        <i class="icon-phone"></i> {{ contact.phone }}<br />
+    {% endif %}
+    {% if contact.fax %}
+        <i class="icon-print"></i> {{ contact.fax }}<br />
+    {% endif %}
+    {% if contact.email%}
+        <i class="icon-envelope"></i>
+        <a href="mailto:{{ contact.email }}">{{ contact.email }}</a><br />
+    {% endif %}
+{% endwith %}

@@ -2,8 +2,11 @@
 import os
 import sys
 
-PROJECT_DIR = os.path.dirname(__file__)
-location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), x)
+PROJECT_DIR = '%s/..' % os.path.dirname(__file__)
+location = lambda x: os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    "../%s" % x
+)
 
 sys.path.insert(0, os.path.realpath(
     os.path.join(
@@ -144,7 +147,13 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # Oscar settings
 from oscar.defaults import *
+
 OSCAR_ALLOW_ANON_CHECKOUT = True
+
+OSCAR_SHOP_NAME = "Stores"
+OSCAR_SHOP_TAGLINE = "Your stores online"
+
+GEOIP_PATH = os.path.join(os.path.dirname(__file__), '../geoip')
 
 # Haystack settings
 HAYSTACK_CONNECTIONS = {

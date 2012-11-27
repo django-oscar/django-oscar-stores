@@ -15,10 +15,11 @@ from stores.models import Store
 class TestStore(TestCase):
 
     def test_querying_available_pickup_stores(self):
-        store1 = G(Store, is_pickup_store=True, location="88.39,11.02")
-        store2 = G(Store, is_pickup_store=True, location="88.39,11.02")
-        G(Store, is_pickup_store=False, location="88.39,11.02")
-        store4 = G(Store, is_pickup_store=True, location="88.39,11.02")
+        sample_location = '{"type": "Point", "coordinates": [88.39,11.02]}'
+        store1 = G(Store, is_pickup_store=True, location=sample_location)
+        store2 = G(Store, is_pickup_store=True, location=sample_location)
+        G(Store, is_pickup_store=False, location=sample_location)
+        store4 = G(Store, is_pickup_store=True, location=sample_location)
 
         stores = Store.objects.pickup_stores()
         self.assertItemsEqual(
@@ -79,12 +80,13 @@ class TestASignedInUser(StoresWebTest):
         create_form['address-0-state'] = 'Victoria'
         create_form['address-0-postcode'] = '3456'
         create_form['address-0-country'] = 'AU'
-        create_form['location'] = '30.203332,44.33333'
+        create_form['location'] = '{"type": "Point", "coordinates": [30.203332,44.33333] }'
 
-        create_form['phone'] = '123456789'
         create_form['description'] = 'A short description of the store'
         create_form['is_pickup_store'] = False
         create_form['is_active'] = True
+
+        create_form['contact_details-0-phone'] = '123456789'
         page = create_form.submit()
 
         self.assertRedirects(page, reverse('stores-dashboard:store-list'))
@@ -93,9 +95,9 @@ class TestASignedInUser(StoresWebTest):
 
         store = Store.objects.get(id=1)
         self.assertEquals(store.name, 'Sample Store')
-        self.assertEquals(store.location.x, D('30.203332'))
-        self.assertEquals(store.location.y, D('44.33333'))
-        self.assertEquals(store.phone, '123456789')
+        self.assertEquals(store.location.x, 30.203332)
+        self.assertEquals(store.location.y, 44.33333)
+        self.assertEquals(store.contact_details.phone, '123456789')
         self.assertEquals(
             store.description,
             'A short description of the store'

@@ -1,0 +1,14 @@
+{% with periods=store.opening_periods.all %}
+    {% if periods|length %}
+        <table class='table table-bordered table-striped table-condensed'>
+            <tbody>
+                {% for period in periods %}
+                <tr>
+                    <td>{{ period.printable_weekday }}</td>
+                    <td>{{ period.printable_period }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endwith %}

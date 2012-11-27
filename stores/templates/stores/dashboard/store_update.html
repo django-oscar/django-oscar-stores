@@ -5,7 +5,7 @@
 {% block body_class %}stores{% endblock %}
 
 {% block extrahead %}
-<style>#storeMap img { max-width: none; }</style>
+    <link rel='stylesheet' type='text/css' href="{% static "css/stores.css" %}" />
 {% endblock %}
 
 {% block title %}
@@ -54,7 +54,7 @@
             {% include "partials/field.html" %}
 
             {% if forloop.first %}
-                {# use the first formset which is the opening times #}
+                {# add the address inline form here #}
                 {% with formset=inlines.1 %}
                     {{ formset.management_form }}
                     {% for address_form in formset %}
@@ -69,15 +69,34 @@
         {% endfor %}
     </div>
 
+    {# we are adding the contact detail inline form here #}
+    {% with formset=inlines.2 %}
     <div class="well well-blank">
+        <div class="sub-header">
+            <h3>{% trans "Store contact" %}</h3>
+        </div>
 
+        <div class="span2">
+            {{ formset.management_form }}
+            {% for contact_form in formset %}
+
+                {% for field in contact_form %}
+                    {% include "partials/field.html" %}
+                {% endfor %}
+
+            {% endfor %}
+        </div>
+    </div>
+    {% endwith %}
+
+    <div class="well well-blank">
         <div class="sub-header">
             <h3>{% trans "Store location" %}</h3>
         </div>
 
         <div>
-            <input id="searchTextField" class="span12" style="margin-bottom: 1em;" />
-            <div id="storeMap" style="width: 968px; height: 380px"></div>
+            <input type="text" id="search-text-field" class="span12" style="margin-bottom: 10px; width: 968px;"/>
+            <div id="store-map" style="width: 968px; height: 380px"></div>
         </div>
     </div>
 
@@ -94,21 +113,7 @@
         <div class='row-fluid' style="margin-bottom: 1em;">
 
             {% for field in form %}
-            <div class="span2">
-                {% if field.is_hidden %}
-                    {{ field }}
-                {% else %}
-                    <div class="control-group {% if field.errors %}error{% endif %}">
-                        {{ field.label_tag }}
-                        {{ field }}
-                        {% for error in field.errors %}
-                            <ul class="help-block">
-                                <li>{{ error|escape }}</li>
-                            </ul>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
+                {% include "partials/field_inline.html" %}
             {% endfor %}
 
         </div>

@@ -34,16 +34,26 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('stores', ['StoreGroup'])
 
+        # Adding model 'StoreContact'
+        db.create_table('stores_storecontact', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('manager_name', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
+            ('phone', self.gf('django.db.models.fields.CharField')(max_length=20, null=True, blank=True)),
+            ('email', self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True)),
+            (u'Store', self.gf('django.db.models.fields.related.OneToOneField')(related_name='contact_details', unique=True, to=orm['stores.Store'])),
+        ))
+        db.send_create_signal('stores', ['StoreContact'])
+
         # Adding model 'Store'
         db.create_table('stores_store', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('slug', self.gf('django.db.models.fields.SlugField')(max_length=100, unique=True, null=True)),
-            ('phone', self.gf('django.db.models.fields.CharField')(max_length=20, null=True, blank=True)),
-            ('location', self.gf('django.contrib.gis.db.models.fields.PointField')(null=True, blank=True)),
+            ('reference', self.gf('django.db.models.fields.CharField')(max_length=32, unique=True, null=True, blank=True)),
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
-            ('group', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='stores', null=True, to=orm['stores.StoreGroup'])),
+            ('location', self.gf('django.contrib.gis.db.models.fields.PointField')(null=True, blank=True)),
+            (u'Group', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='stores', null=True, to=orm['stores.StoreGroup'])),
             ('is_pickup_store', self.gf('django.db.models.fields.BooleanField')(default=True)),
             ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
@@ -52,24 +62,12 @@ class Migration(SchemaMigration):
         # Adding model 'OpeningPeriod'
         db.create_table('stores_openingperiod', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('store', self.gf('django.db.models.fields.related.ForeignKey')(related_name='opening_periods', to=orm['stores.Store'])),
+            (u'Store', self.gf('django.db.models.fields.related.ForeignKey')(related_name='opening_periods', to=orm['stores.Store'])),
             ('weekday', self.gf('django.db.models.fields.PositiveIntegerField')()),
-            ('start', self.gf('django.db.models.fields.TimeField')()),
-            ('end', self.gf('django.db.models.fields.TimeField')()),
+            ('start', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
+            ('end', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
         ))
         db.send_create_signal('stores', ['OpeningPeriod'])
-
-        # Adding model 'OpeningPeriodOverride'
-        db.create_table('stores_openingperiodoverride', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('store', self.gf('django.db.models.fields.related.ForeignKey')(related_name='opening_period_overrides', to=orm['stores.Store'])),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('date', self.gf('django.db.models.fields.DateField')()),
-            ('start', self.gf('django.db.models.fields.TimeField')()),
-            ('end', self.gf('django.db.models.fields.TimeField')()),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('stores', ['OpeningPeriodOverride'])
 
 
     def backwards(self, orm):
@@ -79,14 +77,14 @@ class Migration(SchemaMigration):
         # Deleting model 'StoreGroup'
         db.delete_table('stores_storegroup')
 
+        # Deleting model 'StoreContact'
+        db.delete_table('stores_storecontact')
+
         # Deleting model 'Store'
         db.delete_table('stores_store')
 
         # Deleting model 'OpeningPeriod'
         db.delete_table('stores_openingperiod')
-
-        # Deleting model 'OpeningPeriodOverride'
-        db.delete_table('stores_openingperiodoverride')
 
 
     models = {
@@ -102,33 +100,23 @@ class Migration(SchemaMigration):
         },
         'stores.openingperiod': {
             'Meta': {'ordering': "['weekday']", 'object_name': 'OpeningPeriod'},
-            'end': ('django.db.models.fields.TimeField', [], {}),
+            u'Store': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'opening_periods'", 'to': "orm['stores.Store']"}),
+            'end': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'start': ('django.db.models.fields.TimeField', [], {}),
-            'store': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'opening_periods'", 'to': "orm['stores.Store']"}),
+            'start': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
             'weekday': ('django.db.models.fields.PositiveIntegerField', [], {})
         },
-        'stores.openingperiodoverride': {
-            'Meta': {'object_name': 'OpeningPeriodOverride'},
-            'date': ('django.db.models.fields.DateField', [], {}),
-            'description': ('django.db.models.fields.TextField', [], {}),
-            'end': ('django.db.models.fields.TimeField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'start': ('django.db.models.fields.TimeField', [], {}),
-            'store': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'opening_period_overrides'", 'to': "orm['stores.Store']"})
-        },
         'stores.store': {
+            u'Group': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'stores'", 'null': 'True', 'to': "orm['stores.StoreGroup']"}),
             'Meta': {'object_name': 'Store'},
             'description': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
-            'group': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'stores'", 'null': 'True', 'to': "orm['stores.StoreGroup']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_pickup_store': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'location': ('django.contrib.gis.db.models.fields.PointField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'}),
+            'reference': ('django.db.models.fields.CharField', [], {'max_length': '32', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100', 'unique': 'True', 'null': 'True'})
         },
         'stores.storeaddress': {
@@ -146,6 +134,14 @@ class Migration(SchemaMigration):
             'state': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'store': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'address'", 'unique': 'True', 'to': "orm['stores.Store']"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'})
+        },
+        'stores.storecontact': {
+            'Meta': {'object_name': 'StoreContact'},
+            u'Store': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'contact_details'", 'unique': 'True', 'to': "orm['stores.Store']"}),
+            'email': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'manager_name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True', 'blank': 'True'})
         },
         'stores.storegroup': {
             'Meta': {'object_name': 'StoreGroup'},

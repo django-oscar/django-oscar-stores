@@ -1,6 +1,7 @@
 {% extends "oscar/layout.html" %}
 {% load i18n %}
 {% load staticfiles %}
+{% load thumbnail %}
 {% load currency_filters %}
 
 {% block extrahead %}
@@ -19,34 +20,38 @@
     	        </div>
 
                 {% for store in store_list %}
-                <div class="row-fluid">
-                    <div class="span12">
-                        <div class="sub-header">
-                            <h4>{{ store.name }}</h4>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="sub-header">
+                                <h4>{{ store.name }}
+                                <a href="{% url stores:detail store.slug %}" class="btn pull-right">
+                                    {% trans "View store details" %}
+                                </a>
+                                </h4>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="span3">
-                        {% include "stores/partials/store_address.html" %}
-                    </div>
-                    <div class="span3">
-                    </div>
-                    <div class="span3">
-                        {% if store.opening_times.all|length %}
-                        <div class='sub-header'>
-                            <h5>{% trans "Opening Hours" %}</h5>
+                    <div class="row-fluid">
+                        <div class="span4">
+                            {% thumbnail store.image "400x400" as im %}
+                            <div>
+                                <img src="{{ im.url }}" />
+                            </div>
+                            {% endthumbnail %}
                         </div>
-        		<table class='table table-bordered table-striped'>
-                            <tbody>
-                                {% for ot_item in store.opening_times.all %}
-                                    <tr><td>{{ ot_item.title|capfirst }}</td><td>{{ ot_item.time }}</td></tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        {% endif %}
-                    </div>
 
-                </div>
+                        <div class="span4">
+                            {% include "stores/partials/store_address.html" %}
+                            {% include "stores/partials/store_contact.html" %}
+                            <br/>
+                        </div>
+
+                        <div class="span4">
+                            {% include "stores/partials/store_opening_periods.html" %}
+                        </div>
+
+                    </div>
                 {% endfor %}
             </section>
         </div>
@@ -55,8 +60,7 @@
 
 {% block extrascripts %}
     {{ block.super }}
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
-    <script type="text/javascript" src="{% static "js/stores.js" %}"></script>
+    {% include "stores/partials/extrascripts.html" %}
 {% endblock %}
 
 {% block onbodyload %}

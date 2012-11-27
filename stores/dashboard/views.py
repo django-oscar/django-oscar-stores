@@ -6,11 +6,13 @@ from extra_views import (CreateWithInlinesView, UpdateWithInlinesView,
                          InlineFormSet)
 
 from stores.dashboard import forms
+from stores.utils import get_current_ip
 
-Store = get_model('stores', 'store')
-StoreGroup = get_model('stores', 'storegroup')
-OpeningPeriod = get_model('stores', 'openingperiod')
-StoreAddress = get_model('stores', 'storeaddress')
+Store = get_model('stores', 'Store')
+StoreGroup = get_model('stores', 'StoreGroup')
+StoreContact = get_model('stores', 'StoreContact')
+OpeningPeriod = get_model('stores', 'OpeningPeriod')
+StoreAddress = get_model('stores', 'StoreAddress')
 
 
 class StoreListView(generic.ListView):
@@ -27,6 +29,13 @@ class StoreAddressInline(InlineFormSet):
     form_class = forms.StoreAddressForm
 
 
+class StoreContactInline(InlineFormSet):
+    extra = 1
+    max_num = 1
+    can_delete = False
+    model = StoreContact
+
+
 class OpeningPeriodInline(InlineFormSet):
     extra = 7
     max_num = 7
@@ -34,20 +43,27 @@ class OpeningPeriodInline(InlineFormSet):
     form_class = forms.OpeningPeriodForm
 
 
-class StoreCreateView(CreateWithInlinesView):
+class StoreEditMixin(object):
+    inlines = [OpeningPeriodInline, StoreAddressInline, StoreContactInline]
+
+    def get_form_kwargs(self):
+        kwargs = super(StoreEditMixin, self).get_form_kwargs()
+        kwargs['current_ip'] = get_current_ip(self.request)
+        return kwargs
+
+
+class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
     model = Store
     template_name = "stores/dashboard/store_update.html"
-    inlines = [OpeningPeriodInline, StoreAddressInline]
     form_class = forms.StoreForm
 
     def get_success_url(self):
         return reverse('stores-dashboard:store-list')
 
 
-class StoreUpdateView(UpdateWithInlinesView):
+class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
     model = Store
     template_name = "stores/dashboard/store_update.html"
-    inlines = [OpeningPeriodInline]
     form_class = forms.StoreForm
 
     def get_success_url(self):
