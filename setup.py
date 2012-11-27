@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-oscar-stores',
-    version="0.0.1a",
+    version=":versiontools:stores:",
     url='https://github.com/tangentlabs/django-oscar-stores',
     author="Sebastian Vetter",
     author_email="sebastian.vetter@tangentsnowball.com.au",
@@ -17,6 +17,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Django>=1.4.2',
+        'versiontools>=1.1.9',
         'django-model-utils>=1.1.0',
         'django-oscar>=0.4',
         'django-extra-views>=0.5.2',
