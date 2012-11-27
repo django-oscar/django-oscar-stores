@@ -1,5 +1,3 @@
-from decimal import Decimal as D
-
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -112,4 +110,3 @@ class TestASignedInUser(StoresWebTest):
         self.assertEquals(store.address.country, self.country)
 
         self.assertEquals(store.opening_periods.count(), 0)
-        self.assertEquals(store.opening_period_overrides.count(), 0)
