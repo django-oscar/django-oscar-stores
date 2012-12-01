@@ -64,14 +64,14 @@
             <td>{{ store.address.country }}</td>
             <td>
             {% if store.is_pickup_store %}
-                <span class="label label-success">{% trans "Yes" %}</span> 
+                <span class="label label-success">{% trans "Yes" %}</span>
             {% else %}
-                <span class="label label-danger">{% trans "No" %}</span> 
+                <span class="label label-danger">{% trans "No" %}</span>
             {% endif %}
             {% if store.is_active %}
-                <span class="label label-success">{% trans "Active" %}</span> 
+                <span class="label label-success">{% trans "Active" %}</span>
             {% else %}
-                <span class="label label-danger">{% trans "Inactive" %}</span> 
+                <span class="label label-danger">{% trans "Inactive" %}</span>
             {% endif %}
             </td>
             <td>
@@ -83,7 +83,7 @@
     </table>
 
     {% if page_obj %}
-        {% include "catalogue/partials/pagination.html" %}
+        {% include "partials/pagination.html" %}
     {% endif %}
 </form>
 

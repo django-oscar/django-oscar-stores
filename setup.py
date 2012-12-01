@@ -18,7 +18,6 @@ setup(
     install_requires=[
         'Django>=1.4.2',
         'versiontools>=1.1.9',
-        'django-model-utils>=1.1.0',
         'django-oscar>=0.4',
         'django-extra-views>=0.5.2',
     ],

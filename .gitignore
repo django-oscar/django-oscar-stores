@@ -8,6 +8,7 @@
 .coverage
 
 .tox/
+dist/
 cover/
 docs/_build/
 sandbox/public/
