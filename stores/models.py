@@ -64,7 +64,7 @@ class Store(models.Model):
         blank=True, null=True
     )
 
-    location = PointField(_("Location"), null=True, blank=True)
+    location = PointField(_("Location"))
 
     group = models.ForeignKey('stores.StoreGroup', related_name='stores',
                               name=_("Group"), null=True, blank=True)
