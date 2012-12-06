@@ -46,6 +46,10 @@ class OpeningPeriodForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={'placeholder': _("e.g. Christmas")}
             ),
-            'start': forms.TextInput(attrs={'placeholder': _("e.g. 9am, noon, etc.")}),
-            'end': forms.TextInput(attrs={'placeholder': _("e.g. 5pm, late, etc.")}),
+            'start': forms.TextInput(
+                attrs={'placeholder': _("e.g. 9am, noon, etc.")}
+            ),
+            'end': forms.TextInput(
+                attrs={'placeholder': _("e.g. 5pm, late, etc.")}
+            ),
         }

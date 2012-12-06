@@ -1,10 +1,9 @@
 .PHONY: sandbox geoip
 
 geoip:
-	cd sandbox/geoip
 	wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
 	gunzip GeoLiteCity.dat.gz
-	cd -
+	mv GeoLiteCity.dat sandbox/geoip
 
 sandbox:
 	rm sandbox/sandbox/sandbox.sqlite3 || true
