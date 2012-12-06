@@ -27,7 +27,11 @@ class StoresDashboardApplication(Application):
 
     def get_urls(self):
         urlpatterns = patterns('',
-            url(r'^$', self.store_list_view.as_view(), name='store-list'),
+            url(
+                r'^$',
+                self.store_list_view.as_view(),
+                name='store-list'
+            ),
             url(
                 r'^create/$',
                 self.store_create_view.as_view(),

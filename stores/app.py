@@ -14,8 +14,16 @@ class StoresApplication(Application):
         urlpatterns = super(StoresApplication, self).get_urls()
 
         urlpatterns += patterns('',
-            url(r'^$', self.list_view.as_view(), name='index'),
-            url(r'^(?P<slug>[\w-]+)/$', self.detail_view.as_view(), name='detail'),
+            url(
+                r'^$',
+                self.list_view.as_view(),
+                name='index'
+            ),
+            url(
+                r'^(?P<slug>[\w-]+)/$',
+                self.detail_view.as_view(),
+                name='detail'
+            ),
         )
         return self.post_process_urls(urlpatterns)
 
