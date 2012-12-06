@@ -72,6 +72,7 @@ def configure():
             },
             GEOIP_PATH = 'sandbox/geoip',
             NOSE_ARGS=['-s', '-x', '--with-spec'],
+            STORES_SRID=32140, # Flat projection so spatialite can do distances
             **OSCAR_SETTINGS
         )
 

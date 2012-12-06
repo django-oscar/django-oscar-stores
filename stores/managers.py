@@ -15,4 +15,3 @@ class StoreManager(GeoManager):
 
     def pickup_stores(self):
         return self.get_query_set().pickup_stores()
-
