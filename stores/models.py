@@ -11,7 +11,8 @@ from oscar.apps.address.abstract_models import AbstractAddress
 
 from stores.managers import StoreManager
 
-STORES_SRID  = getattr(settings, 'STORES_SRID', 4326)
+STORES_SRID = getattr(settings, 'STORES_SRID', 4326)
+
 
 class StoreAddress(AbstractAddress):
     store = models.OneToOneField(
@@ -40,7 +41,7 @@ class StoreContact(models.Model):
     phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
     email = models.CharField(_('Email'), max_length=100, blank=True, null=True)
 
-    store = models.OneToOneField('stores.Store', name=_("Store"),
+    store = models.OneToOneField('stores.Store', verbose_name=_("Store"),
                                  related_name="contact_details")
 
     def __unicode__(self):
@@ -68,10 +69,15 @@ class Store(models.Model):
         blank=True, null=True
     )
 
-    location = PointField(_("Location"), null=True, blank=True, srid=STORES_SRID)
+    location = PointField(
+        _("Location"),
+        null=True,
+        blank=True,
+        srid=STORES_SRID
+    )
 
     group = models.ForeignKey('stores.StoreGroup', related_name='stores',
-                              name=_("Group"), null=True, blank=True)
+                              verbose_name=_("Group"), null=True, blank=True)
 
     is_pickup_store = models.BooleanField(_("Is pickup store"), default=True)
     is_active = models.BooleanField(_("Is active"), default=True)
@@ -99,18 +105,26 @@ class OpeningPeriod(models.Model):
         SATURDAY: _("Saturday"),
         SUNDAY: _("Sunday"),
     }
-    store = models.ForeignKey('stores.Store', name=_("Store"),
+    store = models.ForeignKey('stores.Store', verbose_name=_("Store"),
                               related_name='opening_periods')
 
     weekday_choices = [(k, v) for k, v in WEEK_DAYS.items()]
-    weekday = models.PositiveIntegerField(_("Weekday"),
-                                          choices=weekday_choices)
+    weekday = models.PositiveIntegerField(
+        _("Weekday"),
+        choices=weekday_choices
+    )
     start = models.CharField(
-        _("Start"), max_length=30, null=True, blank=True,
+        _("Start"),
+        max_length=30,
+        null=True,
+        blank=True,
         help_text=_("Leaving start and end time empty is displayed as 'Closed'")
     )
     end = models.CharField(
-        _("End"), max_length=30, null=True, blank=True,
+        _("End"),
+        max_length=30,
+        null=True,
+        blank=True,
         help_text=_("Leaving start and end time empty is displayed as 'Closed'")
     )
 
@@ -135,27 +149,55 @@ class OpeningPeriod(models.Model):
 
 class StoreStock(models.Model):
 
-    store = models.ForeignKey('stores.Store',
-                              related_name='stock')
-    product = models.ForeignKey('catalogue.Product', related_name="store_stock")
-     
+    store = models.ForeignKey(
+        'stores.Store',
+        verbose_name=_("Store"),
+        related_name='stock'
+    )
+    product = models.ForeignKey(
+        'catalogue.Product',
+        verbose_name=_("Product"),
+        related_name="store_stock"
+    )
     # Stock level information
-    num_in_stock = models.PositiveIntegerField(_("Number in stock"), default=0, blank=True, null=True)
+    num_in_stock = models.PositiveIntegerField(
+        _("Number in stock"),
+        default=0,
+        blank=True,
+        null=True
+    )
 
     # The amount of stock allocated in store but not fed back to the master
-    num_allocated = models.IntegerField(_("Number allocated"), default=0, blank=True, null=True)
+    num_allocated = models.IntegerField(
+        _("Number allocated"),
+        default=0,
+        blank=True,
+        null=True
+    )
 
-    location = models.CharField(_("In store location"), max_length=50, blank=True, null=True)
+    location = models.CharField(
+        _("In store location"),
+        max_length=50,
+        blank=True,
+        null=True
+    )
 
     # Date information
-    date_created = models.DateTimeField(_("Date Created"), auto_now_add=True)
-    date_updated = models.DateTimeField(_("Date Updated"), auto_now=True, db_index=True)
+    date_created = models.DateTimeField(
+        _("Date Created"),
+        auto_now_add=True
+    )
+    date_updated = models.DateTimeField(
+        _("Date Updated"),
+        auto_now=True,
+        db_index=True
+    )
 
     class Meta:
         verbose_name = _("Store Stock Record")
         verbose_name_plural = _("Store Stock Records")
 
-    objects = GeoManager()
+    objects = GeoManager()  # Needed for distance queries against stores
 
     def __unicode__(self):
         if self.store and self.product:

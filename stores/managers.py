@@ -1,4 +1,3 @@
-from django.db import models
 from django.contrib.gis.db.models import GeoManager
 from django.contrib.gis.db.models.query import GeoQuerySet
 
