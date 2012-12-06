@@ -190,3 +190,5 @@ LOGGING = {
         },
     }
 }
+
+STORES_SRID=32140, # Flat projection so spatialite can do distances
