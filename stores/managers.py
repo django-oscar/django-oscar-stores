@@ -1,3 +1,4 @@
+from django.db import models
 from django.contrib.gis.db.models import GeoManager
 from django.contrib.gis.db.models.query import GeoQuerySet
 
@@ -15,4 +16,3 @@ class StoreManager(GeoManager):
 
     def pickup_stores(self):
         return self.get_query_set().pickup_stores()
-
