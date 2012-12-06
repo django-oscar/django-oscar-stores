@@ -1,6 +1,9 @@
 Store Extension for the Oscar Ecommerce Platform
 ================================================
 
+[![Build Status](https://travis-ci.org/elbaschid/django-oscar-stores.png)]
+                (https://travis-ci.org/elbaschid/django-oscar-stores)
+
 **NOTE:** This project is currently a work in progress. It works
 for the most part but there's most likely unfixed issues in there.
 If you feel the need to try it out, use with care.
