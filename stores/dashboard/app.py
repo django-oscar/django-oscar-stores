@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from oscar.core.application import Application
 from oscar.apps.dashboard.nav import register, Node
+from oscar.views.decorators import staff_member_required
 
 from stores.dashboard import views
 
@@ -65,5 +66,7 @@ class StoresDashboardApplication(Application):
         )
         return self.post_process_urls(urlpatterns)
 
+    def get_url_decorator(self, url_name):
+        return staff_member_required
 
 application = StoresDashboardApplication()
