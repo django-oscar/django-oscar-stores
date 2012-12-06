@@ -4,6 +4,7 @@ python:
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq spatialite-bin libspatialite3 libgeos++-dev libgdal-dev libproj0
+ - make geoip
 install:
   - "pip install django-extra-views" # temporary fix for package version conflict with oscar
   - "pip install -r requirements.txt"

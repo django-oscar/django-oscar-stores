@@ -19,7 +19,7 @@ setup(
         'Django>=1.4.2',
         'versiontools>=1.1.9',
         'django-oscar>=0.4',
-        'django-extra-views>=0.2.2',
+        'django-extra-views>=0.5.2',
     ],
     # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
