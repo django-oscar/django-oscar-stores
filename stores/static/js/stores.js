@@ -1,7 +1,49 @@
 var stores = stores || {};
 
 stores.maps = {
+
+    overview: {
+        init: function() {
+            var map = stores.maps.createOverviewMap();
+
+            // callback function for when coordinates are found
+            var success = function(position) {
+                var currentLocation = new google.maps.LatLng(
+                    position.coords.latitude,
+                    position.coords.longitude
+                );
+                var bounds = map.getBounds();
+                bounds.extend(currentLocation);
+                map.fitBounds(bounds);
+
+                var marker = new google.maps.Marker({
+                    position: currentLocation,
+                    map: map,
+                    title: 'You are here'
+                });
+            };
+
+            // callback function for when location could not be determined
+            var error = function(msg) {
+                oscar.messages.error(msg);
+            };
+
+            $('[data-behaviours~=geo-location]').live('click', function(ev) {
+                ev.preventDefault();
+
+                // get location from browser
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(success, error);
+                } else {
+                    error('Your location could not be determined');
+                }
+            });
+
+        }
+    },
+
     createOverviewMap: function () {
+        var map = null;
         $('.store-map').each(function (elem) {
             var myOptions = {
                 center: new google.maps.LatLng(-37.813988, 144.964256),
@@ -11,20 +53,20 @@ stores.maps = {
                 scrollwheel: true,
                 zoom: 11
             };
-            var map = new google.maps.Map(this, myOptions);
+            map = new google.maps.Map(this, myOptions);
             var bounds = new google.maps.LatLngBounds();
 
             $('address').each(function (elem) {
                 var storeLocation = new google.maps.LatLng(
-                    $(this).attr('data-lat'),
-                    $(this).attr('data-lng')
+                    $(this).data('lat'),
+                    $(this).data('lng')
                 );
                 bounds.extend(storeLocation);
 
                 var marker = new google.maps.Marker({
                     position: storeLocation,
                     map: map,
-                    title: $(this).attr('data-name')
+                    title: $(this).data('name')
                 });
                 map.fitBounds(bounds);
 
@@ -39,10 +81,12 @@ stores.maps = {
             });
 
         });
+        return map;
     },
+
     createIndividualMap: function (mapElem, addressElem, zoomLevel) {
-        lat = addressElem.attr('data-lat');
-        lng = addressElem.attr('data-lng');
+        lat = addressElem.data('lat');
+        lng = addressElem.data('lng');
 
         if (lat & lng) {
             storeLocation = new google.maps.LatLng(lat, lng);
