@@ -12,7 +12,7 @@
     <div class="container-fluid page">
         <div class="row-fluid">
             <div class="span3">
-                <a href="@" class="btn btn-primary">Use my location</a>
+                <button class="btn btn-primary" data-behaviours="geo-location">Use my location</button>
                 <ul>
                     <li>something</li>
                     <li>something</li>
@@ -68,6 +68,7 @@
             </div>
         </div>
     </div>
+
 {% endblock %}
 
 {% block extrascripts %}
@@ -76,5 +77,5 @@
 {% endblock %}
 
 {% block onbodyload %}
-    stores.maps.createOverviewMap();
+stores.maps.overview.init();
 {% endblock %}
