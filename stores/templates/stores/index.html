@@ -6,6 +6,7 @@
 
 {% block extrahead %}
 <style>map img { max-width: none; }</style>
+<link rel="stylesheet" href="/static/oscar/css/responsive.css" />
 {% endblock %}
 
 {% block content %}
@@ -13,12 +14,30 @@
         <div class="row-fluid">
             <div class="span3">
                 <button class="btn btn-primary" data-behaviours="geo-location">Use my location</button>
+                or
+                <input id="id_store_serach" type="text" maxlength="255" name="store_search">
+                Select your state
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle visible-desktop" data-toggle="dropdown"></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>something</li>
+                        <li>something</li>
+                        <li>something</li>
+                        <li>something</li>
+                        <li>Victoria</li>
+                    </ul>
+                </div>
+                <label class="checkbox">
+                    <input type="checkbox">Show stores opening soon
+                </label>
                 <ul>
-                    <li>something</li>
-                    <li>something</li>
-                    <li>something</li>
-                    <li>something</li>
-                    <li>something</li>
+                    <li><a href="">34 Collins St (Melbourne)</a></li>
+                    <li><a href="">Bendigo</a></li>
+                    <li>Camberwell</li>
+                    <li>Collins Place</li>
+                    <li>Doncaster</li>
+                    <li>Eastland (Ringwood)</li>
+                    <li>Fountain Gate</li>
                 </ul>
             </div>
             <div class="span9">
