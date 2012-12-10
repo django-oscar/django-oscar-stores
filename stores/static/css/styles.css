@@ -1,0 +1,67 @@
+#store-map img,
+.store-map img {
+  max-width: none;
+}
+.view-stores > button {
+  width: 100%;
+  padding: 8px 14px;
+}
+.view-stores > button i {
+  font-size: 24px;
+  padding-right: 8px;
+}
+.view-stores ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.view-stores ul > li {
+  line-height: 20px;
+}
+.view-stores ul > li > a {
+  display: block;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 8px 14px 8px 0;
+  margin: 0 0 -1px;
+}
+.view-stores ul > li > a:first-child {
+  border-top: none;
+}
+.view-stores ul > li > a > h5 {
+  font-weight: normal;
+}
+.view-stores input[type="text"] {
+  padding: 8px 0 8px 4px;
+  font-size: 12px;
+}
+.divide-header {
+  height: 18px;
+  clear: both;
+  width: 100%;
+  margin: 5px 0;
+}
+.divide-header em {
+  background-clip: padding-box;
+  border-bottom: 1px solid #e8e8e8;
+  width: 44%;
+  height: 10px;
+  float: left;
+  text-indent: -9999px;
+}
+.divide-header span {
+  text-align: center;
+  float: left;
+  width: 12%;
+  line-height: 18px;
+  color: #9f9f9f;
+}
+.store-map {
+  margin-bottom: 28px;
+}
+.stores-list i,
+.store-details i {
+  color: #b6b6b6;
+}
+.store-details {
+  margin-bottom: 20px;
+}
