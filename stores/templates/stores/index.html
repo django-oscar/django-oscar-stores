@@ -6,30 +6,56 @@
 
 {% block extrahead %}
 <style>map img { max-width: none; }</style>
+<link rel="stylesheet" href="{{ STATIC_URL }}css/styles.css" />
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid page">
+    <div class="container-fluid">
+        <h1 class="hidden-phone">{% trans "View our stores" %}</h1>
+        <!-- <button class="btn pull-right">View all stores</button> -->
         <div class="row-fluid">
-            <div class="span3">
-                <button class="btn btn-primary" data-behaviours="geo-location">Use my location</button>
+            <div class="span3 view-stores">
+                <button class="btn btn-primary" data-behaviours="geo-location"><i class="icon-screenshot"></i>Use my location</button>
+                <header class="divide-header">
+                    <em>-</em>
+                    <span>or</span>
+                    <em>-</em>
+                </header>
+                <input id="id_store_serach" type="text" placeholder="Enter your postcode or suburb..." maxlength="255" name="store_search">
+                <h3>Select your state</h3>
+                <div class="btn-group">
+                    <button class="btn">Victoria</button>
+                    <button class="btn dropdown-toggle visible-desktop" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>something</li>
+                        <li>something</li>
+                        <li>something</li>
+                        <li>something</li>
+                        <li>Victoria</li>
+                    </ul>
+                </div>
+                <label class="checkbox">
+                    <input type="checkbox">Show stores opening soon
+                </label>
                 <ul>
-                    <li>something</li>
-                    <li>something</li>
-                    <li>something</li>
-                    <li>something</li>
-                    <li>something</li>
+                {% for store in store_list %}
+                    <li>
+                        <a href="{% url stores:detail store.slug %}">
+                            <h5>{{ store.name }}</h5>
+                        </a>
+                    </li>
+                {% endfor %}
                 </ul>
             </div>
             <div class="span9">
                 <section class="stores-list">
-                    <h1 class="hidden-phone">{% trans "View our stores" %}</h1>
                     <div class='row-fluid'>
                         <map class='span12'>
                             <div class='store-map' style="width: 100%; height: 380px;"></div>
                         </map>
                     </div>
-
                     {% for store in store_list %}
                         <div class="row-fluid">
                             <div class="span12">
