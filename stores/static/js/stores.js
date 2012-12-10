@@ -6,21 +6,47 @@ stores.maps = {
         init: function() {
             var map = stores.maps.createOverviewMap();
 
+            google.maps.event.addDomListener(window, 'load', function() {
+
+                if (!!$('#id_location').val()) {
+                    var location = stores.maps.getLatLngFromGeoJSON($('#id_location').val());
+                    var bounds = map.getBounds();
+                    bounds.extend(location);
+                    map.fitBounds(bounds);
+
+                    var marker = new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        title: 'You are here'
+                    });
+                    map.setCenter(location);
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: marker.title
+                    });
+
+                    // Open the infowindow on marker click
+                    google.maps.event.addListener(marker, "click", function () {
+                        infowindow.open(map, marker);
+                    });
+                }
+
+            });
+
             // callback function for when coordinates are found
             var success = function(position) {
-                var currentLocation = new google.maps.LatLng(
-                    position.coords.latitude,
-                    position.coords.longitude
-                );
-                var bounds = map.getBounds();
-                bounds.extend(currentLocation);
-                map.fitBounds(bounds);
 
-                var marker = new google.maps.Marker({
-                    position: currentLocation,
-                    map: map,
-                    title: 'You are here'
-                });
+                // populate hidden field
+                $('#id_location').val(
+                    JSON.stringify(
+                        stores.maps.getGeoJson(
+                            position.coords.latitude,
+                            position.coords.longitude
+                        )
+                    )
+                );
+
+                $('#store-search').submit();
             };
 
             // callback function for when location could not be determined
@@ -40,6 +66,35 @@ stores.maps = {
             });
 
         }
+    },
+
+    getGeoJson: function (lat, lng) {
+        return {
+            'type': 'Point',
+            // the GeoJSON format provides latitude and longitude
+            // in reverse order in the 'coordinates' list:
+            // [x, y] => [longitude, latitude]
+            'coordinates': [lat, lng]
+        };
+    },
+
+    getLatLngFromGeoJSON: function (data) {
+        var point = jQuery.parseJSON(data);
+
+        if (!point || point.type.toLowerCase() !== "point") {
+            return new google.maps.LatLng(
+                -37.82850537866209,
+                144.9661415816081
+            );
+        }
+
+        // the GeoJSON format provides latitude and longitude
+        // in reverse order in the 'coordinates' list:
+        // [x, y] => [longitude, latitude]
+        return new google.maps.LatLng(
+            point.coordinates[1],
+            point.coordinates[0]
+        );
     },
 
     createOverviewMap: function () {
