@@ -5,7 +5,7 @@
 {% block body_class %}stores{% endblock %}
 
 {% block extrahead %}
-    <link rel='stylesheet' type='text/css' href="{% static "css/stores.css" %}" />
+    <link rel='stylesheet' type='text/css' href="{% static "css/styles.css" %}" />
 {% endblock %}
 
 {% block title %}
@@ -40,37 +40,58 @@
 {% endblock header %}
 
 {% block dashboard_content %}
-<form action="." method="post" class="form-horizontal" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="well well-blank">
-
-        <div class="sub-header">
-            <h3>{% trans "Store Details" %}</h3>
+<div class="row-fluid">
+    <div class="span3">
+        <!-- <div class="table-header">
+                    <h3>Sections</h3>
+                </div> -->
+            
+        <div class="tabbable tabs-left">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a data-toggle="tab" href="#store_details">Store Details</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#store_contact">Store Contact</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#store_location">Store Location</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#opening_hours">Opening Hours</a>
+            </li>
+        </ul>
         </div>
-
-        <span class="help-block">{{ form.non_field_errors }}</span>
-        {% for field in form %}
-
-            {% include "partials/field.html" %}
-
-            {% if forloop.first %}
-                {# add the address inline form here #}
-                {% with formset=inlines.1 %}
-                    {{ formset.management_form }}
-                    {% for address_form in formset %}
-
-                        {% for field in address_form %}
-                            {% include "partials/field.html" %}
-                        {% endfor %}
-
-                    {% endfor %}
-                {% endwith %}
-            {% endif %}
-        {% endfor %}
     </div>
-
+    <div class="span9">
+        <form action="." method="post" class="form-stacked wysiwyg" enctype="multipart/form-data">
+            {% csrf_token %}
+            <section class="tab-content" id="store_details">
+            <div class="table-header">
+                <h3>Store Details</h3>
+            </div>
+            <div class="well product-details">
+                <span class="help-block">{{ form.non_field_errors }}</span>
+                {% for field in form %}
+                    {% include "partials/field.html" %}
+            
+                    {% if forloop.first %}
+                        {# add the address inline form here #}
+                        {% with formset=inlines.1 %}
+                            {{ formset.management_form }}
+                            {% for address_form in formset %}            
+                                {% for field in address_form %}
+                                    {% include "partials/field.html" %}
+                                {% endfor %}        
+                            {% endfor %}
+                        {% endwith %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            </section>
     {# we are adding the contact detail inline form here #}
     {% with formset=inlines.2 %}
+    <section id="store_contact">
     <div class="well well-blank">
         <div class="sub-header">
             <h3>{% trans "Store contact" %}</h3>
@@ -87,8 +108,9 @@
             {% endfor %}
         </div>
     </div>
+    </section>
     {% endwith %}
-
+    <section id="store_location">
     <div class="well well-blank">
         <div class="sub-header">
             <h3>{% trans "Store location" %}</h3>
@@ -99,9 +121,11 @@
             <div id="store-map" style="width: 968px; height: 380px"></div>
         </div>
     </div>
+    </section>
 
     {# use the first formset which is the opening times #}
     {% with formset=inlines.0 %}
+    <section id="opening_hours">
     <div class="well well-blank">
 
         <div class="sub-header">
@@ -119,6 +143,7 @@
         </div>
         {% endfor %}
     </div>
+    </section>
     {% endwith %}
 
     <hr/>
@@ -131,6 +156,7 @@
         </div>
     </div>
 </form>
+    </div>
 </div>
 {% endblock dashboard_content %}
 
