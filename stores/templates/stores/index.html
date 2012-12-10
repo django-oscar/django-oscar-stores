@@ -39,19 +39,15 @@
                 <label class="checkbox">
                     <input type="checkbox">Show stores opening soon
                 </label>
-                {% for store in store_list %}
                 <ul>
+                {% for store in store_list %}
                     <li>
-                        <a href="{% url stores:detail store.slug %}"><h5>{{ store.name }}</h5></a>
+                        <a href="{% url stores:detail store.slug %}">
+                            <h5>{{ store.name }}</h5>
+                        </a>
                     </li>
-                    <li><a href="">Bendigo</a></li>
-                    <li><a href="">Camberwell</a></li>
-                    <li><a href="">Collins Place</a></li>
-                    <li><a href="">Doncaster</a></li>
-                    <li><a href="">Eastland (Ringwood)</a></li>
-                    <li><a href="">Fountain Gate</a></li>
-                </ul>
                 {% endfor %}
+                </ul>
             </div>
             <div class="span9">
                 <section class="stores-list">
