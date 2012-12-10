@@ -6,19 +6,28 @@
 
 {% block extrahead %}
 <style>map img { max-width: none; }</style>
-<link rel="stylesheet" href="/static/oscar/css/responsive.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/styles.css" />
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid page">
+    <div class="container-fluid">
+        <h1 class="hidden-phone">{% trans "View our stores" %}</h1>
+        <!-- <button class="btn pull-right">View all stores</button> -->
         <div class="row-fluid">
-            <div class="span3">
-                <button class="btn btn-primary" data-behaviours="geo-location">Use my location</button>
-                or
-                <input id="id_store_serach" type="text" maxlength="255" name="store_search">
-                Select your state
+            <div class="span3 view-stores">
+                <button class="btn btn-primary" data-behaviours="geo-location"><i class="icon-screenshot"></i>Use my location</button>
+                <header class="divide-header">
+                    <em>-</em>
+                    <span>or</span>
+                    <em>-</em>
+                </header>
+                <input id="id_store_serach" type="text" placeholder="Enter your postcode or suburb..." maxlength="255" name="store_search">
+                <h3>Select your state</h3>
                 <div class="btn-group">
-                    <button class="btn dropdown-toggle visible-desktop" data-toggle="dropdown"></button>
+                    <button class="btn">Victoria</button>
+                    <button class="btn dropdown-toggle visible-desktop" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
                     <ul class="dropdown-menu" role="menu">
                         <li>something</li>
                         <li>something</li>
@@ -30,15 +39,19 @@
                 <label class="checkbox">
                     <input type="checkbox">Show stores opening soon
                 </label>
+                {% for store in store_list %}
                 <ul>
-                    <li><a href="">34 Collins St (Melbourne)</a></li>
+                    <li>
+                        <a href="{% url stores:detail store.slug %}"><h5>{{ store.name }}</h5></a>
+                    </li>
                     <li><a href="">Bendigo</a></li>
-                    <li>Camberwell</li>
-                    <li>Collins Place</li>
-                    <li>Doncaster</li>
-                    <li>Eastland (Ringwood)</li>
-                    <li>Fountain Gate</li>
+                    <li><a href="">Camberwell</a></li>
+                    <li><a href="">Collins Place</a></li>
+                    <li><a href="">Doncaster</a></li>
+                    <li><a href="">Eastland (Ringwood)</a></li>
+                    <li><a href="">Fountain Gate</a></li>
                 </ul>
+                {% endfor %}
             </div>
             <div class="span9">
                 <section class="stores-list">

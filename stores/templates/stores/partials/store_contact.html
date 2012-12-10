@@ -8,8 +8,12 @@
     {% if contact.fax %}
         <i class="icon-print"></i> {{ contact.fax }}<br />
     {% endif %}
-    {% if contact.email%}
-        <i class="icon-envelope"></i>
+    {% if contact.email %}
+        <i class="icon-envelope-alt"></i>
         <a href="mailto:{{ contact.email }}">{{ contact.email }}</a><br />
+    {% endif %}
+    {% if contact.facebook %}
+        <i class="icon-facebook-sign"></i>
+        <a href="http://www.facebook.com/">{{ contact.facebook }}</a><br />
     {% endif %}
 {% endwith %}
