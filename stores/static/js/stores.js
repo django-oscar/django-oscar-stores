@@ -9,7 +9,7 @@ stores.maps = {
             google.maps.event.addDomListener(window, 'load', function() {
 
                 if (!!$('#id_location').val()) {
-                    var location = stores.maps.getLatLngFromGeoJSON($('#id_location'));
+                    var location = stores.maps.getLatLngFromGeoJSON($('#id_location').val());
                     var bounds = map.getBounds();
                     bounds.extend(location);
                     map.fitBounds(bounds);
