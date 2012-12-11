@@ -10,11 +10,11 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="hidden-phone">{% trans "View our stores" %}</h1>
-    <!-- <button class="btn pull-right">View all stores</button> -->
-    <div class="row-fluid">
-        <div class="span3 view-stores">
+    <div class="container-fluid">
+        <h1 class="hidden-phone">{% trans "View our stores" %}</h1>
+        <!-- <button class="btn pull-right">View all stores</button> -->
+        <div class="row-fluid">
+            <div class="span3 view-stores">
             <form id="store-search" action="." method="post">
                 <button class="btn btn-primary" data-behaviours="geo-location"><i class="icon-screenshot"></i>Use my location</button>
                 <header class="divide-header">
@@ -39,9 +39,9 @@
                         {% for state in states %}
                         <li>{{ state }}</li>
                         {% endfor %}
-                    </ul>
+                    </ul>
                 </div>
-                <label class="checkbox">
+                <label class="checkbox pull-left">
                     <input type="checkbox">Show stores opening soon
                 </label>
                  #}
@@ -49,68 +49,68 @@
             </form>
             <ul>
             {% for store in nearest_stores %}
-            <li>
-                <a href="{% url stores:detail store.slug %}">
+                    <li>
+                        <a href="{% url stores:detail store.slug %}">
                     <h5>{{ store.name }}</h5>
                     {% if store.distance %}
                         ({{ store.distance.km|floatformat:2 }} km)
                     {% endif %}
-                </a>
-            </li>
-            {% endfor %}
-            </ul>
-        </div>
-        <div class="span9">
-            <section class="stores-list">
-                <div class='row-fluid'>
-                    <map class='span12'>
-                        <div class='store-map' style="width: 100%; height: 380px;"></div>
-                    </map>
-                </div>
-                {% for store in store_list %}
-                <div class="row-fluid">
-                    <div class="span12">
-                        <div class="sub-header">
-                            <h4>{{ store.name }}
-                                <a href="{% url stores:detail store.slug %}" class="btn pull-right">
-                                    {% trans "View store details" %}
-                                </a>
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row-fluid">
-                    <div class="span4">
-                        {% thumbnail store.image "400x400" as im %}
-                        <div>
-                            <img src="{{ im.url }}" />
-                        </div>
-                        {% endthumbnail %}
-                    </div>
-
-                    <div class="span4">
-                        {% include "stores/partials/store_address.html" %}
-                        {% include "stores/partials/store_contact.html" %}
-                        <br/>
-                    </div>
-
-                    <div class="span4">
-                        {% include "stores/partials/store_opening_periods.html" %}
-                    </div>
-
-                </div>
+                        </a>
+                    </li>
                 {% endfor %}
-            </section>
+                </ul>
+            </div>
+            <div class="span9">
+                <section class="stores-list">
+                    <div class='row-fluid'>
+                        <map class='span12'>
+                            <div class='store-map' style="width: 100%; height: 380px;"></div>
+                        </map>
+                    </div>
+                    {% for store in store_list %}
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="sub-header">
+                                    <h4>{{ store.name }}
+                                    <a href="{% url stores:detail store.slug %}" class="btn pull-right">
+                                        {% trans "View store details" %}
+                                    </a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span4">
+                                {% thumbnail store.image "400x400" as im %}
+                                <div>
+                                    <img src="{{ im.url }}" />
+                                </div>
+                                {% endthumbnail %}
+                            </div>
+
+                            <div class="span4">
+                                {% include "stores/partials/store_address.html" %}
+                                {% include "stores/partials/store_contact.html" %}
+                                <br/>
+                            </div>
+
+                            <div class="span4">
+                                {% include "stores/partials/store_opening_periods.html" %}
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </section>
+            </div>
         </div>
     </div>
-</div>
 
 {% endblock %}
 
 {% block extrascripts %}
-{{ block.super }}
-{% include "stores/partials/extrascripts.html" %}
+    {{ block.super }}
+    {% include "stores/partials/extrascripts.html" %}
 
 {% endblock %}
 
