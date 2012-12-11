@@ -124,3 +124,13 @@ stores.dashboard = {
         });
     }
 };
+
+
+$(document).ready(function() {
+    //Adds error icon if there are erros in the product form
+    $('[data-behaviour="affix-nav-errors"] .tab-pane').each(function(){
+        var productErrorListener = $(this).find('[class*="error"]').closest('.tab-pane').attr('id');
+        $('[data-spy="affix"] a[href="#' + productErrorListener + '"]').append('<i class="icon-exclamation-sign pull-right"></i>');
+    });
+});
+
