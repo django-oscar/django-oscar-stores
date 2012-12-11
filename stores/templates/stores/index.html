@@ -21,9 +21,12 @@
                     <span>or</span>
                     <em>-</em>
                 </header>
-                <input id="id_store_serach" type="text" placeholder="Enter your postcode or suburb..." maxlength="255" name="store_search">
+                <form class="form-search stores-postcode-search">
+                    <input id="id_store_serach" type="text" class="search-query" placeholder="Enter your postcode or suburb..." maxlength="255" name="store_search">
+                    <button type="submit" class="icon-search"></button>
+                </form>
                 <h3>Select your state</h3>
-                <div class="btn-group">
+                <div class="btn-group state-select">
                     <button class="btn">Victoria</button>
                     <button class="btn dropdown-toggle visible-desktop" data-toggle="dropdown">
                         <span class="caret"></span>
@@ -36,14 +39,14 @@
                         <li>Victoria</li>
                     </ul>
                 </div>
-                <label class="checkbox">
+                <label class="checkbox pull-left">
                     <input type="checkbox">Show stores opening soon
                 </label>
-                <ul>
+                <ul class="nav nav-tabs nav-stacked">
                 {% for store in store_list %}
                     <li>
                         <a href="{% url stores:detail store.slug %}">
-                            <h5>{{ store.name }}</h5>
+                            {{ store.name }}
                         </a>
                     </li>
                 {% endfor %}
