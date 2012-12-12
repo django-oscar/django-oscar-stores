@@ -37,10 +37,10 @@
                 </label>
                 {% endcomment %}
             </form>
-            <ul class="nav nav-tabs nav-stacked">
+            <ul class="nav nav-tabs nav-stacked">
             {% for store in object_list %}
-                <li>
-                    <a href="{% url stores:detail store.slug %}">
+            <li>
+                <a href="{% url stores:detail store.slug %}">
                     {{ store.name }}
                     {% if store.distance %}
                         <span class="distance">({{ store.distance.km|floatformat:2 }} km)</span>
@@ -48,7 +48,7 @@
                 </a>
             </li>
             {% endfor %}
-            </ul>
+            </ul>
         </div>
         <div class="span9">
             <div class='row-fluid'>
