@@ -2,10 +2,6 @@ var stores = stores || {};
 
 stores.maps = {
 
-    mapPosition: Class.extend(
-
-    ),
-
     overview: {
         defaultLng: -37.82850537866209,
         defaultLat: 144.9661415816081,
@@ -20,6 +16,15 @@ stores.maps = {
                 position: latLng,
                 map: map,
                 title: 'You are here'
+            });
+
+            // init autocomplete
+            var input = $('#id_store_search'),
+                autocomplete = new google.maps.places.Autocomplete(input[0]);
+
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                var place = autocomplete.getPlace();
+                stores.maps.updateMap(map, marker, place.geometry.location);
             });
 
 
@@ -46,7 +51,7 @@ stores.maps = {
 
                         // update map with new marker
                         stores.maps.updateMap(map, marker, latLng);
-                        console.log("#id_location val: " + $('#id_location').val());
+                        console.log("#id_location (GeoJSON): " + $('#id_location').val());
                     };
                     navigator.geolocation.getCurrentPosition(success, error);
                 } else {
@@ -62,9 +67,13 @@ stores.maps = {
         var bounds = map.getBounds();
         bounds.extend(latLng);
         map.fitBounds(bounds);
+        map.setCenter(latLng);
         marker.setPosition(latLng);
-        new google.maps.InfoWindow({
-            content: this.innerHTML
+        var infowindow = new google.maps.InfoWindow({
+            content: 'You are here'
+        });
+        google.maps.event.addListener(marker, "click", function() {
+            infowindow.open(map, marker);
         });
     },
 
