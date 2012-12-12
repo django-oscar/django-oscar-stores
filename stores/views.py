@@ -1,6 +1,8 @@
 from django.views import generic
 from django.db.models import get_model
 from django.conf import settings
+from django.contrib.gis.geos import GEOSGeometry
+
 
 from stores.forms import StoreSearchForm
 
@@ -15,12 +17,12 @@ class StoreListView(generic.ListView):
 
     def get_queryset(self):
         if self.request.POST and self.request.POST['location']:
-            point = self.request.POST['location']
+            point = GEOSGeometry(self.request.POST['location'])
             # save to session
             self.request.session['request_location'] = point
             return self.model.objects.filter(
                 is_active=True
-            ).distance(point).order_by('distance')
+            ).transform(STORES_SRID).distance(point).order_by('distance')
 
         return self.model.objects.filter(is_active=True)
 
@@ -31,7 +33,6 @@ class StoreListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super(StoreListView, self).get_context_data(**kwargs)
-        ctx['nearest_stores'] = self.get_queryset()
         ctx['form'] = self.get_search_form()
         return ctx
 

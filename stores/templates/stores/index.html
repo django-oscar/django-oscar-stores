@@ -49,7 +49,7 @@
                 </label>
             </form>
             <ul class="nav nav-tabs nav-stacked">
-            {% for store in nearest_stores %}
+            {% for store in object_list %}
             <li>
                 <a href="{% url stores:detail store.slug %}">
                     {{ store.name }}
