@@ -40,7 +40,7 @@
                 </label>
                 <ul class="nav nav-tabs nav-stacked">
                 {% for store in store_list %}
-                    <li>
+                    <li>
                         <a href="{% url stores:detail store.slug %}">
                             {{ store.name }} <span class="distance">(3.4km)</span>
                         </a>

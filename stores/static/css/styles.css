@@ -19,6 +19,9 @@
 .view-stores > select {
   width: 100%;
 }
+.view-stores > ul {
+  margin-top: 20px;
+}
 .view-stores .stores-postcode-search {
   border: 1px solid #999;
   border-radius: 4px;
