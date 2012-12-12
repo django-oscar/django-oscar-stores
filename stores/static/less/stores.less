@@ -19,6 +19,9 @@
   input[type="text"] {
     padding: 8px 0 8px 4px;
   }
+  > select {
+    width: 100%;
+  }
 }
 .view-stores .stores-postcode-search {
   border: 1px solid #999;
@@ -34,6 +37,7 @@
     font-size: 12px;
     padding: 8px 0 8px 4px;
     width: 84%;
+    box-shadow: none;
   }
   .icon-search {
     background: transparent;
@@ -47,21 +51,26 @@
     width: auto;
   }
 }
-.state-select {
- .btn {
-    width: 86%;
-    float: left;
-    text-align: left;
-    + .dropdown-toggle {
-      width: 14%;
-    }
+.view-stores .nav-tabs.nav-stacked > li > a {
+  padding-left: 0;
+  padding-right: 0;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-top: 1px solid #DDDDDD;
+ .distance {
+    color: #999;
   }
+}
+
+.nav-tabs.nav-stacked > li:first-child > a {
+  border-top: none;
 }
 .divide-header {
   height: 18px;
   clear: both;
   width: 100%;
-  margin: 5px 0;
+  margin: 10px 0;
   em {
     background-clip: padding-box;
     border-bottom: 1px solid #e8e8e8;
@@ -87,16 +96,43 @@
 .store-details {
   i {
     color: #b6b6b6;
+    font-size: 18px;
+    padding-right: 5px;
+    float: left;
   }
 }
 .stores-list {
+  margin-bottom: 30px;
   .sub-header {
-    padding-bottom: 20px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+  }
+  a.email {
+    width: 90%;
+  	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	float: right;
   }
 }
-
+.store-address-contact div {
+  padding: 4px 0;
+}
+.stores-list .table-condensed th, .table-condensed td {
+  padding: 5px 10px;
+}
 .store-details {
   margin-bottom: 20px;
+}
+.store-name {
+  h1 {
+    float: left;
+    margin-bottom: 20px;
+  }
+  a > button {
+    float: right;
+    margin: 10px 0 20px;
+  }
 }
 
 /* CMS Area - needs to be added into the dashboard less file */ 
