@@ -2,13 +2,13 @@
 .store-map img {
   max-width: none;
 }
-.view-stores > button {
+.view-stores .location {
   line-height: 16px;
   padding: 10px 14px;
   vertical-align: middle;
   width: 100%;
 }
-.view-stores > button i {
+.view-stores .location i {
   font-size: 24px;
   padding-right: 8px;
   vertical-align: middle;
@@ -24,28 +24,27 @@
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+  display: inline-block;
+  float: left;
+  position: relative;
+  width: 100%;
 }
 .view-stores .stores-postcode-search .search-query {
   border: none;
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
   float: left;
   font-size: 12px;
   padding: 8px 0 8px 4px;
-  width: 84%;
   box-shadow: none;
 }
 .view-stores .stores-postcode-search .icon-search {
-  background: transparent;
+  background: #fff;
   border: medium none;
   color: #999;
-  display: inline-block;
-  float: right;
   font-size: 20px;
-  padding: 8px 6px;
   vertical-align: middle;
-  width: auto;
+  position: absolute;
+  right: 0;
+  top: 10px;
 }
 .view-stores .nav-tabs.nav-stacked > li > a {
   padding-left: 0;
@@ -93,7 +92,7 @@
   float: left;
 }
 .stores-list {
-  margin-bottom: 30px;
+  margin: 30px 0;
 }
 .stores-list .sub-header {
   margin-bottom: 18px;
@@ -124,7 +123,8 @@
   float: right;
   margin: 10px 0 20px;
 }
-/* CMS Area - needs to be added into the dashboard less file */.stores .well {
+/* CMS Area - needs to be added into the dashboard less file */
+.stores .well {
   background-color: #fff;
 }
 .stores label {
