@@ -207,7 +207,7 @@ LOGGING = {
     }
 }
 
-# STORES_SRID = 32140 # Flat projection so spatialite can do distances
+STORES_SRID = 3577
 
 spatialite_lib = os.environ.get('SPATIALITE_LIBRARY_PATH', None)
 

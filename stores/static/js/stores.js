@@ -6,7 +6,7 @@ stores.maps = {
         defaultLng: -37.82850537866209,
         defaultLat: 144.9661415816081,
 
-        init: function() {
+        init: function () {
             var latLng = stores.maps.getCurrentLatLng();
             var map = stores.maps.createOverviewMap(latLng);
 
@@ -20,7 +20,7 @@ stores.maps = {
 
                 // update hidden field
                 $('#id_location').val(JSON.stringify(stores.maps.getGeoJsonFromLatLng(place.geometry.location)));
-                setTimeout(function() {
+                setTimeout(function () {
                     $('#store-search').submit();
                 }, 500);
             });
@@ -30,7 +30,7 @@ stores.maps = {
 
                 // update hidden field
                 $('#id_location').val(JSON.stringify(stores.maps.getGeoJsonFromLatLng(place.geometry.location)));
-                setTimeout(function() {
+                setTimeout(function () {
                     $('#store-search').submit();
                 }, 500);
             });
@@ -44,19 +44,16 @@ stores.maps = {
                 if (navigator.geolocation) {
                     // callback function for when location could not be determined
                     var error = function(msg) {
-                        console.log("navigator.geolocation.getCurrentPosition(): error");
                         oscar.messages.error(msg);
                     };
 
-                    var success = function(position) {
-                        console.log("navigator.geolocation.getCurrentPosition(): success");
+                    var success = function (position) {
                         latLng = new google.maps.LatLng(
                             position.coords.latitude,
                             position.coords.longitude
                         );
                         // populate hidden field
                         $('#id_location').val(JSON.stringify(stores.maps.getGeoJsonFromLatLng(latLng)));
-                        console.log("#id_location (GeoJSON): " + $('#id_location').val());
 
                         // submit form
                         $('#store-search').submit();
@@ -70,8 +67,7 @@ stores.maps = {
 
         },
 
-        addStoreMarkers: function(map, bounds) {
-            console.log("addStoreMarkers()");
+        addStoreMarkers: function (map, bounds) {
 
             $('address').each(function (elem) {
                 var storeLatLng = new google.maps.LatLng(
@@ -101,14 +97,10 @@ stores.maps = {
         }
     },
 
-    getCurrentLatLng: function() {
-        console.log("store.maps.getCurrentLatLng()");
+    getCurrentLatLng: function () {
         var latLng = null;
         if (!!$('#id_location').val()) {
             latLng = stores.maps.getLatLngFromGeoJSON($('#id_location').val());
-            // update map with new marker
-            console.log("latLng from GEOJSON: ");
-            console.log(latLng);
         }
         return latLng;
     },
@@ -161,12 +153,13 @@ stores.maps = {
 
 
         if (!!latLng) {
-            setTimeout(function() {
+            setTimeout(function () {
                 var marker = new google.maps.Marker({
                     position: latLng,
                     map: map,
                     title: 'You are here',
-                    visible: true
+                    visible: true,
+                    icon: 'http://www.google.com/mapfiles/arrow.png'
                 });
                 bounds.extend(latLng);
                 map.fitBounds(bounds);
@@ -176,7 +169,7 @@ stores.maps = {
                 var infowindow = new google.maps.InfoWindow({
                     content: 'You are here'
                 });
-                google.maps.event.addListener(marker, "click", function() {
+                google.maps.event.addListener(marker, "click", function () {
                     infowindow.open(map, marker);
                 });
 
