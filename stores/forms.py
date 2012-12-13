@@ -22,4 +22,4 @@ class StoreSearchForm(forms.Form):
             attrs={'placeholder': _("Enter your postcode or suburb...")}
         )
     )
-    state = forms.ChoiceField(choices=STATE_CHOICES)
+    #state = forms.ChoiceField(choices=STATE_CHOICES)

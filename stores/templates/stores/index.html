@@ -27,26 +27,13 @@
                 {{ form.location }}
 
                 {{ form.store_search }}
+                {% comment %}
                 <h3>Select your state</h3>
                 {{ form.state }}
-                <!--
-                {#
-                <div class="btn-group">
-                    <button class="btn">VIC</button>
-                    <button class="btn dropdown-toggle visible-desktop" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        {% for state in states %}
-                        <li>{{ state }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                 #}
-                -->
                 <label class="checkbox pull-left">
                     <input type="checkbox">Show stores opening soon
                 </label>
+                {% endcomment %}
             </form>
             <ul class="nav nav-tabs nav-stacked">
             {% for store in object_list %}
