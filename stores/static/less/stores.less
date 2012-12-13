@@ -5,7 +5,7 @@
 }
 
 .view-stores {
-  > button {
+  .location {
     line-height: 16px;
     padding: 10px 14px;
     vertical-align: middle;
@@ -28,27 +28,26 @@
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+  display: inline-block;
+  float: left;
+  position: relative;
+  width: 100%;
   .search-query {
     border: none;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
     float: left;
     font-size: 12px;
     padding: 8px 0 8px 4px;
-    width: 84%;
     box-shadow: none;
   }
   .icon-search {
-    background: transparent;
+    background: #fff;
     border: medium none;
     color: #999;
-    display: inline-block;
-    float: right;
     font-size: 20px;
-    padding: 8px 6px;
     vertical-align: middle;
-    width: auto;
+    position: absolute;
+    right: 0;
+    top: 10px;
   }
 }
 .view-stores .nav-tabs.nav-stacked > li > a {
@@ -102,7 +101,7 @@
   }
 }
 .stores-list {
-  margin-bottom: 30px;
+  margin: 30px 0;
   .sub-header {
     margin-bottom: 18px;
     padding-bottom: 14px;
@@ -135,7 +134,7 @@
   }
 }
 
-/* CMS Area - needs to be added into the dashboard less file */ 
+/* CMS Area - needs to be added into the dashboard less file */
 .stores .well {
   background-color: #fff;
 }

@@ -19,7 +19,10 @@ class StoreSearchForm(forms.Form):
     location = forms.CharField(widget=forms.HiddenInput)
     store_search = forms.CharField(
         widget=forms.TextInput(
-            attrs={'placeholder': _("Enter your postcode or suburb...")}
+            attrs={
+                'placeholder': _("Enter your postcode or suburb..."),
+                'class': 'search-query'
+            }
         )
     )
     #state = forms.ChoiceField(choices=STATE_CHOICES)
