@@ -17,7 +17,7 @@
     <div class="row-fluid">
         <div class="span3 view-stores">
             <form id="store-search" action="." method="post">
-                <button class="btn btn-primary" data-behaviours="geo-location"><i class="icon-screenshot"></i>Use my location</button>
+                <button class="btn btn-primary location" data-behaviours="geo-location"><i class="icon-screenshot"></i>Use my location</button>
                 <header class="divide-header">
                     <em>-</em>
                     <span>or</span>
@@ -25,8 +25,10 @@
                 </header>
                 {% csrf_token %}
                 {{ form.location }}
-
-                {{ form.store_search }}
+                <div class="stores-postcode-search">
+                    {{ form.store_search }}
+                    <button type="submit" class="icon-search"></button>
+                </div>
                 {% comment %}
                 <h3>Select your state</h3>
                 {{ form.state }}
