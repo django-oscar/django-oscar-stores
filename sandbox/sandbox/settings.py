@@ -207,8 +207,19 @@ LOGGING = {
     }
 }
 
-# STORES_SRID = 32140, # Flat projection so spatialite can do distances
+# SRID that ist used for distance calculations. If a geodetic coordinate
+# system is used to calculate distances in kilometers, miles, etc. this
+# SRID will be used to transform the geometries into a geographic
+# coordinate system. There are many different SRIDs that can be used. I
+# recommend taking a look at http://spatialreference.org/ to find the one
+# that is most suitable for you.
+# We use Autstralian Albers here (http://spatialreference.org/ref/epsg/3577/)
+STORES_SRID = 3577
 
-spatialite_lib = os.environ.get('SPATIALITE_LIBRARY_PATH')
-if spatialite_lib != '':
+# This is set here to make spatialite work with Mac OS X it should
+# not impact other linux-based systems. It has been tested on Ubuntu
+# and works fine.
+spatialite_lib = os.environ.get('SPATIALITE_LIBRARY_PATH', None)
+
+if spatialite_lib is not None:
     SPATIALITE_LIBRARY_PATH = spatialite_lib

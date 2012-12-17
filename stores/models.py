@@ -1,17 +1,23 @@
 from django.db import models
-#from django.contrib.gis.geos.point import Point
+from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import slugify
 from django.contrib.gis.db.models import PointField
 from django.contrib.gis.db.models import GeoManager
-from django.conf import settings
-
+from django.core.exceptions import ImproperlyConfigured
 
 from oscar.apps.address.abstract_models import AbstractAddress
 
 from stores.managers import StoreManager
 
-STORES_SRID = getattr(settings, 'STORES_SRID', 4326)
+
+try:
+    STORES_SRID = settings.STORES_SRID
+except AttributeError:
+    raise ImproperlyConfigured(
+        "A geographic SRID is required for distance calculation in"
+        "kilometers, miles, etc."
+    )
 
 
 class StoreAddress(AbstractAddress):
