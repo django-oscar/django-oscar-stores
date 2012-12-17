@@ -47,8 +47,11 @@ class StoreContact(models.Model):
     phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
     email = models.CharField(_('Email'), max_length=100, blank=True, null=True)
 
-    store = models.OneToOneField('stores.Store', verbose_name=_("Store"),
-                                 related_name="contact_details")
+    store = models.OneToOneField(
+        'stores.Store',
+        verbose_name=_("Store"),
+        related_name="contact_details"
+    )
 
     def __unicode__(self):
         if self.store:
@@ -61,8 +64,13 @@ class Store(models.Model):
     slug = models.SlugField(_('Slug'), max_length=100, unique=True, null=True)
 
     reference = models.CharField(
-        _("Reference"), max_length=32, unique=True, null=True, blank=True,
-        help_text=_("A reference number that uniquely identifies this store"))
+        _("Reference"),
+        max_length=32,
+        unique=True,
+        null=True,
+        blank=True,
+        help_text=_("A reference number that uniquely identifies this store")
+    )
 
     image = models.ImageField(
         _("Image"),
@@ -79,8 +87,13 @@ class Store(models.Model):
         srid=STORES_SRID
     )
 
-    group = models.ForeignKey('stores.StoreGroup', related_name='stores',
-                              verbose_name=_("Group"), null=True, blank=True)
+    group = models.ForeignKey(
+        'stores.StoreGroup',
+        related_name='stores',
+        verbose_name=_("Group"),
+        null=True,
+        blank=True
+    )
 
     is_pickup_store = models.BooleanField(_("Is pickup store"), default=True)
     is_active = models.BooleanField(_("Is active"), default=True)
@@ -200,7 +213,7 @@ class StoreStock(models.Model):
         verbose_name = _("Store Stock Record")
         verbose_name_plural = _("Store Stock Records")
 
-    objects = GeoManager()  # Needed for distance queries against stores
+    objects = GeoManager()
 
     def __unicode__(self):
         if self.store and self.product:

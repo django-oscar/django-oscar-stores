@@ -16,10 +16,12 @@ register(node, 100)
 
 class StoresDashboardApplication(Application):
     name = 'stores-dashboard'
+
     store_list_view = views.StoreListView
     store_create_view = views.StoreCreateView
     store_update_view = views.StoreUpdateView
     store_delete_view = views.StoreDeleteView
+
     store_group_list_view = views.StoreGroupListView
     store_group_create_view = views.StoreGroupCreateView
     store_group_update_view = views.StoreGroupUpdateView
