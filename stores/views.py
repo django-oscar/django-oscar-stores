@@ -16,15 +16,18 @@ class StoreListView(generic.ListView):
     context_object_name = 'store_list'
 
     def get_queryset(self):
-        if self.request.POST and self.request.POST['location']:
-            point = GEOSGeometry(self.request.POST['location'])
-            # save to session
-            self.request.session['request_location'] = point
-            return self.model.objects.filter(
-                is_active=True
-            ).transform(STORES_SRID).distance(point).order_by('distance')
+        qs = self.model.objects.filter(is_active=True)
 
-        return self.model.objects.filter(is_active=True)
+        if self.request.POST:
+            if self.request.POST['group']:
+                qs = qs.filter(group=self.request.POST['group'])
+
+            if self.request.POST['location']:
+                point = GEOSGeometry(self.request.POST['location'])
+                # save to session
+                self.request.session['request_location'] = point
+                qs = qs.transform(STORES_SRID).distance(point).order_by('distance')
+        return qs
 
     def get_search_form(self):
         if self.request.POST:
