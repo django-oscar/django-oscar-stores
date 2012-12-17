@@ -65,6 +65,10 @@ stores.maps = {
                 }
             });
 
+            $('[data-behaviours~=filter-group]').on('change', function() {
+                $('#store-search').submit();
+            });
+
         },
 
         addStoreMarkers: function (map, bounds) {

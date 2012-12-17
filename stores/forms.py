@@ -2,21 +2,20 @@ from django import forms
 from django.db.models import get_model
 from django.utils.translation import ugettext as _
 
-StoreAddress = get_model('stores', 'StoreAddress')
+StoreGroup = get_model('stores', 'StoreGroup')
 
 
 class StoreSearchForm(forms.Form):
 
-    STATE_CHOICES = (
-        (_('VIC'), _('Victoria')),
-        (_('NSW'), _('New South Wales')),
-        (_('SA'), _('South Australia')),
-        (_('TAS'), _('Tasmania')),
-        (_('QLD'), _('Queensland')),
-        (_('NT'), _('Northern Territory')),
-    )
-
     location = forms.CharField(widget=forms.HiddenInput)
+    group = forms.ModelChoiceField(
+        queryset=StoreGroup.objects.all(),
+        widget=forms.Select(
+            attrs={
+                'data-behaviours': 'filter-group'
+            }
+        )
+    )
     store_search = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -25,4 +24,3 @@ class StoreSearchForm(forms.Form):
             }
         )
     )
-    #state = forms.ChoiceField(choices=STATE_CHOICES)

@@ -17,7 +17,7 @@
     <div class="row-fluid">
         <div class="span3 view-stores">
             <form id="store-search" action="." method="post">
-                <button class="btn btn-primary location" data-behaviours="geo-location"><i class="icon-screenshot"></i>Use my location</button>
+                <button class="btn btn-primary location" data-behaviours="geo-location"><i class="icon-screenshot"></i>{% trans "Use my location" %}</button>
                 <header class="divide-header">
                     <em>-</em>
                     <span>or</span>
@@ -29,16 +29,16 @@
                     {{ form.store_search }}
                     <button type="submit" class="icon-search"></button>
                 </div>
+                <h3>{% trans "Filter by group" %}</h3>
+                {{ form.group }}
                 {% comment %}
-                <h3>Select your state</h3>
-                {{ form.state }}
                 <label class="checkbox pull-left">
-                    <input type="checkbox">Show stores opening soon
+                    <input type="checkbox">{% trans "Show stores opening soon" %}
                 </label>
                 {% endcomment %}
             </form>
             <ul class="nav nav-tabs nav-stacked">
-            {% for store in object_list %}
+            {% for store in store_list %}
             <li>
                 <a href="{% url stores:detail store.slug %}">
                     {{ store.name }}
