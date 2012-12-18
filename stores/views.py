@@ -1,13 +1,12 @@
 from django.views import generic
 from django.db.models import get_model
-from django.conf import settings
 from django.contrib.gis.geos import GEOSGeometry
 
-
 from stores.forms import StoreSearchForm
+from stores.utils import get_geographic_srid
+
 
 Store = get_model('stores', 'store')
-STORES_SRID = getattr(settings, 'STORES_SRID', 4326)
 
 
 class StoreListView(generic.ListView):
@@ -26,7 +25,9 @@ class StoreListView(generic.ListView):
                 point = GEOSGeometry(self.request.POST['location'])
                 # save to session
                 self.request.session['request_location'] = point
-                qs = qs.transform(STORES_SRID).distance(point).order_by('distance')
+                qs = qs.transform(
+                    get_geographic_srid()
+                ).distance(point).order_by('distance')
         return qs
 
     def get_search_form(self):
