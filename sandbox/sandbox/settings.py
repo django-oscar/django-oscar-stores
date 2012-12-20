@@ -163,6 +163,8 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # Oscar settings
 from oscar.defaults import *
+# Oscar stores settings
+from stores.defaults import *
 
 OSCAR_ALLOW_ANON_CHECKOUT = True
 
@@ -207,8 +209,9 @@ LOGGING = {
     }
 }
 
-# STORES_SRID = 32140 # Flat projection so spatialite can do distances
-
+# This is set here to make spatialite work with Mac OS X it should
+# not impact other linux-based systems. It has been tested on Ubuntu
+# and works fine.
 spatialite_lib = os.environ.get('SPATIALITE_LIBRARY_PATH', None)
 
 if spatialite_lib is not None:
