@@ -3,7 +3,7 @@ from django.db.models import get_model
 from django.contrib.gis.geos import GEOSGeometry
 
 from stores.forms import StoreSearchForm
-from stores.utils import get_geographic_srid
+from stores.utils import get_geographic_srid, get_geodetic_srid
 
 
 Store = get_model('stores', 'store')
@@ -15,25 +15,28 @@ class StoreListView(generic.ListView):
     context_object_name = 'store_list'
 
     def get_queryset(self):
-        qs = self.model.objects.filter(is_active=True)
+        queryset = self.model.objects.filter(is_active=True)
 
-        if self.request.POST:
-            if self.request.POST['group']:
-                qs = qs.filter(group=self.request.POST['group'])
+        group = self.request.POST.get('group', None)
+        if group:
+            queryset = queryset.filter(group=group)
 
-            if self.request.POST['location']:
-                point = GEOSGeometry(self.request.POST['location'])
-                # save to session
-                self.request.session['request_location'] = point
-                qs = qs.transform(
-                    get_geographic_srid()
-                ).distance(point).order_by('distance')
-        return qs
+        location = self.request.POST.get('location', None)
+        if location:
+            point = GEOSGeometry(location)
+            queryset = queryset.transform(
+                get_geographic_srid()
+            ).distance(
+                point
+            ).transform(
+                get_geodetic_srid()
+            ).order_by('distance')
+        return queryset
 
     def get_search_form(self):
         if self.request.POST:
             return StoreSearchForm(self.request.POST)
-        return StoreSearchForm
+        return StoreSearchForm()
 
     def get_context_data(self, **kwargs):
         ctx = super(StoreListView, self).get_context_data(**kwargs)

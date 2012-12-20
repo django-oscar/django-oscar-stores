@@ -7,7 +7,7 @@ from django.contrib.gis.db.models import GeoManager
 from oscar.apps.address.abstract_models import AbstractAddress
 
 from stores.managers import StoreManager
-from stores.utils import get_geographic_srid
+from stores.utils import get_geodetic_srid
 
 
 class StoreAddress(AbstractAddress):
@@ -20,8 +20,7 @@ class StoreAddress(AbstractAddress):
 
 class StoreGroup(models.Model):
     name = models.CharField(_('Name'), max_length=100, unique=True)
-    slug = models.SlugField(_('Slug'), max_length=100, unique=True, blank=True)
-
+    slug = models.SlugField(_('Slug'), max_length=100, unique=True, blank=True) 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -74,7 +73,7 @@ class Store(models.Model):
     )
     location = PointField(
         _("Location"),
-        srid=get_geographic_srid()
+        srid=get_geodetic_srid(),
     )
 
     group = models.ForeignKey(

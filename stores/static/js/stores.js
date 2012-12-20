@@ -10,7 +10,6 @@ stores.maps = {
             var latLng = stores.maps.getCurrentLatLng();
             var map = stores.maps.createOverviewMap(latLng);
 
-
             // init autocomplete
             var input = $('#id_store_search'),
                 autocomplete = new google.maps.places.Autocomplete(input[0]);
@@ -35,15 +34,14 @@ stores.maps = {
                 }, 500);
             });
 
-
             // callback function for when coordinates are found
-            $('[data-behaviours~=geo-location]').live('click', function(ev) {
+            $('[data-behaviours~=geo-location]').live('click', function (ev) {
                 ev.preventDefault();
 
                 // get location from browser
                 if (navigator.geolocation) {
                     // callback function for when location could not be determined
-                    var error = function(msg) {
+                    var error = function (msg) {
                         oscar.messages.error(msg);
                     };
 
@@ -65,10 +63,9 @@ stores.maps = {
                 }
             });
 
-            $('[data-behaviours~=filter-group]').on('change', function() {
+            $('[data-behaviours~=filter-group]').on('change', function () {
                 $('#store-search').submit();
             });
-
         },
 
         addStoreMarkers: function (map, bounds) {
@@ -150,38 +147,29 @@ stores.maps = {
             scrollwheel: true,
             zoom: 17
         });
-
-
         var bounds = new google.maps.LatLngBounds();
 
-
-
         if (!!latLng) {
-            setTimeout(function () {
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                    title: 'You are here',
-                    visible: true,
-                    icon: 'http://www.google.com/mapfiles/arrow.png'
-                });
-                bounds.extend(latLng);
-                map.fitBounds(bounds);
-                map.setZoom(11);
-                map.setCenter(latLng);
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                title: 'You are here',
+                visible: true,
+                icon: 'http://www.google.com/mapfiles/arrow.png'
+            });
+            bounds.extend(latLng);
+            map.fitBounds(bounds);
+            map.setZoom(11);
+            map.setCenter(latLng);
 
-                var infowindow = new google.maps.InfoWindow({
-                    content: 'You are here'
-                });
-                google.maps.event.addListener(marker, "click", function () {
-                    infowindow.open(map, marker);
-                });
-
-            }, 500);
+            var infowindow = new google.maps.InfoWindow({
+                content: 'You are here'
+            });
+            google.maps.event.addListener(marker, "click", function () {
+                infowindow.open(map, marker);
+            });
         }
-
         google.maps.event.addDomListener(window, 'load', stores.maps.overview.addStoreMarkers(map, bounds));
-
         return map;
     },
 

@@ -163,6 +163,8 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # Oscar settings
 from oscar.defaults import *
+# Oscar stores settings
+from stores.defaults import *
 
 OSCAR_ALLOW_ANON_CHECKOUT = True
 
@@ -206,15 +208,6 @@ LOGGING = {
         },
     }
 }
-
-# SRID that ist used for distance calculations. If a geodetic coordinate
-# system is used to calculate distances in kilometers, miles, etc. this
-# SRID will be used to transform the geometries into a geographic
-# coordinate system. There are many different SRIDs that can be used. I
-# recommend taking a look at http://spatialreference.org/ to find the one
-# that is most suitable for you.
-# We use Autstralian Albers here (http://spatialreference.org/ref/epsg/3577/)
-STORES_SRID = 3577
 
 # This is set here to make spatialite work with Mac OS X it should
 # not impact other linux-based systems. It has been tested on Ubuntu

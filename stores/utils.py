@@ -10,13 +10,20 @@ def get_current_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
-
 def get_geographic_srid():
     try:
-        return settings.STORES_SRID
+        return settings.STORES_GEOGRAPHIC_SRID
     except AttributeError:
         raise ImproperlyConfigured(
             "A geographic SRID is required for distance calculation in"
             "kilometers, miles, etc."
         )
 
+def get_geodetic_srid():
+    try:
+        return settings.STORES_GEODETIC_SRID
+    except AttributeError:
+        raise ImproperlyConfigured(
+            "A geodetic SRID is required to use with the standard"
+            "latitude, longitude coordinates for locations"
+        )
