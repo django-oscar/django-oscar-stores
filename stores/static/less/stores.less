@@ -1,11 +1,12 @@
 .map {
 }
+
 #store-map img, .store-map img {
-    max-width: none;
+  max-width: none;
 }
 
 .view-stores {
-  > button {
+  .location {
     line-height: 16px;
     padding: 10px 14px;
     vertical-align: middle;
@@ -22,38 +23,36 @@
   > select {
     width: 100%;
   }
-  > ul {
-    margin-top: 20px;
-  }
 }
+
 .view-stores .stores-postcode-search {
   border: 1px solid #999;
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+  display: inline-block;
+  float: left;
+  position: relative;
+  width: 100%;
   .search-query {
     border: none;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
     float: left;
     font-size: 12px;
     padding: 8px 0 8px 4px;
-    width: 84%;
     box-shadow: none;
   }
   .icon-search {
-    background: transparent;
+    background: #fff;
     border: medium none;
     color: #999;
-    display: inline-block;
-    float: right;
     font-size: 20px;
-    padding: 8px 6px;
     vertical-align: middle;
-    width: auto;
+    position: absolute;
+    right: 0;
+    top: 10px;
   }
 }
+
 .view-stores .nav-tabs.nav-stacked > li > a {
   padding-left: 0;
   padding-right: 0;
@@ -61,7 +60,7 @@
   border-right: none;
   border-bottom: none;
   border-top: 1px solid #DDDDDD;
- .distance {
+  .distance {
     color: #999;
   }
 }
@@ -105,28 +104,32 @@
   }
 }
 .stores-list {
-  margin-bottom: 30px;
+  margin: 30px 0;
   .sub-header {
     margin-bottom: 18px;
     padding-bottom: 14px;
   }
   a.email {
     width: 90%;
-  	white-space: nowrap;
-  	overflow: hidden;
-  	text-overflow: ellipsis;
-  	float: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: right;
   }
 }
+
 .store-address-contact div {
   padding: 4px 0;
 }
+
 .stores-list .table-condensed th, .table-condensed td {
   padding: 5px 10px;
 }
+
 .store-details {
   margin-bottom: 20px;
 }
+
 .store-name {
   h1 {
     float: left;
@@ -138,7 +141,7 @@
   }
 }
 
-/* CMS Area - needs to be added into the dashboard less file */ 
+/* CMS Area - needs to be added into the dashboard less file */
 .stores .well {
   background-color: #fff;
 }
@@ -204,15 +207,16 @@ div[data-spy="affix"].affix {
 }
 
 ul.wysihtml5-toolbar > li {
-    display: list-item;
-    float: left;
-    list-style: none outside none;
-    margin: 0 5px 10px 0;
+  display: list-item;
+  float: left;
+  list-style: none outside none;
+  margin: 0 5px 10px 0;
 }
 
 .fixed-actions {
   margin-bottom: 100px;
 }
+
 .fixed-actions .fixed-actions-group {
   margin: 0;
   position: fixed;
@@ -220,6 +224,7 @@ ul.wysihtml5-toolbar > li {
   left: 0;
   width: 100%;
 }
+
 .fixed-actions .form-actions {
   margin: 0;
   background: #2a2a2a;
@@ -242,14 +247,15 @@ ul.wysihtml5-toolbar > li {
   border: 1px solid #e5e5e5;
   color: #0088cc;
   &:hover {
-   background: #f1faff;
+     background: #f1faff;
   }
   i.icon-exclamation-sign {
-    color:#ea0001;
-    font-size:16px;
+    color: #ea0001;
+    font-size: 16px;
     vertical-align: middle;
   }
 }
+
 #opening_hours .line-divide {
   padding: 20px 0;
   border-bottom: 1px solid #eee;

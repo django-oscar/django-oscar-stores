@@ -6,95 +6,96 @@
 
 {% block extrahead %}
 <style>map img { max-width: none; }</style>
-<link rel="stylesheet" href="{{ STATIC_URL }}css/styles.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/stores.css" />
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row-fluid store-name">
+<div class="container-fluid">
+    <div class="row-fluid store-name">
         <h1 class="hidden-phone">{% trans "View our stores" %}</h1>
-        </div>
-        <div class="row-fluid">
-            <div class="span3 view-stores">
-                <button class="btn btn-primary" data-behaviours="geo-location"><i class="icon-screenshot"></i>Use my location</button>
+    </div>
+    <div class="row-fluid">
+        <div class="span3 view-stores">
+            <form id="store-search" action="." method="post">
+                <button class="btn btn-primary location" data-behaviours="geo-location"><i class="icon-screenshot"></i>{% trans "Use my location" %}</button>
                 <header class="divide-header">
                     <em>-</em>
                     <span>or</span>
                     <em>-</em>
                 </header>
-                <form class="form-search stores-postcode-search">
-                    <input id="id_store_serach" type="text" class="search-query" placeholder="Enter your postcode or suburb..." maxlength="255" name="store_search">
+                {% csrf_token %}
+                {{ form.location }}
+                <div class="stores-postcode-search">
+                    {{ form.store_search }}
                     <button type="submit" class="icon-search"></button>
-                </form>
-                <h3>Select your state</h3>
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-
+                </div>
+                <h3>{% trans "Filter by group" %}</h3>
+                {{ form.group }}
+                {% comment %}
                 <label class="checkbox pull-left">
-                    <input type="checkbox">Show stores opening soon
+                    <input type="checkbox">{% trans "Show stores opening soon" %}
                 </label>
-                <ul class="nav nav-tabs nav-stacked">
-                {% for store in store_list %}
-                    <li>
-                        <a href="{% url stores:detail store.slug %}">
-                            {{ store.name }} <span class="distance">(3.4km)</span>
-                        </a>
-                    </li>
-                {% endfor %}
-                </ul>
-            </div>
-            <div class="span9">
-                    <div class='row-fluid'>
-                        <map class='span12'>
-                            <div class='store-map' style="width: 100%; height: 380px;"></div>
-                        </map>
-                    </div>
-                    {% for store in store_list %}
-                    <div class="stores-list">
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <div class="sub-header">
-                                    <h4>{{ store.name }}<a href="{% url stores:detail store.slug %}" class="btn pull-right">{% trans "View store details" %}</a></h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row-fluid">
-                            <div class="span4">
-                                {% thumbnail store.image "400x400" as im %}
-                                <div>
-                                    <img src="{{ im.url }}" />
-                                </div>
-                                {% endthumbnail %}
-                            </div>
-
-                            <div class="span4 store-address-contact">
-                                {% include "stores/partials/store_address.html" %}
-                                {% include "stores/partials/store_contact.html" %}
-                                <br/>
-                            </div>
-
-                            <div class="span4">
-                                {% include "stores/partials/store_opening_periods.html" %}
-                            </div>
-
-                        </div>
-                    </div>
-                    {% endfor %}
-                </section>
-            </div>
+                {% endcomment %}
+            </form>
+            <ul class="nav nav-tabs nav-stacked">
+            {% for store in store_list %}
+            <li>
+                <a href="{% url stores:detail store.slug %}">
+                    {{ store.name }}
+                    {% if store.distance %}
+                        <span class="distance">({{ store.distance.km|floatformat:2 }} km)</span>
+                    {% endif %}
+                </a>
+            </li>
+            {% endfor %}
+            </ul>
         </div>
+        <div class="span9">
+            <div class='row-fluid'>
+                <map class='span12'>
+                    <div id='store-map' style="width: 100%; height: 380px;"></div>
+                </map>
+            </div>
+            {% for store in store_list %}
+            <div class="stores-list">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="sub-header">
+                            <h4>{{ store.name }}<a href="{% url stores:detail store.slug %}" class="btn pull-right">{% trans "View store details" %}</a></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        {% thumbnail store.image "400x400" as im %}
+                        <div>
+                            <img src="{{ im.url }}" />
+                        </div>
+                        {% endthumbnail %}
+                    </div>
+
+                    <div class="span4 store-address-contact">
+                        {% include "stores/partials/store_address.html" %}
+                        {% include "stores/partials/store_contact.html" %}
+                        <br/>
+                    </div>
+
+                    <div class="span4">
+                        {% include "stores/partials/store_opening_periods.html" %}
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </section>
     </div>
+</div>
 
 {% endblock %}
 
 {% block extrascripts %}
-    {{ block.super }}
-    {% include "stores/partials/extrascripts.html" %}
+{{ block.super }}
+{% include "stores/partials/extrascripts.html" %}
 {% endblock %}
 
 {% block onbodyload %}

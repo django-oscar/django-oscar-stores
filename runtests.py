@@ -8,10 +8,15 @@ from django.conf import settings
 from oscar.defaults import OSCAR_SETTINGS
 from oscar import OSCAR_MAIN_TEMPLATE_DIR, OSCAR_CORE_APPS
 
+from stores.defaults import STORES_SETTINGS
+
 location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), x)
 
 def configure():
     if not settings.configured:
+        default_settings = OSCAR_SETTINGS
+        default_settings.update(STORES_SETTINGS)
+
         settings.configure(
             DATABASES={
                 'default': {
@@ -72,8 +77,7 @@ def configure():
             },
             GEOIP_PATH = 'sandbox/geoip',
             NOSE_ARGS=['-s', '-x', '--with-spec'],
-            STORES_SRID=32140, # Flat projection so spatialite can do distances
-            **OSCAR_SETTINGS
+            **default_settings
         )
 
 logging.disable(logging.CRITICAL)
