@@ -1,7 +1,7 @@
 from django.views import generic
 from django.db.models import get_model
-from django.core.urlresolvers import reverse
-
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 from extra_views import (CreateWithInlinesView, UpdateWithInlinesView,
                          InlineFormSet)
 
@@ -56,32 +56,36 @@ class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
     model = Store
     template_name = "stores/dashboard/store_update.html"
     form_class = forms.StoreForm
+    success_url = reverse_lazy('stores-dashboard:store-list')
 
-    def get_success_url(self):
-        return reverse('stores-dashboard:store-list')
+    def get_context_data(self, **kwargs):
+        ctx = super(StoreCreateView, self).get_context_data(**kwargs)
+        ctx['title'] = _("Create new store")
+        return ctx
 
 
 class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
     model = Store
     template_name = "stores/dashboard/store_update.html"
     form_class = forms.StoreForm
+    success_url = reverse_lazy('stores-dashboard:store-list')
 
-    def get_success_url(self):
-        return reverse('stores-dashboard:store-list')
+    def get_context_data(self, **kwargs):
+        ctx = super(StoreUpdateView, self).get_context_data(**kwargs)
+        ctx['title'] = self.object.name
+        return ctx
 
 
 class StoreDeleteView(generic.DeleteView):
     model = Store
     template_name = "stores/dashboard/store_delete.html"
+    success_url = reverse_lazy('stores-dashboard:store-list')
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         for time in self.object.opening_times.all():
             time.delete()
         return super(StoreDeleteView, self).delete(request, *args, **kwargs)
-
-    def get_success_url(self):
-        return reverse('stores-dashboard:store-list')
 
 
 class StoreGroupListView(generic.ListView):
@@ -93,22 +97,26 @@ class StoreGroupListView(generic.ListView):
 class StoreGroupCreateView(generic.CreateView):
     model = StoreGroup
     template_name = "stores/dashboard/store_group_update.html"
+    success_url = reverse_lazy('stores-dashboard:store-group-list')
 
-    def get_success_url(self):
-        return reverse('stores-dashboard:store-group-list')
+    def get_context_data(self, **kwargs):
+        ctx = super(StoreGroupCreateView, self).get_context_data(**kwargs)
+        ctx['title'] = _("Create new store group")
+        return ctx
 
 
 class StoreGroupUpdateView(generic.UpdateView):
     model = StoreGroup
     template_name = "stores/dashboard/store_group_update.html"
+    success_url = reverse_lazy('stores-dashboard:store-group-list')
 
-    def get_success_url(self):
-        return reverse('stores-dashboard:store-group-list')
+    def get_context_data(self, **kwargs):
+        ctx = super(StoreGroupUpdateView, self).get_context_data(**kwargs)
+        ctx['title'] = self.object.name
+        return ctx
 
 
 class StoreGroupDeleteView(generic.DeleteView):
     model = StoreGroup
     template_name = "stores/dashboard/store_group_delete.html"
-
-    def get_success_url(self):
-        return reverse('stores-dashboard:store-group-list')
+    success_url = reverse_lazy('stores-dashboard:store-group-list')

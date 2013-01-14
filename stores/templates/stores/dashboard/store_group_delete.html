@@ -1,6 +1,10 @@
 {% extends 'dashboard/layout.html' %}
 {% load i18n %}
 
+{% block title %}
+{% trans "Delete store group?" %} | {{ block.super }}
+{% endblock %}
+
 {% block breadcrumbs %}
 <ul class="breadcrumb">
     <li>
@@ -11,7 +15,7 @@
         <a href="{% url stores-dashboard:store-list %}">{% trans "Store groups" %}</a>
         <span class="divider">/</span>
     </li>
-    <li class="active"><a href=".">{% trans "Delete store group?" %}</a></li>
+    <li class="active">{% trans "Delete store group?" %}</li>
 </ul>
 {% endblock %}
 
@@ -25,11 +29,12 @@
 <form action="." method="post">
     {% csrf_token %}
     {% blocktrans with group_name=object.name %}
-    <p>Delete store <strong>{{ group_name }}</strong> - are you sure?</p>
+    <p>Delete store group <strong>{{ group_name }}</strong> - are you sure?</p>
     {% endblocktrans %}
-    <div class="form-actions">
-        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
-        {% trans "or" %} <a href="{% url stores-dashboard:store-group-list %}">{% trans "cancel" %}</a>
+    <div class="form-actions pull-right">
+        <a href="{% url stores-dashboard:store-group-list %}">{% trans "Cancel" %}</a>
+        {% trans "or" %}
+        <button type="submit" class="btn btn-danger">{% trans "delete" %}</button>
     </div>
 </form>
 {% endblock %}

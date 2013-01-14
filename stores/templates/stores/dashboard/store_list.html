@@ -12,23 +12,18 @@
         <a href="{% url dashboard:index %}">{% trans "Dashboard" %}</a>
         <span class="divider">/</span>
     </li>
-    <li class="active"><a href=".">{% trans "Stores" %}</a></li>
+    <li class="active">{% trans "Stores" %}</li>
 </ul>
 {% endblock %}
 
 {% block header %}
 <div class="page-header">
-<h1>{% trans "Store Management" %}</h1>
+    <a href="{% url stores-dashboard:store-create %}" class="btn btn-primary pull-right">{% trans "Create new store" %}</a>
+    <h1>{% trans "Store Management" %}</h1>
 </div>
 {% endblock header %}
 
 {% block dashboard_content %}
-
-<div class="well well-info">
-    <a href="{% url stores-dashboard:store-create %}">
-        <button class="btn btn-primary">{% trans "Create new store" %}</button>
-    </a>
-</div>
 
 <div class="sub-header">
     <h2>{{ queryset_description }}</h2>
