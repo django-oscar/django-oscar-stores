@@ -7,6 +7,11 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ("address", "0001_initial"),
+        ("catalogue", "0001_initial"),
+    )
+
     def forwards(self, orm):
         # Adding model 'StoreAddress'
         db.create_table('stores_storeaddress', (
