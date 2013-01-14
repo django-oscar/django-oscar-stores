@@ -109,7 +109,6 @@ project root::
 
     $ pip install -r requirements.txt
 
-
 .. _Oscar: http://oscarcommerce.com
 .. _documentation: http://django-oscar.readthedocs.org/en/latest
 .. _`store manager`: http://localhost:8000/dashboard/stores
@@ -117,6 +116,20 @@ project root::
 .. _geodjango: https://docs.djangoproject.com/en/1.4/ref/contrib/gis
 .. _`geodjango's installation guide`: https://docs.djangoproject.com/en/1.4/ref/contrib/gis/install
 .. _`pysqlite`: http://code.google.com/p/pysqlite
+
+Contributing
+============
+
+There is sandbox site within the repo which is a sample Oscar project that uses
+the stores extension.  Set this up with::
+
+    make sandbox
+
+A fixture is loaded which provides a superuser to test the dashboard with::
+
+    email: superuser@example.com
+    username: superuser
+    password: testing
 
 
 License
