@@ -216,3 +216,8 @@ spatialite_lib = os.environ.get('SPATIALITE_LIBRARY_PATH', None)
 
 if spatialite_lib is not None:
     SPATIALITE_LIBRARY_PATH = spatialite_lib
+
+try:
+    from settings_local import *
+except ImportError:
+    pass

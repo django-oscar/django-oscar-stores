@@ -1,4 +1,4 @@
-.PHONY: sandbox geoip
+.PHONY: install sandbox geoip
 
 install:
 	python setup.py develop

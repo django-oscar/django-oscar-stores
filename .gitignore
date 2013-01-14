@@ -12,3 +12,5 @@ dist/
 cover/
 docs/_build/
 sandbox/public/
+
+settings_local.py
