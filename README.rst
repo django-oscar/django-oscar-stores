@@ -74,6 +74,10 @@ this::
         url(r'^stores/', include(stores_app.urls)),
     )
 
+You also need to include the default settings::
+
+    from stores.defaults import *
+
 And that's all you need to do. Running the server of your Oscar project, you
 should now have access to the `store manager`_ in the dashboard as well as a
 overview_ page displayed to your customers.
