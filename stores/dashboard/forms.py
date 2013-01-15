@@ -2,7 +2,6 @@ from django import forms
 from django.db.models import get_model
 from django.contrib.gis.forms import fields
 from django.utils.translation import ugettext_lazy as _
-
 from django.contrib.gis.geoip import HAS_GEOIP
 
 
@@ -27,7 +26,9 @@ class StoreForm(forms.ModelForm):
             self.initial['location'] = instance.location.geojson
         elif HAS_GEOIP:
             from django.contrib.gis.geoip import GeoIP
-            self.initial['location'] = GeoIP().geos(current_ip).geojson
+            point = GeoIP().geos(current_ip)
+            if point:
+                self.initial['location'] = point.geojson
 
     class Meta:
         model = get_model('stores', 'Store')
