@@ -16,10 +16,9 @@ setup(
     packages=find_packages(exclude=["sandbox*", "tests*"]),
     include_package_data=True,
     install_requires=[
-        'Django>=1.4.2',
-        'versiontools>=1.1.9',
-        'django-oscar>=0.4',
+        'django-oscar>=0.4,<0.5',
         'django-extra-views>=0.5.2',
+        'versiontools>=1.1.9',
     ],
     # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
