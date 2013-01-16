@@ -7,13 +7,11 @@
             {{ field }}
             {% for error in field.errors %}
                 <ul class="help-block">
-                    <li>{{ error|escape }}</li>
+                    <li>{{ error }}</li>
                 </ul>
             {% endfor %}
             {% if field.help_text %}
-                <span class='help-block'>
-                    {{ field.help_text }}
-                </span>
+                <span class='help-block'>{{ field.help_text }}</span>
             {% endif %}
         </div>
     </div>

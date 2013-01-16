@@ -66,7 +66,7 @@
                     <div class="well store-details">
                         <span class="help-block">{{ form.non_field_errors }}</span>
                         {% for field in form %}
-                            {% include "partials/field.html" %}
+                            {% include "partials/form_field.html" %}
 
                             {% if forloop.first %}
                                 {# add the address inline form here #}
@@ -74,7 +74,7 @@
                                     {{ formset.management_form }}
                                     {% for address_form in formset %}            
                                         {% for field in address_form %}
-                                            {% include "partials/field.html" %}
+                                            {% include "partials/form_field.html" %}
                                         {% endfor %}        
                                     {% endfor %}
                                 {% endwith %}
@@ -93,7 +93,7 @@
                         {{ formset.management_form }}
                         {% for contact_form in formset %}
                         {% for field in contact_form %}
-                        {% include "partials/field.html" %}
+                        {% include "partials/form_field.html" %}
                         {% endfor %}
 
                         {% endfor %}
