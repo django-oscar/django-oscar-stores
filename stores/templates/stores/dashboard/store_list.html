@@ -47,11 +47,7 @@
         {% for store in store_list %}
         <tr>
             <th><a href="{% url stores:detail store.slug %}">{{ store.name }}</a></th>
-            <td>
-                {{ store.address.line1 }}<br />
-                {% if store.address.line2 %}{{ store.address.line2 }}<br />{% endif %}
-                {% if store.address.line3 %}{{ store.address.line3 }}<br />{% endif %}
-            </td>
+            <td>{{ store.address.street|linebreaks }}</td>
             <td>{{ store.address.line4 }}</td>
             <td>{{ store.address.postcode }}</td>
             <td>{{ store.address.state|default:"-" }}</td>

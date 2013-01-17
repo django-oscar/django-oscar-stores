@@ -36,8 +36,7 @@
         <tr>
             <th>{% trans "Group Name" %}</th>
             <th>{% trans "Store" %}</th>
-            <th>{% trans "Street Address 1" %}</th>
-            <th>{% trans "Street Address 2" %}</th>
+            <th>{% trans "Street" %}</th>
             <th>{% trans "City" %}</th>
             <th>{% trans "Post Code" %}</th>
             <th>{% trans "State" %}</th>
@@ -48,27 +47,28 @@
             {% for store in group.stores.all %}
             <tr>
                 {% if forloop.first %}
-                <td rowspan="{{ group.stores.all|length }}">{{ group.name }}</td>
+                    <td rowspan="{{ group.stores.all|length }}">{{ group.name }}</td>
                 {% endif%}
                 <td>{{ store.name }}</td>
-                <td>{{ store.line1 }}</td>
-                <td>{{ store.line2 }}</td>
-                <td>{{ store.city }}</td>
-                <td>{{ store.postcode }}</td>
-                <td>{{ store.state }}</td>
-                <td>{{ store.country }}</td>
+                {% with address=store.address %}
+                    <td>{{ address.street|linebreaks }}</td>
+                    <td>{{ address.city }}</td>
+                    <td>{{ address.postcode }}</td>
+                    <td>{{ address.state }}</td>
+                    <td>{{ address.country }}</td>
+                {% endwith %}
                 {% if forloop.first %}
-                <td rowspan="{{ group.stores.all|length }}">
-                    <a class="btn btn-info" href="{% url stores-dashboard:store-group-update group.id %}">{% trans "Edit" %}</a>
-                    <a class="btn btn-danger" href="{% url stores-dashboard:store-group-delete group.id %}">{% trans "Delete" %}</a>
-                </td>
+                    <td rowspan="{{ group.stores.all|length }}">
+                        <a class="btn btn-info" href="{% url stores-dashboard:store-group-update group.id %}">{% trans "Edit" %}</a>
+                        <a class="btn btn-danger" href="{% url stores-dashboard:store-group-delete group.id %}">{% trans "Delete" %}</a>
+                    </td>
                 {% endif%}
             </tr>
             {% empty %}
             <tr>
                 <td>{{ group.name }}</td>
                 <td colspan="7">{% trans "No stores assigned to this group." %}</td>
-                <td rowspan="{{ group.stores.all|length }}">
+                <td>
                     <a class="btn btn-info" href="{% url stores-dashboard:store-group-update group.id %}">{% trans "Edit" %}</a>
                     <a class="btn btn-danger" href="{% url stores-dashboard:store-group-delete group.id %}">{% trans "Delete" %}</a>
                 </td>
