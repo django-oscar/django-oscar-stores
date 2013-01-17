@@ -5,7 +5,7 @@
 {% block body_class %}stores{% endblock %}
 
 {% block extrahead %}
-    <link rel='stylesheet' type='text/css' href="{% static "css/stores.css" %}" />
+    <link rel='stylesheet' type='text/css' href="{% static "stores/css/stores.css" %}" />
 {% endblock %}
 
 {% block title %}
@@ -152,9 +152,7 @@
 
 {% block extrascripts %}
     {{ block.super }}
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
-    <script type="text/javascript" src="{% static "js/dashboard.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/stores.js" %}"></script>
+    <script type="text/javascript" src="{% static "stores/js/dashboard.js" %}"></script>
 {% endblock %}
 
 {% block onbodyload %}
