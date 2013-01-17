@@ -36,9 +36,13 @@
         <div class="span4 store-address-contact">
             {% if store.image or store.description %}
             <div class="store-details">
+                {% thumbnail store.image "400x400" as im %}
+                <div><img src="{{ im.url }}" /></div>
+                {% endthumbnail %}
+
                 {% include "stores/partials/store_address.html" %}
                 {% include "stores/partials/store_contact.html" %}
-                {{ store.description|safe }}
+
             </div>
             {% endif %}
             {% with periods=store.opening_periods.all %}
@@ -63,6 +67,8 @@
                     <div class='store-map' style="width: 720px; height:450px;"></div>
                 </map>
             </section>
+
+            {{ store.description|safe }}
         </div>
     </div>
 {% endblock %}

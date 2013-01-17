@@ -1,4 +1,9 @@
+{% load i18n %}
+
 {% with contact=store.contact_details %}
+    {% if contact and not contact.is_empty %}
+        <h3>{% trans "Contact" %}</h3>
+    {% endif %}
     {% if contact.manager_name %}
         {{ contact.manager_name }}<br />
     {% endif %}
@@ -7,27 +12,10 @@
         <i class="icon-phone"></i> {{ contact.phone }}<br />
     </div>
     {% endif %}
-    {% if contact.fax %}
-    <div>
-        <i class="icon-print"></i> {{ contact.fax }}<br />
-    </div>
-    {% endif %}
     {% if contact.email %}
     <div>
         <i class="icon-envelope-alt"></i>
         <a class="email" href="mailto:{{ contact.email }}">{{ contact.email }}</a><br />
-    </div>
-    {% endif %}
-    {% comment %}
-    <div>
-        <i class="icon-map-marker"></i>
-        <a href="">View Map</a><br />
-    </div>
-    {% endcomment %}
-    {% if contact.facebook %}
-    <div>
-        <i class="icon-facebook-sign"></i>
-        <a href="http://www.facebook.com/">{{ contact.facebook }}</a><br />
     </div>
     {% endif %}
 {% endwith %}

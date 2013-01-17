@@ -10,12 +10,19 @@ from stores.managers import StoreManager
 from stores.utils import get_geodetic_srid
 
 
+# Re-use Oscar's address model
 class StoreAddress(AbstractAddress):
     store = models.OneToOneField(
         'stores.Store',
         verbose_name=_("Store"),
-        related_name="address"
-    )
+        related_name="address")
+
+    @property
+    def street(self):
+        """
+        Summary of the 3 line fields
+        """
+        return "\n".join(filter(bool, [self.line1, self.line2, self.line3]))
 
 
 class StoreGroup(models.Model):
@@ -31,21 +38,23 @@ class StoreGroup(models.Model):
 
 
 class StoreContact(models.Model):
-    manager_name = models.CharField(_('Manager name'), max_length=200,
-                                    blank=True, null=True)
+    manager_name = models.CharField(
+        _('Manager name'), max_length=200, blank=True, null=True)
     phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
     email = models.CharField(_('Email'), max_length=100, blank=True, null=True)
 
     store = models.OneToOneField(
         'stores.Store',
         verbose_name=_("Store"),
-        related_name="contact_details"
-    )
+        related_name="contact_details")
 
     def __unicode__(self):
-        if self.store:
-            return "Contact details for %s" % self.store.name
-        return "Store contacts #%s" % self.id
+        return "Contact details for %s" % self.store.name
+
+    @property
+    def is_empty(self):
+        return any([self.manage_name, self.phone, self.email])
+
 
 
 class Store(models.Model):
