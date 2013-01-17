@@ -20,7 +20,7 @@ class StoreAddress(AbstractAddress):
 
 class StoreGroup(models.Model):
     name = models.CharField(_('Name'), max_length=100, unique=True)
-    slug = models.SlugField(_('Slug'), max_length=100, unique=True, blank=True) 
+    slug = models.SlugField(_('Slug'), max_length=100, unique=True, blank=True)
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -63,7 +63,7 @@ class Store(models.Model):
 
     image = models.ImageField(
         _("Image"),
-        upload_to="images/stores",
+        upload_to="uploads/store-images",
         blank=True, null=True
     )
     description = models.CharField(

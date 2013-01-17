@@ -10,8 +10,10 @@ geoip:
 	mv GeoLiteCity.dat sandbox/geoip
 
 sandbox: install
-	-rm sandbox/sandbox/sandbox.sqlite3
-	-spatialite sandbox/sandbox/sandbox.sqlite3 "SELECT InitSpatialMetaData();"
+	-rm -rf sandbox/public/media/cache sandbox/public/media/uploads
+	./sandbox/manage.py reset_db --router=default --noinput
 	./sandbox/manage.py syncdb --noinput
 	./sandbox/manage.py migrate
-	./sandbox/manage.py loaddata sandbox/fixtures/auth.json countries.json
+	./sandbox/manage.py loaddata sandbox/fixtures/auth.json countries.json \
+		sandbox/fixtures/stores.json
+	./sandbox/manage.py thumbnail clear

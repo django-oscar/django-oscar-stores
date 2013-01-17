@@ -11,6 +11,7 @@
 dist/
 cover/
 docs/_build/
-sandbox/public/
+sandbox/public/media/uploads
+sandbox/public/media/cache
 
 settings_local.py
