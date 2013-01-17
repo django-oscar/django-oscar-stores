@@ -1,6 +1,8 @@
 from django.views import generic
 from django.db.models import get_model
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse_lazy
+from django.template.loader import render_to_string
+from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from extra_views import (CreateWithInlinesView, UpdateWithInlinesView,
                          InlineFormSet)
@@ -63,6 +65,12 @@ class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
         ctx['title'] = _("Create new store")
         return ctx
 
+    def forms_valid(self, form, inlines):
+        msg = render_to_string('stores/dashboard/messages/store_saved.html',
+                               {'store': self.object})
+        messages.success(self.request, msg, extra_tags='safe')
+        return super(StoreUpdateView, self).form_valid(form)
+
 
 class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
     model = Store
@@ -74,6 +82,12 @@ class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
         ctx = super(StoreUpdateView, self).get_context_data(**kwargs)
         ctx['title'] = self.object.name
         return ctx
+
+    def forms_valid(self, form, inlines):
+        msg = render_to_string('stores/dashboard/messages/store_saved.html',
+                               {'store': self.object})
+        messages.success(self.request, msg, extra_tags='safe')
+        return super(StoreUpdateView, self).form_valid(form)
 
 
 class StoreDeleteView(generic.DeleteView):

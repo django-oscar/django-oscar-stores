@@ -1,0 +1,5 @@
+{% load i18n %}
+{% blocktrans with name=store.name %}
+<strong>{{ name }}</strong> store saved.
+{% endblocktrans %}
+(<a href="{{ store.get_absolute_url }}">{% trans "View on site" %}</a>.)
