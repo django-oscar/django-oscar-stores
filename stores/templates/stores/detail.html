@@ -37,7 +37,7 @@
             {% if store.image or store.description %}
             <div class="store-details">
                 {% thumbnail store.image "400x400" as im %}
-                <div><img src="{{ im.url }}" /></div>
+                    <img alt="{{ store.name }}" src="{{ im.url }}" width="{{ im.width}}" height="{{ im.height }}" />
                 {% endthumbnail %}
 
                 {% include "stores/partials/store_address.html" %}

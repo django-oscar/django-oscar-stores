@@ -76,7 +76,7 @@
                 <div class="row-fluid">
                     <div class="span4">
                         {% thumbnail store.image "400x400" as im %}
-                        <div><img src="{{ im.url }}" /></div>
+                        <a href="{{ store.get_absolute_url }}"><img alt="{{ store.name }}" src="{{ im.url }}" width="{{ im.width}}" height="{{ im.height }}" /></a>
                         {% endthumbnail %}
                     </div>
 
