@@ -1,20 +1,8 @@
 # Django settings for sandbox project.
 import os
-import sys
 
-PROJECT_DIR = '%s/..' % os.path.dirname(__file__)
-location = lambda x: os.path.join(
-    os.path.dirname(os.path.realpath(__file__)),
-    "../%s" % x
-)
-
-sys.path.insert(0, os.path.realpath(
-    os.path.join(
-        os.path.realpath(__file__),
-        '../..'
-    )
-))
-
+PROJECT_DIR = os.path.join(os.path.dirname(__file__), '..')
+location = lambda x: os.path.join(PROJECT_DIR, x)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -25,14 +13,14 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# Default to using Spatialite.  Use a settings_local.py file to use a different
+# database for testing (eg PostGIS)
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.spatialite',
         'NAME': os.path.join(os.path.dirname(__file__), 'sandbox.sqlite3'),
     }
 }
-
-STORES_USE_GEODJANGO = False
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -98,19 +86,19 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-        "django.contrib.auth.context_processors.auth",
-        "django.core.context_processors.request",
-        "django.core.context_processors.debug",
-        "django.core.context_processors.i18n",
-        "django.core.context_processors.media",
-        "django.core.context_processors.static",
-        "django.contrib.messages.context_processors.messages",
-        # Oscar specific
-        'oscar.apps.search.context_processors.search_form',
-        'oscar.apps.promotions.context_processors.promotions',
-        'oscar.apps.checkout.context_processors.checkout',
-        'oscar.apps.customer.notifications.context_processors.notifications',
-        'oscar.core.context_processors.metadata',
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.request",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
+    # Oscar specific
+    'oscar.apps.search.context_processors.search_form',
+    'oscar.apps.promotions.context_processors.promotions',
+    'oscar.apps.checkout.context_processors.checkout',
+    'oscar.apps.customer.notifications.context_processors.notifications',
+    'oscar.core.context_processors.metadata',
 )
 
 ROOT_URLCONF = 'sandbox.urls'
@@ -119,7 +107,6 @@ ROOT_URLCONF = 'sandbox.urls'
 WSGI_APPLICATION = 'sandbox.wsgi.application'
 
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
-
 TEMPLATE_DIRS = (
     location('templates'),
     os.path.join(OSCAR_MAIN_TEMPLATE_DIR, 'templates'),
@@ -135,13 +122,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.gis',
-
     'django_extensions',
     'debug_toolbar',
-    'haystack',
-    'sorl.thumbnail',
     'south',
-
     'stores',
 ]
 
@@ -157,12 +140,11 @@ LOGIN_REDIRECT_URL = '/accounts/'
 APPEND_SLASH = True
 
 INTERNAL_IPS = ['127.0.0.1']
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False
-}
+DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 # Oscar settings
 from oscar.defaults import *
+
 # Oscar stores settings
 from stores.defaults import *
 
@@ -213,10 +195,10 @@ LOGGING = {
 # not impact other linux-based systems. It has been tested on Ubuntu
 # and works fine.
 spatialite_lib = os.environ.get('SPATIALITE_LIBRARY_PATH', None)
-
 if spatialite_lib is not None:
     SPATIALITE_LIBRARY_PATH = spatialite_lib
 
+# Allow local overrides
 try:
     from settings_local import *
 except ImportError:

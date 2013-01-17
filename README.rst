@@ -82,6 +82,12 @@ And that's all you need to do. Running the server of your Oscar project, you
 should now have access to the `store manager`_ in the dashboard as well as a
 overview_ page displayed to your customers.
 
+You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
+appropriate directory.
+
+.. _`GeoIP data files`: https://docs.djangoproject.com/en/dev/ref/contrib/gis/geoip/
+
+
 Setting up *spatialite* in Ubuntu
 ---------------------------------
 
@@ -124,6 +130,10 @@ There is sandbox site within the repo which is a sample Oscar project that uses
 the stores extension.  Set this up with::
 
     make sandbox
+
+Fetch the GeoIP files with::
+
+    make geoip
 
 A fixture is loaded which provides a superuser to test the dashboard with::
 
