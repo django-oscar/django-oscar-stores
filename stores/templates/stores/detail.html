@@ -7,6 +7,20 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}css/stores.css" />
 {% endblock %}
 
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+    <li>
+        <a href="{% url promotions:home %}">{% trans "Home" %}</a>
+        <span class="divider">/</span>
+    </li>
+    <li>
+        <a href="{% url stores:index %}">{% trans "Stores" %}</a>
+        <span class="divider">/</span>
+    </li>
+    <li class="active">{{ store.name }}</li>
+</ul>
+{% endblock %}
+
 {% block content %}
     <div class="row-fluid store-name">
             <h1>

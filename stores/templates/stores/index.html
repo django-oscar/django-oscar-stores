@@ -5,8 +5,18 @@
 {% load currency_filters %}
 
 {% block extrahead %}
-<style>map img { max-width: none; }</style>
-<link rel="stylesheet" href="{{ STATIC_URL }}css/stores.css" />
+    <style>map img { max-width: none; }</style>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/stores.css" />
+{% endblock %}
+
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+    <li>
+        <a href="{% url promotions:home %}">{% trans "Home" %}</a>
+        <span class="divider">/</span>
+    </li>
+    <li class="active">{% trans "Stores" %}</li>
+</ul>
 {% endblock %}
 
 {% block content %}
