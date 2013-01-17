@@ -29,23 +29,21 @@
             <form id="store-search" action="." method="post">
                 <button class="btn btn-primary location" data-behaviours="geo-location"><i class="icon-screenshot"></i>{% trans "Use my location" %}</button>
                 <header class="divide-header">
-                    <em>-</em>
-                    <span>or</span>
-                    <em>-</em>
+                    <em>-</em> <span>{% trans "or" %}</span> <em>-</em>
                 </header>
+
                 {% csrf_token %}
                 {{ form.location }}
+
                 <div class="stores-postcode-search">
                     {{ form.store_search }}
                     <button type="submit" class="icon-search"></button>
                 </div>
+
+                {% if form.group.field.choices %}
                 <h3>{% trans "Filter by group" %}</h3>
                 {{ form.group }}
-                {% comment %}
-                <label class="checkbox pull-left">
-                    <input type="checkbox">{% trans "Show stores opening soon" %}
-                </label>
-                {% endcomment %}
+                {% endif %}
             </form>
             <ul class="nav nav-tabs nav-stacked">
             {% for store in store_list %}
@@ -78,9 +76,7 @@
                 <div class="row-fluid">
                     <div class="span4">
                         {% thumbnail store.image "400x400" as im %}
-                        <div>
-                            <img src="{{ im.url }}" />
-                        </div>
+                        <div><img src="{{ im.url }}" /></div>
                         {% endthumbnail %}
                     </div>
 
