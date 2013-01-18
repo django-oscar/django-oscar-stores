@@ -5,7 +5,6 @@ from django.contrib.gis.geos import GEOSGeometry
 from stores.forms import StoreSearchForm
 from stores.utils import get_geographic_srid, get_geodetic_srid
 
-
 Store = get_model('stores', 'store')
 
 

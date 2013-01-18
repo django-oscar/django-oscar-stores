@@ -27,7 +27,7 @@
     <div class="row-fluid">
         <div class="span3 view-stores">
             <form id="store-search" action="." method="post">
-                <button class="btn btn-primary location" data-behaviours="geo-location"><i class="icon-screenshot"></i>{% trans "Use my location" %}</button>
+                <button type="button" class="btn btn-primary location" data-behaviours="geo-location"><i class="icon-screenshot"></i>{% trans "Use my location" %}</button>
                 <header class="divide-header">
                     <em>-</em> <span>{% trans "or" %}</span> <em>-</em>
                 </header>
@@ -100,8 +100,8 @@
 {% endblock %}
 
 {% block extrascripts %}
-{{ block.super }}
-{% include "stores/partials/extrascripts.html" %}
+    {{ block.super }}
+    {% include "stores/partials/extrascripts.html" %}
 {% endblock %}
 
 {% block onbodyload %}

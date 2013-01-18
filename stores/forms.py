@@ -6,21 +6,14 @@ StoreGroup = get_model('stores', 'StoreGroup')
 
 
 class StoreSearchForm(forms.Form):
-
     location = forms.CharField(widget=forms.HiddenInput)
-    group = forms.ModelChoiceField(
-        queryset=StoreGroup.objects.all(),
-        widget=forms.Select(
-            attrs={
-                'data-behaviours': 'filter-group'
-            }
-        )
-    )
     store_search = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'placeholder': _("Enter your postcode or suburb..."),
-                'class': 'search-query'
-            }
-        )
+                'placeholder': _("Enter your postcode or address..."),
+                'class': 'search-query',
+            }))
+    group = forms.ModelChoiceField(
+        queryset=StoreGroup.objects.all(),
+        widget=forms.Select(attrs={'data-behaviours': 'filter-group'}),
     )
