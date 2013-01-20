@@ -82,19 +82,6 @@ stores.dashboard = {
             }
         });
 
-        google.maps.event.addListener(autocomplete, 'enter', function () {
-            var place = autocomplete.getPlace();
-            if (place.geometry.viewport) {
-                stores.dashboard.map.fitBounds(place.geometry.viewport);
-            } else {
-                stores.dashboard.map.setCenter(place.geometry.location);
-                stores.dashboard.map.setZoom(17);  // Why 17? Because it looks good.
-            }
-
-            marker.setPosition(place.geometry.location);
-            stores.dashboard.updateMarkerPosition(place.geometry.location);
-        });
-
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var place = autocomplete.getPlace();
             if (place.geometry.viewport) {
@@ -128,7 +115,7 @@ stores.dashboard = {
 
 $(document).ready(function() {
     //Adds error icon if there are erros in the product form
-    $('[data-behaviour="affix-nav-errors"] .tab-pane').each(function(){
+    $('[data-behaviour="affix-nav-errors"].tab-pane').each(function (){
         var productErrorListener = $(this).find('[class*="error"]').closest('.tab-pane').attr('id');
         $('[data-spy="affix"] a[href="#' + productErrorListener + '"]').append('<i class="icon-exclamation-sign pull-right"></i>');
     });
