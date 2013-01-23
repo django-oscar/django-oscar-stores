@@ -1,4 +1,4 @@
-.PHONY: install sandbox geoip
+.PHONY: install sandbox geoip css
 
 install:
 	python setup.py develop
@@ -17,3 +17,6 @@ sandbox: install
 	./sandbox/manage.py loaddata sandbox/fixtures/auth.json countries.json \
 		sandbox/fixtures/stores.json
 	./sandbox/manage.py thumbnail clear
+
+css:
+	lessc stores/static/stores/less/stores.less > stores/static/stores/css/stores.css
