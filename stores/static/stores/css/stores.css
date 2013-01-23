@@ -97,6 +97,9 @@
   margin-bottom: 18px;
   padding-bottom: 14px;
 }
+.stores-list .sub-header .distance {
+  color: #aaa;
+}
 .stores-list a.email {
   width: 90%;
   white-space: nowrap;

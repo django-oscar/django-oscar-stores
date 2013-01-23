@@ -1,5 +1,6 @@
 from django.views import generic
 from django.db.models import get_model
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib import messages
 from django import http
@@ -43,6 +44,18 @@ class StoreListView(generic.ListView):
     def get_context_data(self, **kwargs):
         ctx = super(StoreListView, self).get_context_data(**kwargs)
         ctx['form'] = self.get_search_form()
+
+        title = _("All stores")
+        query = self.request.POST.get('store_search', None)
+        if query:
+            title = _('Stores nearest to %(query)s') % {'query': query}
+        elif self.request.POST.get('location'):
+            title = _('Stores nearest my location')
+            query = _('Nearest to me')
+        ctx['title'] = title
+        ctx['query'] = query
+        ctx['all_stores'] = self.model.objects.all()
+
         return ctx
 
     def post(self, request, *args, **kwargs):

@@ -12,6 +12,7 @@ stores.maps = {
             stores.maps.overview.initAutocomplete();
             stores.maps.overview.initGeoLocation();
 
+            // Submit form when a user selects a store type
             $('[data-behaviours~=filter-group]').on('change', function () {
                 $('#store-search').submit();
             });
@@ -44,6 +45,8 @@ stores.maps = {
                             position.coords.longitude
                         );
                         stores.maps.overview.updateLocation(latLng);
+                        // Clear other form fields before submitting form
+                        $('#id_store_search, #id_group').val('');
                         $('#store-search').submit();
                     };
                     navigator.geolocation.getCurrentPosition(success, error);
