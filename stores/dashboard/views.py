@@ -69,7 +69,7 @@ class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
         msg = render_to_string('stores/dashboard/messages/store_saved.html',
                                {'store': self.object})
         messages.success(self.request, msg, extra_tags='safe')
-        return super(StoreUpdateView, self).form_valid(form)
+        return super(StoreCreateView, self).forms_valid(form, inlines)
 
 
 class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):

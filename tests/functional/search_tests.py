@@ -63,7 +63,6 @@ class TestTheListOfStores(WebTestCase):
         page = search_form.submit()
 
         self.assertContains(page, self.main_store.name)
-        self.assertNotContains(page, self.other_store.name)
 
         stores = page.context[0].get('object_list')
         self.assertSequenceEqual(stores, [self.main_store])

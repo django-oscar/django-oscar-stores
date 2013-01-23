@@ -60,7 +60,7 @@ class StoreListView(generic.ListView):
 
     def post(self, request, *args, **kwargs):
         self.point = self.get_geocoordinates(request)
-        if not self.point:
+        if not request.POST.get('group', None) and not self.point:
             messages.error(request, "Unable to find the searched for location")
             return http.HttpResponseRedirect('.')
         return self.get(request, *args, **kwargs)

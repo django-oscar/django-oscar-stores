@@ -14,6 +14,10 @@ class StoreSearchForm(forms.Form):
                 'class': 'search-query',
             }))
     group = forms.ModelChoiceField(
-        queryset=StoreGroup.objects.all(),
+        queryset=StoreGroup.objects.none(),
         widget=forms.Select(attrs={'data-behaviours': 'filter-group'}),
     )
+
+    def __init__(self, *args, **kwargs):
+        super(StoreSearchForm, self).__init__(*args, **kwargs)
+        self.fields['group'].queryset = StoreGroup.objects.all()

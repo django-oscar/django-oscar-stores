@@ -92,10 +92,9 @@
 
                         {{ formset.management_form }}
                         {% for contact_form in formset %}
-                        {% for field in contact_form %}
-                        {% include "partials/form_field.html" %}
-                        {% endfor %}
-
+                            {% for field in contact_form %}
+                                {% include "partials/form_field.html" %}
+                            {% endfor %}
                         {% endfor %}
                     </div>
                     {% endwith %}
