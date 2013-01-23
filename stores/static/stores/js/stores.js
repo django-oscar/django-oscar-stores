@@ -3,12 +3,8 @@ var stores = stores || {};
 stores.maps = {
 
     overview: {
-        defaultLng: -37.82850537866209,
-        defaultLat: 144.9661415816081,
-
         init: function () {
-            var latLng = stores.maps.getCurrentLatLng();
-            var map = stores.maps.overview.createOverviewMap(latLng);
+            var map = stores.maps.overview.createOverviewMap();
             stores.maps.overview.initAutocomplete();
             stores.maps.overview.initGeoLocation();
 
@@ -57,12 +53,11 @@ stores.maps = {
         },
 
         // Create the initial map
-        createOverviewMap: function (latLng) {
+        createOverviewMap: function() {
             var map = new google.maps.Map($('#store-map')[0], {
-                center: new google.maps.LatLng(
-                    stores.maps.overview.defaultLat,
-                    stores.maps.overview.defaultLng
-                ),
+                // We don't set a centre as adding the stores will 
+                // centre the map.
+                center: new google.maps.LatLng(0, 0),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 disableDefaultUI: false,
                 zoomControl: true,
@@ -71,6 +66,7 @@ stores.maps = {
             });
             var bounds = new google.maps.LatLngBounds();
 
+            var latLng = stores.maps.getCurrentLatLng();
             if (!!latLng) {
                 var marker = new google.maps.Marker({
                     position: latLng,
@@ -81,8 +77,6 @@ stores.maps = {
                 });
                 bounds.extend(latLng);
                 map.fitBounds(bounds);
-                map.setZoom(11);
-                map.setCenter(latLng);
 
                 var infowindow = new google.maps.InfoWindow({
                     content: 'You are here'
@@ -158,17 +152,10 @@ stores.maps = {
 
     // Return a LatLng object from a JSON string
     getLatLngFromGeoJSON: function (data) {
-        var point = $.parseJSON(data);
-        if (!point || point.type.toLowerCase() !== "point") {
-            return new google.maps.LatLng(
-                stores.maps.overview.defaultLat,
-                stores.maps.overview.defaultLng
-            );
-        }
-
         // The GeoJSON format provides latitude and longitude
         // in reverse order in the 'coordinates' list:
         // [x, y] => [longitude, latitude]
+        var point = $.parseJSON(data);
         return new google.maps.LatLng(
             point.coordinates[1],
             point.coordinates[0]
