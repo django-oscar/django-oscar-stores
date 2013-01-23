@@ -3,8 +3,8 @@ var stores = stores || {};
 stores.maps = {
 
     overview: {
-        init: function () {
-            var map = stores.maps.overview.createOverviewMap();
+        init: function(marker) {
+            var map = stores.maps.overview.createOverviewMap(marker);
             stores.maps.overview.initAutocomplete();
             stores.maps.overview.initGeoLocation();
 
@@ -15,7 +15,7 @@ stores.maps = {
         },
 
         initAutocomplete: function() {
-            var input = $('#id_store_search'),
+            var input = $('#id_query'),
                 autocomplete = new google.maps.places.Autocomplete(input[0]);
 
             // 'placed_changed' event fires when a user selects a place from the
@@ -42,7 +42,7 @@ stores.maps = {
                         );
                         stores.maps.overview.updateLocation(latLng);
                         // Clear other form fields before submitting form
-                        $('#id_store_search, #id_group').val('');
+                        $('#id_query, #id_group').val('');
                         $('#store-search').submit();
                     };
                     navigator.geolocation.getCurrentPosition(success, error);
@@ -53,7 +53,7 @@ stores.maps = {
         },
 
         // Create the initial map
-        createOverviewMap: function() {
+        createOverviewMap: function(markerLatLng) {
             var map = new google.maps.Map($('#store-map')[0], {
                 // We don't set a centre as adding the stores will 
                 // centre the map.
@@ -66,16 +66,15 @@ stores.maps = {
             });
             var bounds = new google.maps.LatLngBounds();
 
-            var latLng = stores.maps.getCurrentLatLng();
-            if (!!latLng) {
+            if (markerLatLng) {
                 var marker = new google.maps.Marker({
-                    position: latLng,
+                    position: markerLatLng,
                     map: map,
                     title: 'You are here',
                     visible: true,
                     icon: 'http://www.google.com/mapfiles/arrow.png'
                 });
-                bounds.extend(latLng);
+                bounds.extend(markerLatLng);
                 map.fitBounds(bounds);
 
                 var infowindow = new google.maps.InfoWindow({
@@ -120,22 +119,22 @@ stores.maps = {
 
         // Persist a LatLng in the hidden input
         updateLocation: function(latLng) {
-            $('#id_location').val(JSON.stringify(
-                stores.maps.getGeoJsonFromLatLng(latLng)));
+            $('#id_latitude').val(latLng.lat());
+            $('#id_longitude').val(latLng.lng());
         }
     },
 
     // Return current LatLng
-    //
-    // Note, the element with ID 'id_location' is generated from the
-    // search form.
     getCurrentLatLng: function () {
-        var jsonLatLng = $('#id_location').val(),
-            latLng = null;
-        if (!!jsonLatLng) {
-            latLng = stores.maps.getLatLngFromGeoJSON(jsonLatLng);
+        var latitude = $('#id_latitude').val(),
+            longitude = $('#id_longitude').val();
+        if (latitude && longitude) {
+            return new google.maps.LatLng(
+                parseFloat(latitude),
+                parseFloat(longitude)
+            );
         }
-        return latLng;
+        return null;
     },
 
     // Return a JSON representation of a latLng that can be serialised

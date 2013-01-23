@@ -31,7 +31,7 @@ class StoreAddress(AbstractAddress):
 
 class StoreGroup(models.Model):
     name = models.CharField(_('Name'), max_length=100, unique=True)
-    slug = models.SlugField(_('Slug'), max_length=100, unique=True, blank=True)
+    slug = models.SlugField(_('Slug'), max_length=100, unique=True)
 
     class Meta:
         abstract = True

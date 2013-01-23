@@ -34,17 +34,17 @@
     </div>
     <div class="row-fluid">
         <div class="span3 view-stores">
-            <form id="store-search" action="." method="post">
+            <form id="store-search" action="." method="get">
                 <button type="button" class="btn btn-primary location" data-behaviours="geo-location"><i class="icon-screenshot"></i>{% trans "Use my location" %}</button>
                 <header class="divide-header">
                     <em>-</em> <span>{% trans "or" %}</span> <em>-</em>
                 </header>
 
-                {% csrf_token %}
-                {{ form.location }}
+                {{ form.latitude }}
+                {{ form.longitude }}
 
                 <div class="stores-postcode-search">
-                    {{ form.store_search }}
+                    {{ form.query }}
                     <button type="submit" class="icon-search"></button>
                 </div>
 
@@ -118,5 +118,10 @@
 {% endblock %}
 
 {% block onbodyload %}
-stores.maps.overview.init();
+    {% if longitude and latitude %}
+        var pnt = new google.maps.LatLng({{ latitude}}, {{ longitude }});
+    {% else %}
+        var pnt = null;
+    {% endif %}
+    stores.maps.overview.init(pnt);
 {% endblock %}
