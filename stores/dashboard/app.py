@@ -1,17 +1,9 @@
 from django.conf.urls.defaults import patterns, url
-from django.utils.translation import ugettext_lazy as _
 
 from oscar.core.application import Application
-from oscar.apps.dashboard.nav import register, Node
 from oscar.views.decorators import staff_member_required
 
 from stores.dashboard import views
-
-
-node = Node(_('Store Manager'))
-node.add_child(Node(_('Stores'), 'stores-dashboard:store-list'))
-node.add_child(Node(_('Store Groups'), 'stores-dashboard:store-group-list'))
-register(node, 100)
 
 
 class StoresDashboardApplication(Application):
