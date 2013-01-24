@@ -9,28 +9,28 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}stores/css/stores.css" />
 {% endblock %}
 
+{% block title %}
+{{ queryset_description }} | {{ block.super }}
+{% endblock %}
+
 {% block breadcrumbs %}
 <ul class="breadcrumb">
     <li>
         <a href="{% url promotions:home %}">{% trans "Home" %}</a>
         <span class="divider">/</span>
     </li>
-    {% if query %}
     <li>
         <a href="{% url stores:index %}">{% trans "Stores" %}</a>
         <span class="divider">/</span>
     </li>
-    <li class="active">'{{ query }}'</li>
-    {% else %}
-    <li class="active">{% trans "Stores" %}</li>
-    {% endif %}
+    <li class="active">{{ queryset_description }}</li>
 </ul>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
     <div class="row-fluid store-name">
-        <h1 class="hidden-phone">{{ title }}</h1>
+        <h1 class="hidden-phone">{{ queryset_description }}</h1>
     </div>
     <div class="row-fluid">
         <div class="span3 view-stores">

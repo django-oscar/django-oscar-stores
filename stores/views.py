@@ -13,7 +13,7 @@ class StoreListView(generic.ListView):
     template_name = 'stores/index.html'
     context_object_name = 'store_list'
     form_class = StoreSearchForm
-    title = _("All stores")
+    title_template = "%(store_type)s %(filter)s"
 
     def get(self, request, *args, **kwargs):
         if self.is_form_submitted(request):
@@ -48,28 +48,42 @@ class StoreListView(generic.ListView):
 
         return queryset
 
+    def get_title(self):
+        title_kwargs = {
+            'store_type': _('Stores'),
+            'filter': '',
+        }
+        if self.form.is_valid():
+            data = self.form.cleaned_data
+
+            group = data.get('group', None)
+            if group:
+                title_kwargs['store_type'] = _('%(groups)s stores') % {
+                    'group': group.name,
+                }
+
+            latlng = self.form.point
+            if latlng:
+                if data['query']:
+                    title_kwargs['filter'] = _('nearest to %(query)s') % {
+                        'query': data['query']}
+                else:
+                    title_kwargs['filter'] = _('nearest to me')
+
+        return _(self.title_template) % title_kwargs
+
     def get_context_data(self, **kwargs):
         ctx = super(StoreListView, self).get_context_data(**kwargs)
 
         ctx['form'] = self.form
         ctx['all_stores'] = self.model.objects.all()
 
-        query = None
-        title = _("All stores")
-        if self.form.is_valid():
-            query = self.form.cleaned_data.get('query', None)
-            if query:
-                title = _('Stores nearest to %(query)s') % {'query': query}
-            elif self.form.point:
-                title = _('Stores nearest my location')
-                query = _('Nearest to me')
-            if self.form.point:
-                coords = self.form.point.coords
-                ctx['latitude'] = coords[1]
-                ctx['longitude'] = coords[0]
+        if hasattr(self.form, 'point') and self.form.point:
+            coords = self.form.point.coords
+            ctx['latitude'] = coords[1]
+            ctx['longitude'] = coords[0]
 
-        ctx['title'] = title
-        ctx['query'] = query
+        ctx['queryset_description'] = self.get_title()
 
         return ctx
 
