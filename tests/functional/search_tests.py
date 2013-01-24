@@ -39,7 +39,8 @@ class TestTheListOfStores(WebTestCase):
     def test_can_be_filtered_by_location(self):
         page = self.get(reverse('stores:index'))
         search_form = page.forms['store-search']
-        search_form['location'] = '{"type":"Point","coordinates":[144.9997396,-37.7736132]}'
+        search_form['latitude'] = '-37.7736132'
+        search_form['longitude'] = '-144.9997396'
         page = search_form.submit()
 
         self.assertContains(page, self.main_store.name)

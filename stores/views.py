@@ -50,6 +50,7 @@ class StoreListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super(StoreListView, self).get_context_data(**kwargs)
+
         ctx['form'] = self.form
         ctx['all_stores'] = self.model.objects.all()
 
@@ -62,9 +63,10 @@ class StoreListView(generic.ListView):
             elif self.form.point:
                 title = _('Stores nearest my location')
                 query = _('Nearest to me')
-            coords = self.form.point.coords
-            ctx['latitude'] = coords[1]
-            ctx['longitude'] = coords[0]
+            if self.form.point:
+                coords = self.form.point.coords
+                ctx['latitude'] = coords[1]
+                ctx['longitude'] = coords[0]
 
         ctx['title'] = title
         ctx['query'] = query

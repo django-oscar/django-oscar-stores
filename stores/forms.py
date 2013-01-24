@@ -31,9 +31,20 @@ class StoreSearchForm(forms.Form):
     def clean(self):
         cleaned_data = super(StoreSearchForm, self).clean()
         self.point = self.geocoordinates(cleaned_data)
-        if not self.point:
+
+        query = cleaned_data.get('query', None)
+        if query and not self.point:
             raise forms.ValidationError(_(
                 "No location could be found for your search"))
+
+        # Adjust the data attribute so that the lat/lng values are empty when
+        # the form is rendered again.  This prevents a bug where a search
+        # alters the query field but retains the lat/lng from the previous
+        # search, giving the wrong results.
+        self.data = self.data.copy()
+        self.data['latitude'] = ''
+        self.data['longitude'] = ''
+
         return cleaned_data
 
     def geocoordinates(self, data):
