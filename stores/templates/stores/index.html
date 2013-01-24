@@ -40,6 +40,9 @@
                     <em>-</em> <span>{% trans "or" %}</span> <em>-</em>
                 </header>
 
+                {{ form.non_field_errors }}
+
+                {# Hidden fields that are manipulated by JS #}
                 {{ form.latitude }}
                 {{ form.longitude }}
 

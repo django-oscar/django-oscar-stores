@@ -50,7 +50,7 @@ class StoreListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super(StoreListView, self).get_context_data(**kwargs)
-        ctx['form'] = self.form_class()
+        ctx['form'] = self.form
         ctx['all_stores'] = self.model.objects.all()
 
         query = None

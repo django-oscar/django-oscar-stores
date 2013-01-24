@@ -31,6 +31,9 @@ class StoreSearchForm(forms.Form):
     def clean(self):
         cleaned_data = super(StoreSearchForm, self).clean()
         self.point = self.geocoordinates(cleaned_data)
+        if not self.point:
+            raise forms.ValidationError(_(
+                "No location could be found for your search"))
         return cleaned_data
 
     def geocoordinates(self, data):
