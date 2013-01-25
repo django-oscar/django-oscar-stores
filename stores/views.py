@@ -58,7 +58,7 @@ class StoreListView(generic.ListView):
 
             group = data.get('group', None)
             if group:
-                title_kwargs['store_type'] = _('%(groups)s stores') % {
+                title_kwargs['store_type'] = _('%(group)s stores') % {
                     'group': group.name,
                 }
 
