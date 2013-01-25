@@ -42,7 +42,6 @@ stores.dashboard = {
             zoom = 17,
             marker = null;
 
-        stores.dashboard.updateMarkerPosition(latLng);
         stores.dashboard.geocoder = new google.maps.Geocoder();
 
         stores.dashboard.map = new google.maps.Map(document.getElementById('store-map'), {
@@ -53,12 +52,11 @@ stores.dashboard = {
 
         marker = new google.maps.Marker({
             position: latLng,
-            title: 'Image Location',
             map: stores.dashboard.map,
-            draggable: true
+            draggable: true,
+            visible: true,
+            icon: 'http://www.google.com/mapfiles/arrow.png'
         });
-
-        stores.dashboard.geocodePosition(latLng);
 
         google.maps.event.addListener(marker, 'drag', function () {
             stores.dashboard.updateMarkerPosition(marker.getPosition());
