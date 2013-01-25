@@ -33,99 +33,85 @@
 {% endblock header %}
 
 {% block dashboard_content %}
-<form action="." method="post" data-behaviour="affix-nav-errors" class="form-stacked wysiwyg fixed-actions" enctype="multipart/form-data">
-{% csrf_token %}
-    <div class="row-fluid">
-        <div class="span3">
-            <div class="affix-top" data-offset-top="200" data-spy="affix">
-                <div class="table-header">
-                    <h3>Sections</h3>
-                </div>
-                <ul id="store_update_tabs" class="nav nav-list bs-docs-sidenav">
-                    <li class="active">
-                        <a href="#store_details" data-toggle="tab">Store Details</a>
-                    </li>
-                    <li>
-                        <a href="#store_location" data-toggle="tab">Store Location</a>
-                    </li>
-                    <li>
-                        <a href="#opening_hours" data-toggle="tab">Opening Hours</a>
-                    </li>
-                </ul>
+<form action="." method="post" class="form-horizontal wysiwyg" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="table-header">
+        <h3>{% trans "Store details" %}</h3>
+    </div>
+    <div class="well">
+        {% include "partials/form_field.html" with field=form.name %}
+        {% include "partials/form_field.html" with field=form.description %}
+        {% include "partials/form_field.html" with field=form.reference %}
+        {% include "partials/form_field.html" with field=form.group %}
+        {% include "partials/form_field.html" with field=form.image %}
+        {% include "partials/form_field.html" with field=form.is_pickup_store %}
+        {% include "partials/form_field.html" with field=form.is_active %}
+    </div>
+
+    <div class="table-header">
+        <h3>{% trans "Contact details" %}</h3>
+    </div>
+    <div class="well">
+        {% include "partials/form_field.html" with field=form.manager_name %}
+        {% include "partials/form_field.html" with field=form.phone %}
+        {% include "partials/form_field.html" with field=form.email %}
+    </div>
+
+    <div class="table-header">
+        <h3>{% trans "Address" %}</h3>
+    </div>
+    <div class="well">
+        {% with formset=inlines.1 %}
+            {{ formset.management_form }}
+            {% for address_form in formset %}
+                {% for field in address_form %}
+                    {% include "partials/form_field.html" %}
+                {% endfor %}
+            {% endfor %}
+        {% endwith %}
+    </div>
+
+    <div class="table-header">
+        <h3>{% trans "Location" %}</h3>
+    </div>
+    <div class="well">
+        {% include "partials/form_field.html" with field=form.location %}
+        <div class="well well-blank">
+            <div>
+                <input type="text" id="search-text-field" class="span12" style="margin-bottom: 10px; width: 968px;"/>
+                <div id="store-map" style="width: 968px; height: 380px"></div>
             </div>
         </div>
-        <div class="span9">
-            <div class="tab-content">
-                <div id="store_details" class="tab-pane active">
-                    <div class="table-header">
-                        <h3>{% trans "Store details" %}</h3>
-                    </div>
-                    <div class="well store-details">
-                        <span class="help-block">{{ form.non_field_errors }}</span>
-                        {% for field in form %}
-                            {% include "partials/form_field.html" %}
+    </div>
 
-                            {% if forloop.first %}
-                                {# add the address inline form here #}
-                                {% with formset=inlines.1 %}
-                                    {{ formset.management_form }}
-                                    {% for address_form in formset %}
-                                        {% for field in address_form %}
-                                            {% include "partials/form_field.html" %}
-                                        {% endfor %}
-                                    {% endfor %}
-                                {% endwith %}
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-                <div id="store_location" class="tab-pane">
-                    <div class="table-header">
-                        <h3>{% trans "Store location" %}</h3>
-                    </div>
-                    <div class="well well-blank">
-                        <div>
-                            <input type="text" id="search-text-field" class="span12" style="margin-bottom: 10px; width: 968px;"/>
-                            <div id="store-map" style="width: 968px; height: 380px"></div>
-                        </div>
-                    </div>
-                </div>
+    <div class="table-header">
+        <h3>{% trans "Opening hours" %}</h3>
+    </div>
+    <div class="well">
+        {# use the first formset which is the opening times #}
+        {% with formset=inlines.0 %}
+        <div class="well well-blank">
+            {{ formset.management_form }}
+            {% for form in formset %}
+            <div class='row-fluid line-divide' style="margin-bottom: 1em;">
+                {% for field in form %}
+                    {% include "partials/field_inline.html" %}
+                {% endfor %}
 
-                <div id="opening_hours" class="tab-pane">
-                    {# use the first formset which is the opening times #}
-                    {% with formset=inlines.0 %}
-                    <div class="table-header">
-                        <h3>{% trans "Opening hours" %}</h3>
-                    </div>
-                    <div class="well well-blank">
-                        {{ formset.management_form }}
-                        {% for form in formset %}
-                        <div class='row-fluid line-divide' style="margin-bottom: 1em;">
-                            {% for field in form %}
-                                {% include "partials/field_inline.html" %}
-                            {% endfor %}
-
-                        </div>
-                        {% endfor %}
-                    {% endwith %}
-                </div>
             </div>
-        </div>
-    <hr/>
+            {% endfor %}
+        {% endwith %}
+    </div>
 
-
-    <div class="fixed-actions-group">
-        <div class="form-actions">
-            <div class="pull-right">
-                <a href="{% url stores-dashboard:store-list %}">{% trans "Cancel" %}</a>
-                {% trans "or" %}
-                <button class="btn btn-primary btn-large" type="submit">{% trans "Save" %}</button>
-            </div>
+    <div class="control-group">
+        <div class="pull-right">
+            <a href="{% url stores-dashboard:store-group-list %}">{% trans "Cancel" %}</a>
+            {% trans "or" %}
+            <button class="btn btn-primary btn-large" type="submit">{% trans "Save" %}</button>
         </div>
     </div>
 </form>
-    </div>
-</div>
 {% endblock dashboard_content %}
 
 {% block extrascripts %}
@@ -135,6 +121,7 @@
 {% endblock %}
 
 {% block onbodyload %}
+    {{ block.super }}    
     stores.dashboard.init();
     $('.nav-list a').on('shown', function (e) {
         google.maps.event.trigger(stores.dashboard.map, 'resize');

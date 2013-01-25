@@ -42,8 +42,6 @@ stores.dashboard = {
             zoom = 17,
             marker = null;
 
-        stores.dashboard.geocoder = new google.maps.Geocoder();
-
         stores.dashboard.map = new google.maps.Map(document.getElementById('store-map'), {
             zoom: zoom,
             center: latLng,
@@ -57,6 +55,8 @@ stores.dashboard = {
             visible: true,
             icon: 'http://www.google.com/mapfiles/arrow.png'
         });
+
+        stores.dashboard.geocoder = new google.maps.Geocoder();
 
         google.maps.event.addListener(marker, 'drag', function () {
             stores.dashboard.updateMarkerPosition(marker.getPosition());
@@ -118,4 +118,3 @@ $(document).ready(function() {
         $('[data-spy="affix"] a[href="#' + productErrorListener + '"]').append('<i class="icon-exclamation-sign pull-right"></i>');
     });
 });
-
