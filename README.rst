@@ -113,7 +113,7 @@ Run tests with::
 
     ./runtests.py
 
-icense
+License
 -------
 
 ``django-oscar-stores`` is released under the permissive `New BSD license`_.

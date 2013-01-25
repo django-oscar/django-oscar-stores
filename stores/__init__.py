@@ -1,7 +1,7 @@
 import os
 
 
-__version__ = (0, 2, 0, 'dev', 0)
+__version__ = (0, 3, 0, 'dev', 0)
 
 
 # Keep a setting for the path to the templates in case a project subclasses the
