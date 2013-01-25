@@ -113,12 +113,7 @@ Run tests with::
 
     ./runtests.py
 
-Current CI status:
-
-.. image:: https://secure.travis-ci.org/elbaschid/django-oscar-stores.png
-    :target: http://travis-ci.org/#!/elbaschid/django-oscar
-
-License
+icense
 -------
 
 ``django-oscar-stores`` is released under the permissive `New BSD license`_.
