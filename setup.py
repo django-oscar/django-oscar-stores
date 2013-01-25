@@ -16,11 +16,11 @@ setup(
     packages=find_packages(exclude=["sandbox*", "tests*"]),
     include_package_data=True,
     install_requires=[
-        'django-oscar>=0.4,<0.5',
-        'django-extra-views>=0.5.2',
+        'django-oscar>=0.5-pre-alpha',
         'versiontools>=1.1.9',
         'requests>=1.1,<1.2',
     ],
+    dependency_links=['https://github.com/tangentlabs/django-oscar/tarball/master#egg=django-oscar-0.5-pre-alpha'],
     # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
       'Environment :: Web Environment',

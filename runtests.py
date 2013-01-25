@@ -61,6 +61,7 @@ def configure():
             'django.contrib.staticfiles',
             'django.contrib.admin',
             'django.contrib.gis',
+            'compressor',
         ] + OSCAR_CORE_APPS + [
             'stores',
         ],
@@ -76,6 +77,7 @@ def configure():
             },
         },
         GEOIP_PATH='sandbox/geoip',
+        COMPRESS_ENABLED=False,
         NOSE_ARGS=['-s', '-x', '--with-spec'],
     )
 
