@@ -127,6 +127,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'south',
     'stores',
+    'compressor',
 ]
 
 from oscar import get_core_apps
@@ -146,8 +147,22 @@ DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 # Oscar settings
 from oscar.defaults import *
 
-# Oscar stores settings
-from stores.defaults import *
+from django.utils.translation import ugettext_lazy as _
+OSCAR_DASHBOARD_NAVIGATION.append(
+    {
+        'label': _('Stores'),
+        'icon': 'icon-shopping-cart',
+        'children': [
+            {
+                'label': _('Stores'),
+                'url_name': 'stores-dashboard:store-list',
+            },
+            {
+                'label': _('Store groups'),
+                'url_name': 'stores-dashboard:store-group-list',
+            },
+        ]
+    })
 
 OSCAR_ALLOW_ANON_CHECKOUT = True
 
