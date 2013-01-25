@@ -113,9 +113,17 @@ Run tests with::
 
     ./runtests.py
 
-icense
+License
 -------
 
 ``django-oscar-stores`` is released under the permissive `New BSD license`_.
 
 .. _`New BSD license`: http://github.com/tangentlabs/django-oscar-stores/blob/master/LICENSE
+
+Changelog
+---------
+
+0.2
+~~~
+* First stable release
+* Support for Oscar 0.4
