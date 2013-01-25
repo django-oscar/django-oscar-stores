@@ -46,9 +46,6 @@
                         <a href="#store_details" data-toggle="tab">Store Details</a>
                     </li>
                     <li>
-                        <a href="#store_contact" data-toggle="tab">Store Contact</a>
-                    </li>
-                    <li>
                         <a href="#store_location" data-toggle="tab">Store Location</a>
                     </li>
                     <li>
@@ -81,24 +78,6 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                </div>
-                <div id="store_contact" class="tab-pane">
-                    <div class="table-header">
-                        <h3>{% trans "Store contact" %}</h3>
-                    </div>
-                    <div class="well well-blank">
-                    {# we are adding the contact detail inline form here #}
-                    {% with formset=inlines.2 %}
-
-                        {{ formset.management_form }}
-                        {% for contact_form in formset %}
-                            {% for field in contact_form %}
-                                {% include "partials/form_field.html" %}
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
-                    {% endwith %}
-
                 </div>
                 <div id="store_location" class="tab-pane">
                     <div class="table-header">

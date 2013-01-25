@@ -9,10 +9,6 @@ class StoreGroup(abstract_models.StoreGroup):
     pass
 
 
-class StoreContact(abstract_models.StoreContact):
-    pass
-
-
 class Store(abstract_models.Store):
     pass
 

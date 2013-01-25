@@ -84,7 +84,6 @@ class TestASignedInUser(StoresWebTest):
         create_form['is_pickup_store'] = False
         create_form['is_active'] = True
 
-        create_form['contact_details-0-phone'] = '123456789'
         page = create_form.submit()
 
         self.assertRedirects(page, reverse('stores-dashboard:store-list'))
@@ -95,7 +94,6 @@ class TestASignedInUser(StoresWebTest):
         self.assertEquals(store.name, 'Sample Store')
         self.assertEquals(store.location.x, 30.203332)
         self.assertEquals(store.location.y, 44.33333)
-        self.assertEquals(store.contact_details.phone, '123456789')
         self.assertEquals(
             store.description,
             'A short description of the store'

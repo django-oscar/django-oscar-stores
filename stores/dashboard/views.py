@@ -12,7 +12,6 @@ from stores.utils import get_current_ip
 
 Store = get_model('stores', 'Store')
 StoreGroup = get_model('stores', 'StoreGroup')
-StoreContact = get_model('stores', 'StoreContact')
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
 StoreAddress = get_model('stores', 'StoreAddress')
 
@@ -31,13 +30,6 @@ class StoreAddressInline(InlineFormSet):
     form_class = forms.StoreAddressForm
 
 
-class StoreContactInline(InlineFormSet):
-    extra = 1
-    max_num = 1
-    can_delete = False
-    model = StoreContact
-
-
 class OpeningPeriodInline(InlineFormSet):
     extra = 7
     max_num = 7
@@ -46,7 +38,7 @@ class OpeningPeriodInline(InlineFormSet):
 
 
 class StoreEditMixin(object):
-    inlines = [OpeningPeriodInline, StoreAddressInline, StoreContactInline]
+    inlines = [OpeningPeriodInline, StoreAddressInline]
 
     def get_form_kwargs(self):
         kwargs = super(StoreEditMixin, self).get_form_kwargs()

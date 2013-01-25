@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}stores/css/stores.css" />
 {% endblock %}
 
+{% block title %}
+{{ store.name }} | {{ block.super }}
+{% endblock %}
+
 {% block breadcrumbs %}
 <ul class="breadcrumb">
     <li>

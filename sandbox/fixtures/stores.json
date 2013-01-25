@@ -145,16 +145,6 @@
     }, 
     {
         "pk": 1, 
-        "model": "stores.storecontact", 
-        "fields": {
-            "phone": "(03) 9848 7209", 
-            "manager_name": "", 
-            "store": 5, 
-            "email": "doncaster@dymocks.com.au"
-        }
-    }, 
-    {
-        "pk": 1, 
         "model": "stores.store", 
         "fields": {
             "group": null, 

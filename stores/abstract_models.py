@@ -45,31 +45,15 @@ class StoreGroup(models.Model):
         return self.name
 
 
-class StoreContact(models.Model):
+class Store(models.Model):
+    name = models.CharField(_('Name'), max_length=100)
+    slug = models.SlugField(_('Slug'), max_length=100, unique=True, null=True)
+
+    # Contact details
     manager_name = models.CharField(
         _('Manager name'), max_length=200, blank=True, null=True)
     phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
     email = models.CharField(_('Email'), max_length=100, blank=True, null=True)
-
-    store = models.OneToOneField(
-        'stores.Store',
-        verbose_name=_("Store"),
-        related_name="contact_details")
-
-    class Meta:
-        abstract = True
-
-    def __unicode__(self):
-        return "Contact details for %s" % self.store.name
-
-    @property
-    def is_empty(self):
-        return any([self.manage_name, self.phone, self.email])
-
-
-class Store(models.Model):
-    name = models.CharField(_('Name'), max_length=100)
-    slug = models.SlugField(_('Slug'), max_length=100, unique=True, null=True)
 
     reference = models.CharField(
         _("Reference"),
@@ -122,7 +106,8 @@ class Store(models.Model):
 
 class OpeningPeriod(models.Model):
     PERIOD_FORMAT = _("%(start)s - %(end)s")
-    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY = range(1, 8)
+    (MONDAY, TUESDAY, WEDNESDAY, THURSDAY,
+     FRIDAY, SATURDAY, SUNDAY) = range(1, 8)
     WEEK_DAYS = {
         MONDAY: _("Monday"),
         TUESDAY: _("Tuesday"),
@@ -138,22 +123,19 @@ class OpeningPeriod(models.Model):
     weekday_choices = [(k, v) for k, v in WEEK_DAYS.items()]
     weekday = models.PositiveIntegerField(
         _("Weekday"),
-        choices=weekday_choices
-    )
+        choices=weekday_choices)
     start = models.CharField(
         _("Start"),
         max_length=30,
         null=True,
         blank=True,
-        help_text=_("Leaving start and end time empty is displayed as 'Closed'")
-    )
+        help_text=_("Leaving start and end time empty is displayed as 'Closed'"))
     end = models.CharField(
         _("End"),
         max_length=30,
         null=True,
         blank=True,
-        help_text=_("Leaving start and end time empty is displayed as 'Closed'")
-    )
+        help_text=_("Leaving start and end time empty is displayed as 'Closed'"))
 
     @property
     def printable_weekday(self):
@@ -179,46 +161,39 @@ class StoreStock(models.Model):
     store = models.ForeignKey(
         'stores.Store',
         verbose_name=_("Store"),
-        related_name='stock'
-    )
+        related_name='stock')
     product = models.ForeignKey(
         'catalogue.Product',
         verbose_name=_("Product"),
-        related_name="store_stock"
-    )
+        related_name="store_stock")
     # Stock level information
     num_in_stock = models.PositiveIntegerField(
         _("Number in stock"),
         default=0,
         blank=True,
-        null=True
-    )
+        null=True)
 
     # The amount of stock allocated in store but not fed back to the master
     num_allocated = models.IntegerField(
         _("Number allocated"),
         default=0,
         blank=True,
-        null=True
-    )
+        null=True)
 
     location = models.CharField(
         _("In store location"),
         max_length=50,
         blank=True,
-        null=True
-    )
+        null=True)
 
     # Date information
     date_created = models.DateTimeField(
         _("Date Created"),
-        auto_now_add=True
-    )
+        auto_now_add=True)
     date_updated = models.DateTimeField(
         _("Date Updated"),
         auto_now=True,
-        db_index=True
-    )
+        db_index=True)
 
     class Meta:
         abstract = True
