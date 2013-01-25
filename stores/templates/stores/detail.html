@@ -83,8 +83,5 @@
 {% endblock %}
 
 {% block onbodyload %}
-$('.store-map').each(function(elem) {
-    stores.maps.createIndividualMap(this, $('.store-details address'), 16);
-    $(this).css({width: $(this).parents('.row-fluid').width()});
-});
+stores.maps.initStore();
 {% endblock %}
