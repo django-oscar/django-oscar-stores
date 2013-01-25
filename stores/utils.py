@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 
 
 def get_current_ip(request):
@@ -12,18 +11,8 @@ def get_current_ip(request):
 
 
 def get_geographic_srid():
-    try:
-        return settings.STORES_GEOGRAPHIC_SRID
-    except AttributeError:
-        raise ImproperlyConfigured(
-            "A geographic SRID is required for distance calculation in"
-            "kilometers, miles, etc.")
+    return getattr(settings, 'STORES_GEOGRAPHIC_SRID', 3577)
 
 
 def get_geodetic_srid():
-    try:
-        return settings.STORES_GEODETIC_SRID
-    except AttributeError:
-        raise ImproperlyConfigured(
-            "A geodetic SRID is required to use with the standard"
-            "latitude, longitude coordinates for locations")
+    return getattr(settings, 'STORES_GEODETIC_SRID', 4326)
