@@ -30,6 +30,12 @@ class StoreForm(forms.ModelForm):
             if point:
                 self.initial['location'] = point.geojson
 
+    def clean_reference(self):
+        ref = self.cleaned_data['reference']
+        if ref == "":
+            return None
+        return ref
+
     class Meta:
         model = get_model('stores', 'Store')
         exclude = ('slug',)
