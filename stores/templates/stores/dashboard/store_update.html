@@ -32,7 +32,15 @@
 </div>
 {% endblock header %}
 
+
 {% block dashboard_content %}
+
+{% if form.errors %}
+<div class="alert alert-error">
+    {% trans "Your submitted data did not validate - please correct the below errors and resubmit." %}
+</div>
+{% endif %}
+
 <form action="." method="post" class="form-horizontal wysiwyg" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -78,8 +86,11 @@
     <div class="well">
         {% include "partials/form_field.html" with field=form.location %}
         <div class="well well-blank">
-            <div>
+            <div class="controls">
                 <input type="text" id="search-text-field" class="span12" style="margin-bottom: 10px; width: 968px;"/>
+                {% if form.location.errors %}
+                <div class="alert alert-error">{% trans "Please select a location for your store." %}</div>
+                {% endif %}
                 <div id="store-map" style="width: 968px; height: 380px"></div>
             </div>
         </div>
