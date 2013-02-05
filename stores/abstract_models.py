@@ -52,7 +52,7 @@ class Store(models.Model):
     # Contact details
     manager_name = models.CharField(
         _('Manager name'), max_length=200, blank=True, null=True)
-    phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
+    phone = models.CharField(_('Phone'), max_length=64, blank=True, null=True)
     email = models.CharField(_('Email'), max_length=100, blank=True, null=True)
 
     reference = models.CharField(
