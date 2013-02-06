@@ -20,6 +20,7 @@ class StoreListView(generic.ListView):
     model = Store
     template_name = "stores/dashboard/store_list.html"
     context_object_name = "store_list"
+    paginate_by = 20
 
 
 class StoreAddressInline(InlineFormSet):
@@ -81,7 +82,7 @@ class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
         msg = render_to_string('stores/dashboard/messages/store_saved.html',
                                {'store': self.object})
         messages.success(self.request, msg, extra_tags='safe')
-        return super(StoreUpdateView, self).form_valid(form)
+        return super(StoreUpdateView, self).forms_valid(form, inlines)
 
 
 class StoreDeleteView(generic.DeleteView):
