@@ -92,7 +92,7 @@ class StoreDeleteView(generic.DeleteView):
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
-        for time in self.object.opening_times.all():
+        for time in self.object.opening_periods.all():
             time.delete()
         return super(StoreDeleteView, self).delete(request, *args, **kwargs)
 
