@@ -15,8 +15,8 @@ class StoresApplication(Application):
         urlpatterns += patterns('',
             url(r'^$', self.list_view.as_view(),
                 name='index'),
-            url(r'^(?P<slug>[\w-]+)/$', self.detail_view.as_view(),
-                name='detail'),
+            url(r'^(?P<dummyslug>[\w-]+)/(?P<pk>\d+)/$',
+                self.detail_view.as_view(), name='detail'),
         )
         return self.post_process_urls(urlpatterns)
 

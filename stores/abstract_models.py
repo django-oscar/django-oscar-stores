@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import slugify
 from django.contrib.gis.db.models import PointField
@@ -47,7 +48,7 @@ class StoreGroup(models.Model):
 
 class Store(models.Model):
     name = models.CharField(_('Name'), max_length=100)
-    slug = models.SlugField(_('Slug'), max_length=100, unique=True, null=True)
+    slug = models.SlugField(_('Slug'), max_length=100, null=True)
 
     # Contact details
     manager_name = models.CharField(
@@ -101,7 +102,8 @@ class Store(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('stores:detail', kwargs={'slug': self.slug})
+        return reverse('stores:detail', kwargs={'slug': self.slug,
+                                                'pk': self.pk})
 
 
 class OpeningPeriod(models.Model):

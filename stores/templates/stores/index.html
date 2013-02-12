@@ -61,7 +61,7 @@
             <ul class="nav nav-tabs nav-stacked">
             {% for store in all_stores %}
             <li>
-                <a href="{% url stores:detail store.slug %}">
+                <a href="{% url stores:detail store.slug store.pk %}">
                     {{ store.name }}
                 </a>
             </li>
@@ -85,7 +85,7 @@
                             {% if store.distance %}
                                 <span class="distance">{{ store.distance.km|floatformat:2 }} km</span>
                             {% endif %}
-                            <a href="{% url stores:detail store.slug %}" class="btn pull-right">{% trans "View store details" %}</a></h4>
+                            <a href="{% url stores:detail store.slug store.pk %}" class="btn pull-right">{% trans "View store details" %}</a></h4>
                         </div>
                     </div>
                 </div>
