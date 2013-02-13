@@ -102,7 +102,7 @@ class Store(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('stores:detail', kwargs={'slug': self.slug,
+        return reverse('stores:detail', kwargs={'dummyslug': self.slug,
                                                 'pk': self.pk})
 
 
