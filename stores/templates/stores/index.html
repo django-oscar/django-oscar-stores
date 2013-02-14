@@ -121,10 +121,28 @@
 {% endblock %}
 
 {% block onbodyload %}
+    var storeData = [
+        {% for store in store_list %}
+        {
+            'name': '{{ store.name|escapejs }}',
+            'location': new google.maps.LatLng({{ store.location.y }}, {{ store.location.x }}),
+            'imageURL': '{% if store.image %}{{ store.image.url }}{% endif %}',
+            'address1': '{{ store.address.line1|escapejs }}',
+            'address2': '{{ store.address.line2|escapejs }}',
+            'address3': '{{ store.address.line3|escapejs }}',
+            'address4': '{{ store.address.line4|escapejs }}',
+            'postcode': '{{ store.address.postcode|escapejs }}',
+            'url': '{{ store.get_absolute_url|escapejs }}',
+            'email': '{{ store.email|escapejs }}',
+            'phone': '{{ store.phone|escapejs }}',
+            'group': '{{ store.group.name|upper }}'
+        } {% if forloop.counter < store_list|length %},{% endif %}
+        {% endfor %}
+    ];
     {% if longitude and latitude %}
         var pnt = new google.maps.LatLng({{ latitude}}, {{ longitude }});
     {% else %}
         var pnt = null;
     {% endif %}
-    stores.maps.overview.init(pnt);
+    stores.maps.overview.init(storeData, pnt);
 {% endblock %}

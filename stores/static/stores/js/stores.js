@@ -1,8 +1,8 @@
 var stores = (function(s, gmaps, o) {
     s.maps = {
         'overview': {
-            init: function(marker) {
-                var map = s.maps.overview.createOverviewMap(marker);
+            init: function(stores, marker) {
+                var map = s.maps.overview.createOverviewMap(stores, marker);
                 s.maps.overview.initAutocomplete();
                 s.maps.overview.initGeoLocation();
 
@@ -51,9 +51,9 @@ var stores = (function(s, gmaps, o) {
             },
 
             // Create the initial map
-            createOverviewMap: function(markerLatLng) {
+            createOverviewMap: function(stores, markerLatLng) {
                 var map = new gmaps.Map($('#store-map')[0], {
-                    // We don't set a centre as adding the stores will 
+                    // We use a default center as adding the stores will 
                     // centre the map.
                     center: new gmaps.LatLng(0, 0),
                     mapTypeId: gmaps.MapTypeId.ROADMAP,
@@ -74,35 +74,39 @@ var stores = (function(s, gmaps, o) {
                     bounds.extend(markerLatLng);
                     map.fitBounds(bounds);
                 }
-
-                gmaps.event.addDomListener(
-                    window, 'load', s.maps.overview.addStoreMarkers(map, bounds));
+                s.maps.overview.addStoreMarkers(map, bounds, stores);
                 return map;
             },
 
-            addStoreMarkers: function (map, bounds) {
-                $('address').each(function(elem) {
-                    var storeLatLng = new gmaps.LatLng(
-                        $(this).data('lat'),
-                        $(this).data('lng')
-                    );
-                    bounds.extend(storeLatLng);
-
+            addStoreMarkers: function(map, bounds, stores) {
+                var activeInfoWindow = null;
+                $.each(stores, function(index, store) {
                     var storeMarker = new gmaps.Marker({
-                        position: storeLatLng,
+                        position: store.location,
                         map: map,
-                        title: $(this).data('name'),
+                        title: store.name,
                         visible: true
                     });
+                    bounds.extend(store.location);
                     map.fitBounds(bounds);
 
+                    var infoHTML = 
+                        '<h5><a href="' + store.url + '">' + store.name + '</a></h5>' +
+                        '<p>' + store.address1; 
+                    if (store.address2) infoHTML += '<br/>' + store.address2;
+                    if (store.address3) infoHTML += '<br/>' + store.address3;
+                    infoHTML += '<br/>' + store.postcode + '</p>';
                     var infowindow = new gmaps.InfoWindow({
-                        content: this.innerHTML
+                        content: infoHTML
                     });
 
                     // Open the infowindow on marker click
-                    gmaps.event.addListener(storeMarker, "click", function () {
+                    gmaps.event.addListener(storeMarker, "click", function() {
+                        if (activeInfoWindow) {
+                            activeInfoWindow.close();
+                        }
                         infowindow.open(map, storeMarker);
+                        activeInfoWindow = infowindow;
                     });
                 });
             },
