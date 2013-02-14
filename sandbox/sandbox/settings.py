@@ -166,8 +166,7 @@ OSCAR_DASHBOARD_NAVIGATION.append(
 
 OSCAR_ALLOW_ANON_CHECKOUT = True
 
-OSCAR_SHOP_NAME = "Stores"
-OSCAR_SHOP_TAGLINE = "Your stores online"
+OSCAR_SHOP_TAGLINE = "Stores extension"
 
 GEOIP_PATH = os.path.join(os.path.dirname(__file__), '../geoip')
 
