@@ -105,6 +105,10 @@ class Store(models.Model):
         return reverse('stores:detail', kwargs={'dummyslug': self.slug,
                                                 'pk': self.pk})
 
+    @property
+    def has_contact_details(self):
+        return any([self.manager_name, self.phone, self.email])
+
 
 class OpeningPeriod(models.Model):
     PERIOD_FORMAT = _("%(start)s - %(end)s")

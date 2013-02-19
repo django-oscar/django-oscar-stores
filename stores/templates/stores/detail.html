@@ -25,28 +25,25 @@
 </ul>
 {% endblock %}
 
+{% block headertext %}
+    <a class="btn btn-large pull-right" href="{% url stores:index %}">{% trans "View all stores" %}</a>
+    {% blocktrans with name=store.name %}
+    {{ name }}
+    {% endblocktrans %}
+{% endblock %}
+
 {% block content %}
-    <div class="row-fluid store-name">
-            <h1>
-                {% blocktrans with name=store.name %}
-                {{ name }}
-                {% endblocktrans %}
-            </h1>
-            <a href="{% url stores:index %}" title="{% trans "View all stores" %}">
-                <button class="btn btn-large btn-primary pull-right">{% trans "View all stores" %}</button>
-            </a>
-    </div>
     <div class="row-fluid">
         <div class="span4 store-address-contact">
-            {% if store.image or store.description %}
             <div class="store-details">
+                {% if store.image %}
                 {% thumbnail store.image "400x400" as im %}
                     <img alt="{{ store.name }}" src="{{ im.url }}" width="{{ im.width}}" height="{{ im.height }}" />
                 {% endthumbnail %}
+                {% endif %}
 
                 {% include "stores/partials/store_address.html" %}
                 {% include "stores/partials/store_contact.html" %}
-
             </div>
             {% endif %}
             {% with periods=store.opening_periods.all %}
