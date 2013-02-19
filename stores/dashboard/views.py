@@ -58,6 +58,12 @@ class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
         ctx['title'] = _("Create new store")
         return ctx
 
+    def forms_invalid(self, form, inlines):
+        messages.error(
+            self.request,
+            "Your submitted data was not valid - please correct the below errors")
+        return super(StoreCreateView, self).forms_invalid(form, inlines)
+
     def forms_valid(self, form, inlines):
         response = super(StoreCreateView, self).forms_valid(form, inlines)
 
@@ -77,6 +83,12 @@ class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
         ctx = super(StoreUpdateView, self).get_context_data(**kwargs)
         ctx['title'] = self.object.name
         return ctx
+
+    def forms_invalid(self, form, inlines):
+        messages.error(
+            self.request,
+            "Your submitted data was not valid - please correct the below errors")
+        return super(StoreUpdateView, self).forms_invalid(form, inlines)
 
     def forms_valid(self, form, inlines):
         msg = render_to_string('stores/dashboard/messages/store_saved.html',
