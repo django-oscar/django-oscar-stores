@@ -45,22 +45,10 @@
                 {% include "stores/partials/store_address.html" %}
                 {% include "stores/partials/store_contact.html" %}
             </div>
-            {% endif %}
-            {% with periods=store.opening_periods.all %}
-                {% if periods|length %}
-                    <h3>{% trans "Opening Hours" %}</h3>
-                    <table class='table table-bordered table-striped opening-hours'>
-                        <tbody>
-                        {% for period in periods %}
-                            <tr>
-                                <td>{{ period.printable_weekday }}</td>
-                                <td>{{ period.printable_period }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
-            {% endwith %}
+
+            <h3>{% trans "Opening hours" %}</h3>
+            {% include "stores/partials/store_opening_periods.html" %}
+
         </div>
         <div class="span8">
             <section class="row-fluid">
