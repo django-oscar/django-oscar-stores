@@ -130,28 +130,16 @@ class OpeningPeriod(models.Model):
     weekday = models.PositiveIntegerField(
         _("Weekday"),
         choices=weekday_choices)
-    start = models.CharField(
+    start = models.TimeField(
         _("Start"),
-        max_length=30,
         null=True,
         blank=True,
         help_text=_("Leaving start and end time empty is displayed as 'Closed'"))
-    end = models.CharField(
+    end = models.TimeField(
         _("End"),
-        max_length=30,
         null=True,
         blank=True,
         help_text=_("Leaving start and end time empty is displayed as 'Closed'"))
-
-    @property
-    def printable_weekday(self):
-        return self.WEEK_DAYS.get(self.weekday, _("Unknown weekday"))
-
-    @property
-    def printable_period(self):
-        if not self.start and not self.end:
-            return _("Closed")
-        return self.PERIOD_FORMAT % {'start': self.start, 'end': self.end}
 
     def __unicode__(self):
         return "%s: %s to %s" % (self.weekday, self.start, self.end)

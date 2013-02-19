@@ -46,16 +46,24 @@ class StoreForm(forms.ModelForm):
 
 class OpeningPeriodForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(OpeningPeriodForm, self).__init__(*args, **kwargs)
+        time_input = ['%H:%M', '%H', '%I:%M%p', '%I%p', '%I:%M %p', '%I %p']
+        self.fields['start'].input_formats = time_input
+        self.fields['end'].input_formats = time_input
+
     class Meta:
         model = get_model('stores', 'OpeningPeriod')
         widgets = {
             'name': forms.TextInput(
                 attrs={'placeholder': _("e.g. Christmas")}
             ),
-            'start': forms.TextInput(
-                attrs={'placeholder': _("e.g. 9am, noon, etc.")}
+            'start': forms.TimeInput(
+                format='%H:%M',
+                attrs={'placeholder': _("e.g. 9 AM, 11:30, etc.")}
             ),
-            'end': forms.TextInput(
-                attrs={'placeholder': _("e.g. 5pm, late, etc.")}
+            'end': forms.TimeInput(
+                format='%H:%M',
+                attrs={'placeholder': _("e.g. 5 PM, 18:30, etc.")}
             ),
         }
