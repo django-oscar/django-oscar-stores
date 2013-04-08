@@ -29,7 +29,7 @@ var stores = (function(s, gmaps, o) {
             },
 
             initGeoLocation: function() {
-                $('[data-behaviours~=geo-location]').live('click', function (ev) {
+                $(document).on('click', '[data-behaviours~=geo-location]', function (ev) {
                     if (navigator.geolocation) {
                         // Define callbacks for error/success
                         var error = o.messages.error;
