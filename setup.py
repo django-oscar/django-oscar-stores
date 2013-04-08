@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-oscar-stores',
-    version=":versiontools:stores:",
+    version="0.4",
     url='https://github.com/tangentlabs/django-oscar-stores',
     author="Sebastian Vetter",
     author_email="sebastian.vetter@tangentsnowball.com.au",
@@ -16,11 +16,9 @@ setup(
     packages=find_packages(exclude=["sandbox*", "tests*"]),
     include_package_data=True,
     install_requires=[
-        'django-oscar>=0.5-pre-alpha',
-        'versiontools>=1.1.9',
+        'django-oscar>=0.5,<0.6',
         'requests>=1.1,<1.2',
     ],
-    dependency_links=['https://github.com/tangentlabs/django-oscar/tarball/master#egg=django-oscar-0.5-pre-alpha'],
     # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
       'Environment :: Web Environment',
