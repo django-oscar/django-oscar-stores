@@ -34,8 +34,14 @@ stores.dashboard = {
     },
 
     init: function () {
-        var locationInput = jQuery('#id_location');
-        var latLng = stores.dashboard.getLatLngFromGeoJSON(locationInput.val());
+        var locationJSON = jQuery('#id_location').val(),
+            latLng;
+
+        if (locationJSON) {
+            latLng = stores.dashboard.getLatLngFromGeoJSON(locationJSON);
+        } else {
+            latLng = null;
+        }
 
         var input = jQuery('#search-text-field'),
             autocomplete = new google.maps.places.Autocomplete(input[0]),

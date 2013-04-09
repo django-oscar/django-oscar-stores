@@ -26,12 +26,7 @@
 </ul>
 {% endblock %}
 
-{% block header %}
-<div class="page-header">
-    <h1>{{ title }}</h1>
-</div>
-{% endblock header %}
-
+{% block headertext %}{{ title }}{% endblock %}
 
 {% block dashboard_content %}
 
@@ -84,12 +79,18 @@
         <h3>{% trans "Location" %}</h3>
     </div>
     <div class="well">
+        <p>
+            {% blocktrans %}
+            Enter an adddress in the location input and select your address from the options that appear.
+            You can drag the marker around on the map to fine-tune the location.
+            {% endblocktrans %}
+        </p>
         {% include "partials/form_field.html" with field=form.location %}
         <div class="well well-blank">
             <div class="controls">
                 <input type="text" id="search-text-field" class="span12" style="margin-bottom: 10px; width: 968px;"/>
                 {% if form.location.errors %}
-                <div class="alert alert-error">{% trans "Please select a location for your store." %}</div>
+                    <div class="alert alert-error">{% trans "Please select a location for your store." %}</div>
                 {% endif %}
                 <div id="store-map" style="width: 968px; height: 380px"></div>
             </div>

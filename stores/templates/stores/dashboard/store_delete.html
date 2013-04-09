@@ -11,15 +11,17 @@
         <a href="{% url stores-dashboard:store-list %}">{% trans "Stores" %}</a>
         <span class="divider">/</span>
     </li>
-    <li class="active"><a href=".">{% trans "Delete store?" %}</a></li>
+    <li>
+        {{ object.name }}
+        <span class="divider">/</span>
+    </li>
+    <li class="active">{% trans "Delete store?" %}</li>
 </ul>
 {% endblock %}
 
-{% block header %}
-<div class="page-header">
-    <h1>{% trans "Delete store?" %}</h1>
-</div>
-{% endblock header%}
+{% block headertext %}
+    {% trans "Delete store?" %}
+{% endblock %}
 
 {% block dashboard_content %}
 <form action="." method="post">
@@ -28,8 +30,9 @@
     <p>Delete store <strong>{{ store_name }}</strong> - are you sure?</p>
     {% endblocktrans %}
     <div class="form-actions">
-        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
-        {% trans "or" %} <a href="{% url stores-dashboard:store-list %}">{% trans "cancel" %}</a>
+        <button type="submit" class="btn btn-large btn-danger">{% trans "Delete" %}</button>
+        {% trans "or" %} 
+        <a href="{% url stores-dashboard:store-list %}">{% trans "cancel" %}</a>.
     </div>
 </form>
 {% endblock %}
