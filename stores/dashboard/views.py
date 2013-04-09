@@ -125,6 +125,11 @@ class StoreGroupCreateView(generic.CreateView):
         ctx['title'] = _("Create new store group")
         return ctx
 
+    def form_valid(self, form):
+        response = super(StoreGroupCreateView, self).form_valid(form)
+        messages.success(self.request, _("Store group created"))
+        return response
+
 
 class StoreGroupUpdateView(generic.UpdateView):
     model = StoreGroup
@@ -136,8 +141,18 @@ class StoreGroupUpdateView(generic.UpdateView):
         ctx['title'] = self.object.name
         return ctx
 
+    def form_valid(self, form):
+        response = super(StoreGroupUpdateView, self).form_valid(form)
+        messages.success(self.request, _("Store group updated"))
+        return response
+
 
 class StoreGroupDeleteView(generic.DeleteView):
     model = StoreGroup
     template_name = "stores/dashboard/store_group_delete.html"
     success_url = reverse_lazy('stores-dashboard:store-group-list')
+
+    def form_valid(self, form):
+        response = super(StoreGroupDeleteView, self).form_valid(form)
+        messages.success(self.request, _("Store group deleted"))
+        return response

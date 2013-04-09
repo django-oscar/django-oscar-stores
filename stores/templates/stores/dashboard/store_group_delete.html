@@ -15,15 +15,17 @@
         <a href="{% url stores-dashboard:store-list %}">{% trans "Store groups" %}</a>
         <span class="divider">/</span>
     </li>
-    <li class="active">{% trans "Delete store group?" %}</li>
+    <li>
+        {{ object.name }}
+        <span class="divider">/</span>
+    </li>
+    <li class="active">{% trans "Delete?" %}</li>
 </ul>
 {% endblock %}
 
-{% block header %}
-<div class="page-header">
-    <h1>{% trans "Delete store group?" %}</h1>
-</div>
-{% endblock header%}
+{% block headertext %}
+    {% trans "Delete store group?" %}
+{% endblock headertext %}
 
 {% block dashboard_content %}
 <form action="." method="post">
@@ -31,10 +33,10 @@
     {% blocktrans with group_name=object.name %}
     <p>Delete store group <strong>{{ group_name }}</strong> - are you sure?</p>
     {% endblocktrans %}
-    <div class="form-actions pull-right">
-        <a href="{% url stores-dashboard:store-group-list %}">{% trans "Cancel" %}</a>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-large btn-danger">{% trans "Delete" %}</button>
         {% trans "or" %}
-        <button type="submit" class="btn btn-danger">{% trans "delete" %}</button>
+        <a href="{% url stores-dashboard:store-group-list %}">{% trans "cancel" %}</a>.
     </div>
 </form>
 {% endblock %}
