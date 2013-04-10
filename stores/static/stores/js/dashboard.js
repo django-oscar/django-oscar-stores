@@ -105,6 +105,9 @@ stores.dashboard = {
 
     updateToBestMatch: function(input, marker) {
         var query = input.val();
+        if(!query) {
+            return;
+        }
         stores.dashboard.autocomplete_serv.getQueryPredictions(
             {'input': query},
             function(results, status) {
