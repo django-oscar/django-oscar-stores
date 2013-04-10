@@ -1,5 +1,5 @@
 from django import forms
-from django.db.models import get_model
+from django.db.models import Q, get_model
 from django.contrib.gis.forms import fields
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.gis.geoip import HAS_GEOIP
@@ -67,3 +67,22 @@ class OpeningPeriodForm(forms.ModelForm):
                 attrs={'placeholder': _("e.g. 5 PM, 18:30, etc.")}
             ),
         }
+
+ 
+class DashboardStoreSearchForm(forms.Form):
+    name = forms.CharField(label=_('Store name'), required=False)
+    address = forms.CharField(label=_('Address'), required=False)
+
+    def apply_address_filter(self, qs, value):
+        words = value.replace(',', ' ').split()
+        q = [Q(address__search_text__icontains=word) for word in words]
+        return qs.filter(*q)
+
+    def apply_name_filter(self, qs, value):
+        return qs.filter(name__icontains=value)
+    
+    def apply_filters(self, qs):
+        for key, value in self.cleaned_data.items():
+            if value:
+                qs = getattr(self, 'apply_%s_filter' % key)(qs, value)
+        return qs
