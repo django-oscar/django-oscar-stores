@@ -21,6 +21,19 @@ class StoreListView(generic.ListView):
     template_name = "stores/dashboard/store_list.html"
     context_object_name = "store_list"
     paginate_by = 20
+    form_class = forms.DashboardStoreSearchForm
+
+    def get_context_data(self, **kwargs):
+        data = super(StoreListView, self).get_context_data(**kwargs)
+        data['form'] = self.form
+        return data
+
+    def get_queryset(self):
+        qs = self.model.objects.all()
+        self.form = self.form_class(self.request.GET)
+        if self.form.is_valid():
+            qs = self.form.apply_filters(qs)
+        return qs
 
 
 class StoreAddressInline(InlineFormSet):
