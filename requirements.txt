@@ -10,6 +10,7 @@ flake8==0.8
 
 # Testing
 coverage==3.5.1
+coveralls
 django-dynamic-fixture==1.4.2
 django-nose==1.1
 WebTest==1.3.4

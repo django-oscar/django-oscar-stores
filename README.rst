@@ -2,6 +2,13 @@
 Oscar stores
 ============
 
+.. image:: https://secure.travis-ci.org/tangentlabs/django-oscar-stores.png
+    :target: http://travis-ci.org/#!/tangentlabs/django-oscar-stores
+
+.. image:: https://coveralls.io/repos/tangentlabs/django-oscar-stores/badge.png?branch=master
+    :alt: Coverage
+    :target: https://coveralls.io/r/tangentlabs/django-oscar-stores
+
 This is an extension for django-oscar_ that adds support for stores.  It
 provides:
 
