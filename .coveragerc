@@ -1,0 +1,3 @@
+[run]
+source = stores
+omit = *migrations*
