@@ -63,6 +63,7 @@ stores.dashboard = {
         });
 
         stores.dashboard.geocoder = new google.maps.Geocoder();
+        stores.dashboard.autocomplete_serv = new google.maps.places.AutocompleteService();
 
         google.maps.event.addListener(marker, 'drag', function () {
             stores.dashboard.updateMarkerPosition(marker.getPosition());
@@ -88,16 +89,49 @@ stores.dashboard = {
 
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var place = autocomplete.getPlace();
-            if (place.geometry.viewport) {
-                stores.dashboard.map.fitBounds(place.geometry.viewport);
-            } else {
-                stores.dashboard.map.setCenter(place.geometry.location);
-                stores.dashboard.map.setZoom(17);  // Why 17? Because it looks good.
+            if(!place.geometry) {
+                return;
             }
-
-            marker.setPosition(place.geometry.location);
-            stores.dashboard.updateMarkerPosition(place.geometry.location);
+            stores.dashboard.updateMarkerPlace(marker, place);
         });
+
+        input.keypress(function(e) {
+            if(e.which == 13) { // 13 is for Enter key
+                e.preventDefault();
+                stores.dashboard.updateToBestMatch(input, marker);
+            }
+        });
+    },
+
+    updateToBestMatch: function(input, marker) {
+        var query = input.val();
+        if(!query) {
+            return;
+        }
+        stores.dashboard.autocomplete_serv.getQueryPredictions(
+            {'input': query},
+            function(results, status) {
+                if(status === google.maps.places.PlacesServiceStatus.OK) {
+                    var address = results[0].description;
+                    input.trigger('blur');
+                    input.val(address);
+                    stores.dashboard.updateToAddress(address, marker);
+                    input.trigger('change');
+                }
+            }
+        );
+    },
+
+    updateMarkerPlace: function(marker, place) {
+        if (place.geometry.viewport) {
+            stores.dashboard.map.fitBounds(place.geometry.viewport);
+        } else {
+            stores.dashboard.map.setCenter(place.geometry.location);
+            stores.dashboard.map.setZoom(17);  // Why 17? Because it looks good.
+        }
+
+        marker.setPosition(place.geometry.location);
+        stores.dashboard.updateMarkerPosition(place.geometry.location);
     },
 
     updateMarkerPosition: function (latLng) {
@@ -113,6 +147,18 @@ stores.dashboard = {
                 alert("did not receive valid geo position");
             }
         });
+    },
+
+    updateToAddress: function(address, marker) {
+        stores.dashboard.geocoder.geocode(
+            {'address': address},
+            function(results, status){
+                if(status == google.maps.GeocoderStatus.OK) {
+                    var latLang = results[0].geometry.location;
+                    stores.dashboard.updateMarkerPlace(marker, results[0]);
+                }
+            }
+        );
     }
 };
 
