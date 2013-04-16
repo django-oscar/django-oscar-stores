@@ -3,7 +3,7 @@ from django.db.models import get_model
 from django.core.urlresolvers import reverse_lazy
 from django.template.loader import render_to_string
 from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, ugettext
 from extra_views import (CreateWithInlinesView, UpdateWithInlinesView,
                          InlineFormSet)
 
@@ -21,18 +21,34 @@ class StoreListView(generic.ListView):
     template_name = "stores/dashboard/store_list.html"
     context_object_name = "store_list"
     paginate_by = 20
-    form_class = forms.DashboardStoreSearchForm
+    filterform_class = forms.DashboardStoreSearchForm
+
+    def get_title(self):
+        data = getattr(self.filterform, 'cleaned_data', {})
+
+        name = data.get('name', None)
+        address = data.get('address', None)
+
+        if name and not address:
+            return ugettext('Stores matching "%s"') % (name)
+        elif name and address:
+            return ugettext('Stores matching "%s" near "%s"') % (name, address)
+        elif address:
+            return ugettext('Stores near "%s"') % (address)
+        else:
+            return ugettext('Stores')
 
     def get_context_data(self, **kwargs):
         data = super(StoreListView, self).get_context_data(**kwargs)
-        data['form'] = self.form
+        data['filterform'] = self.filterform
+        data['queryset_description'] = self.get_title()
         return data
 
     def get_queryset(self):
         qs = self.model.objects.all()
-        self.form = self.form_class(self.request.GET)
-        if self.form.is_valid():
-            qs = self.form.apply_filters(qs)
+        self.filterform = self.filterform_class(self.request.GET)
+        if self.filterform.is_valid():
+            qs = self.filterform.apply_filters(qs)
         return qs
 
 
