@@ -74,6 +74,11 @@ class DashboardStoreSearchForm(forms.Form):
     name = forms.CharField(label=_('Store name'), required=False)
     address = forms.CharField(label=_('Address'), required=False)
 
+    def is_empty(self):
+        d = getattr(self, 'cleaned_data', {})
+        empty = lambda key: not d.get(key, None)
+        return empty('name') and empty('address')
+
     def apply_address_filter(self, qs, value):
         words = value.replace(',', ' ').split()
         q = [Q(address__search_text__icontains=word) for word in words]
