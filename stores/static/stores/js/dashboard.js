@@ -5,10 +5,10 @@ stores.dashboard = {
     defaultLat: 144.9661415816081,
 
     getLatLngFromGeoJSON: function (data) {
-	var point = null;
-	try {
-            point = jQuery.parseJSON(data);
-	} catch (e) {}
+    	var point = null;
+    	try {
+                point = jQuery.parseJSON(data);
+    	} catch (e) {}
 
         if (!point || point.type.toLowerCase() !== "point") {
             return new google.maps.LatLng(
