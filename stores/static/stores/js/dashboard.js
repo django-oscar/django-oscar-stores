@@ -7,14 +7,14 @@ stores.dashboard = {
     getLatLngFromGeoJSON: function (data) {
     	var point = null;
     	try {
-                point = jQuery.parseJSON(data);
-    	} catch (e) {}
+            point = jQuery.parseJSON(data);
+        } catch (e) {}
 
         if (!point || point.type.toLowerCase() !== "point") {
             return new google.maps.LatLng(
                 stores.dashboard.defaultLng,
                 stores.dashboard.defaultLat
-            );
+                );
         }
 
         // the GeoJSON format provides latitude and longitude
@@ -23,7 +23,7 @@ stores.dashboard = {
         return new google.maps.LatLng(
             point.coordinates[1],
             point.coordinates[0]
-        );
+            );
     },
 
     getGeoJsonFromLatLng: function (data) {
@@ -38,7 +38,7 @@ stores.dashboard = {
 
     init: function () {
         var locationJSON = jQuery('#id_location').val(),
-            latLng;
+        latLng;
 
         if (locationJSON) {
             latLng = stores.dashboard.getLatLngFromGeoJSON(locationJSON);
@@ -47,9 +47,9 @@ stores.dashboard = {
         }
 
         var input = jQuery('#search-text-field'),
-            autocomplete = new google.maps.places.Autocomplete(input[0]),
-            zoom = 17,
-            marker = null;
+        autocomplete = new google.maps.places.Autocomplete(input[0]),
+        zoom = 17,
+        marker = null;
 
         stores.dashboard.map = new google.maps.Map(document.getElementById('store-map'), {
             zoom: zoom,
@@ -122,7 +122,7 @@ stores.dashboard = {
                     input.trigger('change');
                 }
             }
-        );
+            );
     },
 
     updateMarkerPlace: function(marker, place) {
@@ -161,7 +161,7 @@ stores.dashboard = {
                     stores.dashboard.updateMarkerPlace(marker, results[0]);
                 }
             }
-        );
+            );
     }
 };
 
