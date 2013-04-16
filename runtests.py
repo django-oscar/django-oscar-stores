@@ -8,7 +8,6 @@ from django.conf import settings
 from oscar.defaults import OSCAR_SETTINGS
 from oscar import OSCAR_MAIN_TEMPLATE_DIR, OSCAR_CORE_APPS
 
-from stores.defaults import STORES_SETTINGS
 
 location = lambda x: os.path.join(
     os.path.dirname(os.path.realpath(__file__)), x)
@@ -82,7 +81,6 @@ def configure():
     )
 
     default_settings = OSCAR_SETTINGS
-    default_settings.update(STORES_SETTINGS)
     pairs.update(default_settings)
 
     # Look for a settings_local module that provides overrides for these test
