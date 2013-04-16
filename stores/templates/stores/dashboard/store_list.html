@@ -12,7 +12,7 @@
         <a href="{% url dashboard:index %}">{% trans "Dashboard" %}</a>
         <span class="divider">/</span>
     </li>
-    <li class="active">{% trans "Stores" %}</li>
+    <li class="active">{{ queryset_description }}</li>
 </ul>
 {% endblock %}
 
@@ -29,8 +29,11 @@
 </div>
 <div class="well">
     <form action="." method="get" class="form-inline">
-		{% include "partials/form_fields_inline.html" with form=form %}
+		{% include "partials/form_fields_inline.html" with form=filterform %}
         <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
+        {% if not filterform.is_empty %}
+        <a href="?" class="btn">{% trans "Clear" %}</a>
+        {% endif %}
     </form>
 </div>
 
