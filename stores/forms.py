@@ -3,7 +3,7 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.db.models import get_model
 from django.utils.translation import ugettext as _
 
-from stores.services import GeoCode
+from stores.services import geocode
 
 StoreGroup = get_model('stores', 'StoreGroup')
 
@@ -56,6 +56,6 @@ class StoreSearchForm(forms.Form):
         query = data.get('query', None)
         if query is not None:
             try:
-                return GeoCode.geocode(query)
-            except GeoCode.ResponseError:
+                return geocode.GeoCodeService().geocode(query)
+            except geocode.ServiceError:
                 return None

@@ -1,16 +1,21 @@
 from unittest import TestCase
-from stores.services import GeoCode
+from stores.services import geocode
 from mock import patch, Mock
 
 
 class GeoCodeTest(TestCase):
+    def patch(self, *args, **kwargs):
+        return patch.object(geocode.GeoCodeService, *args, **kwargs)
+        
     def test_geocode_servererror(self):
         response = Mock()
         response.status_code = 500
         get = Mock(return_value=response)
 
-        with patch.object(GeoCode, 'get', get):
-            self.assertRaises(GeoCode.ResponseError, GeoCode.geocode, 'Address query')
+        with self.patch('get', get):
+            func = geocode.GeoCodeService().geocode
+            error = geocode.InvalidResponse
+            self.assertRaises(error, func, 'query')
 
     def test_geocode_zeroresults(self):
         response = Mock()
@@ -18,5 +23,7 @@ class GeoCodeTest(TestCase):
         response.json = Mock(return_value={'results': [], 'status': 'ZERO_RESULTS'})
         get = Mock(return_value=response)
 
-        with patch.object(GeoCode, 'get', get):
-            self.assertRaises(GeoCode.ZeroResultsError, GeoCode.geocode, 'Address query')
+        with self.patch('get', get):
+            func = geocode.GeoCodeService().geocode
+            error = geocode.ZeroResuls
+            self.assertRaises(error, func, 'query')
