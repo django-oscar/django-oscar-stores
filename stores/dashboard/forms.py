@@ -3,6 +3,7 @@ from django.db.models import get_model
 from django.contrib.gis.forms import fields
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.gis.geoip import HAS_GEOIP
+from django.conf import settings
 
 
 class StoreAddressForm(forms.ModelForm):
@@ -24,7 +25,7 @@ class StoreForm(forms.ModelForm):
         instance = kwargs.get('instance', None)
         if instance:
             self.initial['location'] = instance.location.geojson
-        elif HAS_GEOIP:
+        elif HAS_GEOIP and getattr(settings, 'GEOIP_ENABLED', True):
             from django.contrib.gis.geoip import GeoIP
             point = GeoIP().geos(current_ip)
             if point:
