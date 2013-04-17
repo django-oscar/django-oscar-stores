@@ -147,7 +147,7 @@ stores.dashboard = {
             latLng: pos
         }, function (responses) {
             if (!responses || responses.length < 0) {
-                alert("did not receive valid geo position");
+                alert(gettext("did not receive valid geo position"));
             }
         });
     },
