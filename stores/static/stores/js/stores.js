@@ -45,7 +45,7 @@ var stores = (function(s, gmaps, o) {
                         };
                         navigator.geolocation.getCurrentPosition(success, error);
                     } else {
-                        o.messages.error('Your location could not be determined');
+                        o.messages.error(gettext('Your location could not be determined'));
                     }
                 });
             },
