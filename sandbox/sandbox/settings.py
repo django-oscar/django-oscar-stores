@@ -168,6 +168,7 @@ OSCAR_ALLOW_ANON_CHECKOUT = True
 
 OSCAR_SHOP_TAGLINE = "Stores extension"
 
+GEOIP_ENABLED = True
 GEOIP_PATH = os.path.join(os.path.dirname(__file__), '../geoip')
 
 # Haystack settings
