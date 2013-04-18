@@ -26,6 +26,18 @@ class TestStore(TestCase):
         )
 
 
+def repr_opening_hours(store):
+    r = {}
+    for period in store.opening_periods.all().order_by('start'):
+        if period.weekday not in r:
+            r[period.weekday] = ''
+        else:
+            r[period.weekday] += ', '
+        r[period.weekday] += '%s - %s' % (period.start.strftime('%H:%M'),
+                                          period.end  .strftime('%H:%M'))
+    return r
+
+
 class StoresWebTest(WebTest):
     is_staff = False
     is_anonymous = True
@@ -108,3 +120,39 @@ class TestASignedInUser(StoresWebTest):
         self.assertEquals(store.address.country, self.country)
 
         self.assertEquals(store.opening_periods.count(), 0)
+
+    def test_workinghours_form(self):
+        url = reverse('stores-dashboard:store-create')
+        page = self.get(url)
+        form = page.form
+
+        form['name'] = 'WorkingHoursTest'
+        form['location'] = '{"type": "Point", "coordinates": [88.39,11.02]}'
+
+        form['day-1-open'] = True
+
+        form['day-1-0-start'] = '10'
+        form['day-1-0-end'] = '11'
+
+        form['day-1-1-start'] = '12'
+        form['day-1-1-end'] = '13'
+
+        form['day-2-open'] = True
+
+        form['day-2-0-start'] = '12'
+        form['day-2-0-end'] = '13'
+
+        form['day-3-0-start'] = '12'
+        form['day-3-0-end'] = '13'
+
+        resp = form.submit()
+
+        if resp.context and 'form' in resp.context:
+            assert False, repr(resp.context['form'].errors)
+
+        store = Store.objects.get(name='WorkingHoursTest')
+
+        self.assertEquals(repr_opening_hours(store), {
+            1: '10:00 - 11:00, 12:00 - 13:00',
+            2: '12:00 - 13:00',
+        })

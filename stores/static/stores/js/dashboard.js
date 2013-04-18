@@ -5,8 +5,8 @@ stores.dashboard = {
     defaultLat: 144.9661415816081,
 
     getLatLngFromGeoJSON: function (data) {
-    	var point = null;
-    	try {
+        var point = null;
+        try {
             point = jQuery.parseJSON(data);
         } catch (e) {}
 
@@ -104,6 +104,8 @@ stores.dashboard = {
                 stores.dashboard.updateToBestMatch(input, marker);
             }
         });
+
+        stores.dashboard.openingHoursForm();
     },
 
     updateToBestMatch: function(input, marker) {
@@ -162,6 +164,22 @@ stores.dashboard = {
                 }
             }
             );
+    },
+
+    openingHoursForm: function(){
+        function isOpenCallback() {
+            var isopen = $(this).prop('checked');
+            var inputs = $(this).closest('.weekday-block').find('input[type=text],button');
+            inputs.prop('disabled', !isopen);
+        }
+        $('#opening_hours_form input[name$=open]').each(isOpenCallback)
+                                                   .click(isOpenCallback);
+
+        $('#opening_hours_form button.add-more').click(function(e){
+            e.preventDefault();
+            $(this).closest('.weekday-block').find('.hour-input.hide').first().removeClass('hide');
+            return false;
+        });
     }
 };
 

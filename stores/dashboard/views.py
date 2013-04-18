@@ -51,8 +51,10 @@ class OpeningPeriodInline(InlineFormSet):
     form_class = forms.OpeningPeriodForm
 
 
+from stores.dashboard.forms import OpeningHoursInline
 class StoreEditMixin(object):
-    inlines = [OpeningPeriodInline, StoreAddressInline]
+    #inlines = [OpeningPeriodInline, StoreAddressInline]
+    inlines = [OpeningHoursInline, StoreAddressInline]
 
     def get_form_kwargs(self):
         kwargs = super(StoreEditMixin, self).get_form_kwargs()

@@ -100,17 +100,75 @@
     <div class="table-header">
         <h3>{% trans "Opening hours" %}</h3>
     </div>
-    <div class="well">
-        {# use the first formset which is the opening times #}
-        {% with formset=inlines.0 %}
-        <div class="well well-blank">
-            {{ formset.management_form }}
-            {% for form in formset %}
-            <div class='row-fluid line-divide' style="margin-bottom: 1em;">
-                {% for field in form %}
-                    {% include "partials/field_inline.html" %}
-                {% endfor %}
 
+    <div class="well form-horizontal" id="opening_hours_form">
+        {# use the first formset which is the opening times #}
+        {% with workhours=inlines.0 %}
+            {{ formset.management_form }}
+            {% for formset in workhours %}
+            <div class="weekday-block well">
+                <div class="span2">
+                  <label>{{ formset.get_weekday_display }}</label>
+                </div>
+
+                <div class="span1">
+                    <label>{{ formset.open.label }}</label>
+                    {{ formset.open }}
+                </div>
+
+                <div class="span8">
+
+                  <div class="row"></div>
+
+                  <div class="row">
+                    <div class="span2">
+                      {{ formset.0.start.label_tag }}
+                    </div>
+                    <div class="span2">
+                      {{ formset.0.end.label_tag }}
+                    </div>
+                  </div>
+
+                  {% for form in formset %}
+                  <div class="row hour-input{% if not forloop.first and not form.start.value and not form.end.value %} hide{% endif %}"
+                      style="margin-bottom: 1em">
+
+                    <div class="span2">
+                    {{ form.start }}
+                    </div>
+                    <div class="span2">
+                    {{ form.end }}
+                    </div>
+
+                    {{ form.id }}
+
+                    {% if form.errors %}
+                    <div class="span4">
+                      <div class="alert alert-error">
+                      {% for field in form %}
+                        {% if field.errors %}
+                          {{ field.label }}:
+                          {% for err in field.errors %}{{ err }}{% endfor %}
+                          <br />
+                        {% endif %}
+                      {% endfor %}
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div>
+                  {% endfor %}
+
+                  <div class="row">
+                    <div class="span2">
+                      <button class="btn add-more">+</button>
+                    </div>
+                  </div>
+
+                  <div class="row"></div>
+
+                </div>
+
+                {{ formset.management_form }}
             </div>
             {% endfor %}
         {% endwith %}
