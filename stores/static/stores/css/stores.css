@@ -99,6 +99,7 @@
 }
 .stores-list .sub-header .distance {
   color: #aaa;
+  font-size: 18px;
 }
 .stores-list a.email {
   width: 90%;
@@ -230,4 +231,7 @@ ul.wysihtml5-toolbar > li {
 #opening_hours .line-divide {
   padding: 20px 0;
   border-bottom: 1px solid #eee;
+}
+#opening_hours_form .hour-input input[type=text] {
+  width: 100px;
 }

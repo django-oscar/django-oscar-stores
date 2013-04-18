@@ -1,9 +1,13 @@
 from django import forms
+from django.forms import models as modelforms
 from django.db.models import Q, get_model
 from django.contrib.gis.forms import fields
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.gis.geoip import HAS_GEOIP
 from django.conf import settings
+
+OpeningPeriod = get_model('stores', 'OpeningPeriod')
+assert OpeningPeriod
 
 
 class StoreAddressForm(forms.ModelForm):
@@ -15,6 +19,13 @@ class StoreAddressForm(forms.ModelForm):
 
 class StoreForm(forms.ModelForm):
     location = fields.GeometryField(widget=forms.HiddenInput())
+
+    class Meta:
+        model = get_model('stores', 'Store')
+        exclude = ('slug', 'opening_periods', )
+        widgets = {
+            'description': forms.Textarea(attrs={'cols': 40, 'rows': 10}),
+        }
 
     def __init__(self, *args, **kwargs):
         current_ip = kwargs.pop('current_ip', None)
@@ -37,13 +48,6 @@ class StoreForm(forms.ModelForm):
             return None
         return ref
 
-    class Meta:
-        model = get_model('stores', 'Store')
-        exclude = ('slug',)
-        widgets = {
-            'description': forms.Textarea(attrs={'cols': 40, 'rows': 10}),
-        }
-
 
 class OpeningPeriodForm(forms.ModelForm):
 
@@ -51,10 +55,13 @@ class OpeningPeriodForm(forms.ModelForm):
         super(OpeningPeriodForm, self).__init__(*args, **kwargs)
         time_input = ['%H:%M', '%H', '%I:%M%p', '%I%p', '%I:%M %p', '%I %p']
         self.fields['start'].input_formats = time_input
+        self.fields['start'].required = False
         self.fields['end'].input_formats = time_input
+        self.fields['end'].required = False
 
     class Meta:
-        model = get_model('stores', 'OpeningPeriod')
+        model = OpeningPeriod
+        fields = ('start', 'end', )
         widgets = {
             'name': forms.TextInput(
                 attrs={'placeholder': _("e.g. Christmas")}
@@ -68,6 +75,11 @@ class OpeningPeriodForm(forms.ModelForm):
                 attrs={'placeholder': _("e.g. 5 PM, 18:30, etc.")}
             ),
         }
+
+    def clean_delete(self):
+        data = self.cleaned_data
+        if not data['start'] and not data['end']:
+            return True
 
  
 class DashboardStoreSearchForm(forms.Form):
@@ -92,3 +104,100 @@ class DashboardStoreSearchForm(forms.Form):
             if value:
                 qs = getattr(self, 'apply_%s_filter' % key)(qs, value)
         return qs
+
+
+class IsOpenForm(forms.Form):
+    open = forms.BooleanField(label=_('Open'), required=False)
+
+    def __nonzero__(self):
+        self.is_valid()
+        return self.cleaned_data['open']
+
+
+class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
+    extra = 10
+    can_order = False
+    can_delete = True
+    max_num = 30 # Reasonably safe number of maximum period intervals per day
+    absolute_max = 30
+    fk = [f for f in OpeningPeriod._meta.fields if f.name == 'store'][0]
+    model = OpeningPeriod
+
+    def __init__(self, weekday, data, instance):
+        self.weekday = weekday
+        if instance:
+            queryset = instance.opening_periods.all().filter(weekday=weekday)
+        else:
+            queryset = OpeningPeriod.objects.none()
+        prefix = 'day-%d' % weekday
+
+        self.openform = IsOpenForm(data=data or None, prefix=prefix, initial={
+            'open': len(queryset) > 0
+        })
+
+        self.open = self.openform['open']
+
+        super(OpeningPeriodFormset, self).__init__(data=data, instance=instance,
+                                                   prefix=prefix,
+                                                   queryset=queryset)
+
+    def get_weekday_display(self):
+        return unicode(OpeningPeriod.WEEK_DAYS[self.weekday])
+
+    def form(self, *args, **kwargs):
+         form = OpeningPeriodForm(*args, **kwargs)
+         form.instance.weekday = self.weekday
+         form.instance.store = self.instance
+         return form
+
+    def is_valid(self):
+        return super(OpeningPeriodFormset, self).is_valid()
+
+    def save(self, *args, **kwargs):
+        if not self.openform:
+            for form in self:
+                if form.instance.pk:
+                    form.instance.delete()
+        else:
+            return super(OpeningPeriodFormset, self).save(*args, **kwargs)
+
+
+class OpeningHoursFormset(object):
+    def __init__(self, data, instance):
+        self.data = data or None
+        self.instance = instance
+        self.forms = [self.construct_sub_formset(weekday) for weekday in
+            OpeningPeriod.WEEK_DAYS
+        ]
+
+    def __iter__(self):
+        return iter(self.forms)
+
+    def __getitem__(self, key):
+        return self.forms[key]
+
+    def construct_sub_formset(self, weekday):
+        return OpeningPeriodFormset(
+            weekday,
+            self.data or None,
+            self.instance,
+        )
+
+    def is_valid(self):
+        return all([form.is_valid() for form in self.forms])
+
+    def save(self):
+        for form in self:
+            form.save()
+
+
+class OpeningHoursInline(object):
+    def __init__(self, model, request, instance):
+        self.data = request.POST
+        self.instance = instance
+
+    def construct_formset(self):
+        return OpeningHoursFormset(
+            self.data or None,
+            self.instance,
+        )
