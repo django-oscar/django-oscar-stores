@@ -55,4 +55,7 @@ class StoreSearchForm(forms.Form):
 
         query = data.get('query', None)
         if query is not None:
-            return geocode(query)
+            try:
+                return geocode.GeoCodeService().geocode(query)
+            except geocode.ServiceError:
+                return None
