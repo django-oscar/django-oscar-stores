@@ -9,6 +9,9 @@ from django.conf import settings
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
 assert OpeningPeriod
 
+OpeningPeriod = get_model('stores', 'OpeningPeriod')
+assert OpeningPeriod
+
 
 class StoreAddressForm(forms.ModelForm):
 
