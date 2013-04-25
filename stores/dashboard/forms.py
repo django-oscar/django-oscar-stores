@@ -76,12 +76,7 @@ class OpeningPeriodForm(forms.ModelForm):
             ),
         }
 
-    def clean_delete(self):
-        data = self.cleaned_data
-        if not data['start'] and not data['end']:
-            return True
 
- 
 class DashboardStoreSearchForm(forms.Form):
     name = forms.CharField(label=_('Store name'), required=False)
     address = forms.CharField(label=_('Address'), required=False)
@@ -98,7 +93,7 @@ class DashboardStoreSearchForm(forms.Form):
 
     def apply_name_filter(self, qs, value):
         return qs.filter(name__icontains=value)
-    
+
     def apply_filters(self, qs):
         for key, value in self.cleaned_data.items():
             if value:
