@@ -29,6 +29,12 @@ Screenshots
 .. image:: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/detail.thumb.png
     :target: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/detail.png
 
+.. image:: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/dashboard-list.thumb.png
+    :target: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/dashboard-list.png
+
+.. image:: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/dashboard-detail.thumb.png
+    :target: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/dashboard-detail.png
+
 Dependencies
 ------------
 
