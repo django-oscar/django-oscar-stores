@@ -6,14 +6,14 @@
         <table class='table table-bordered table-striped table-condensed'>
             <tbody>
                 {% for weekday in grouped_periods %}
-                <tr>
-                    <td>{{ weekday.list.0|printable_weekday }}</td>
-                    <td>
-                        {% for period in weekday.list %}
-                        {{ period|printable_period }}<br/>
-                        {% endfor %}
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ weekday.list.0|printable_weekday }}</td>
+                        <td>
+                            {% for period in weekday.list %}
+                                {{ period|printable_period:"H:i" }}<br/>
+                            {% endfor %}
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
