@@ -142,7 +142,7 @@ class OpeningPeriod(models.Model):
         help_text=_("Leaving start and end time empty is displayed as 'Closed'"))
 
     def __unicode__(self):
-        return "%s: %s to %s" % (self.weekday, self.start, self.end)
+        return u"%s: %s to %s" % (self.weekday, self.start, self.end)
 
     class Meta:
         abstract = True
@@ -160,6 +160,7 @@ class StoreStock(models.Model):
         'catalogue.Product',
         verbose_name=_("Product"),
         related_name="store_stock")
+
     # Stock level information
     num_in_stock = models.PositiveIntegerField(
         _("Number in stock"),
@@ -182,17 +183,18 @@ class StoreStock(models.Model):
 
     # Date information
     date_created = models.DateTimeField(
-        _("Date Created"),
+        _("Date created"),
         auto_now_add=True)
     date_updated = models.DateTimeField(
-        _("Date Updated"),
+        _("Date updated"),
         auto_now=True,
         db_index=True)
 
     class Meta:
         abstract = True
-        verbose_name = _("Store Stock Record")
-        verbose_name_plural = _("Store Stock Records")
+        verbose_name = _("Store stock record")
+        verbose_name_plural = _("Store stock records")
+        unique_together = ("store", "product")
 
     objects = GeoManager()
 
