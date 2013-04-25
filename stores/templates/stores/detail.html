@@ -8,38 +8,34 @@
 {% endblock %}
 
 {% block title %}
-{{ store.name }} | {{ block.super }}
+    {{ store.name }} | {{ block.super }}
 {% endblock %}
 
 {% block breadcrumbs %}
-<ul class="breadcrumb">
-    <li>
-        <a href="{% url promotions:home %}">{% trans "Home" %}</a>
-        <span class="divider">/</span>
-    </li>
-    <li>
-        <a href="{% url stores:index %}">{% trans "Stores" %}</a>
-        <span class="divider">/</span>
-    </li>
-    <li class="active">{{ store.name }}</li>
-</ul>
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url promotions:home %}">{% trans "Home" %}</a>
+            <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="{% url stores:index %}">{% trans "Stores" %}</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">{{ store.name }}</li>
+        <li class="pull-right"><a href="{% url stores:index %}"><i class="icon-arrow-left"></i> {% trans "View all stores" %}</a></li>
+    </ul>
 {% endblock %}
 
-{% block headertext %}
-    <a class="btn btn-large pull-right" href="{% url stores:index %}">{% trans "View all stores" %}</a>
-    {% blocktrans with name=store.name %}
-    {{ name }}
-    {% endblocktrans %}
-{% endblock %}
+{% block headertext %}{{ store.name }}{% endblock %}
 
 {% block content %}
     <div class="row-fluid">
         <div class="span4 store-address-contact">
             <div class="store-details">
                 {% if store.image %}
-                {% thumbnail store.image "400x400" as im %}
+                    {% thumbnail store.image "400x400" as im %}
                     <img alt="{{ store.name }}" src="{{ im.url }}" width="{{ im.width}}" height="{{ im.height }}" />
-                {% endthumbnail %}
+                    {% endthumbnail %}
                 {% endif %}
 
                 {% include "stores/partials/store_address.html" %}
@@ -56,7 +52,6 @@
                     <div class='store-map' style="width: 720px; height:450px;"></div>
                 </map>
             </section>
-
             {{ store.description|safe }}
         </div>
     </div>
@@ -68,5 +63,5 @@
 {% endblock %}
 
 {% block onbodyload %}
-stores.maps.initStore();
+    stores.maps.initStore();
 {% endblock %}
