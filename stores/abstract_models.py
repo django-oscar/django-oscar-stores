@@ -200,8 +200,8 @@ class StoreStock(models.Model):
 
     def __unicode__(self):
         if self.store and self.product:
-            return "%s @ %s" % (self.product.title, self.store.name)
-        return "Store Stock"
+            return u"%s @ %s" % (self.product.title, self.store.name)
+        return u"Store Stock"
 
     @property
     def is_available_to_buy(self):
