@@ -32,7 +32,12 @@ var stores = (function(s, gmaps, o) {
                 $(document).on('click', '[data-behaviours~=geo-location]', function (ev) {
                     if (navigator.geolocation) {
                         // Define callbacks for error/success
-                        var error = o.messages.error;
+                        var error = function(msg) {
+                            if (console) {
+                                console.log("Geoposition error: ", msg);
+                            }
+                            o.messages.error(gettext("Your position could not be determined.  Please check your browser settings."));
+                        };
                         var success = function (position) {
                             latLng = new gmaps.LatLng(
                                 position.coords.latitude,
