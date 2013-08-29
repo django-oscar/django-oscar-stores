@@ -2,6 +2,11 @@
 Changelog
 =========
 
+0.4.1
+=====
+
+* Allow opening hours form to pick up new fields.
+
 0.4
 ===
 
