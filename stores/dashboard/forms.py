@@ -61,7 +61,7 @@ class OpeningPeriodForm(forms.ModelForm):
 
     class Meta:
         model = OpeningPeriod
-        fields = ('start', 'end', )
+        exclude = ('store', 'weekday', )
         widgets = {
             'name': forms.TextInput(
                 attrs={'placeholder': _("e.g. Christmas")}
