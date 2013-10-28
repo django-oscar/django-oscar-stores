@@ -55,7 +55,7 @@ extensions by default.  To work-around this, there are two options:
 1. Download the package, edit ``setup.cfg`` to enable C extensions and install::
 
    $ pip install pysqlite --no-install
-   $ vim $VIRTUALENV/build/pysqlite/setup.cfg
+   $ vim $VIRTUAL_ENV/build/pysqlite/setup.cfg
    $ pip install pysqlite
 
 2. Use a custom branch::
