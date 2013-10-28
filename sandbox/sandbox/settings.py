@@ -18,8 +18,12 @@ MANAGERS = ADMINS
 # database for testing (eg PostGIS)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.spatialite',
-        'NAME': os.path.join(os.path.dirname(__file__), 'sandbox.sqlite3'),
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'oscar_stores',
+        'USER': 'sample_role',
+        'PASSWORD': 'sample_password',
+        'HOST': '127.0.0.1',
+        'PORT': 5432,
     }
 }
 
