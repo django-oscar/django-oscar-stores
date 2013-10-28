@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% load url from future %}
 {% load i18n %}
 {% load staticfiles %}
 {% load thumbnail %}
@@ -16,11 +17,11 @@
 {% block breadcrumbs %}
 <ul class="breadcrumb">
     <li>
-        <a href="{% url promotions:home %}">{% trans "Home" %}</a>
+        <a href="{% url 'promotions:home' %}">{% trans "Home" %}</a>
         <span class="divider">/</span>
     </li>
     <li>
-        <a href="{% url stores:index %}">{% trans "Stores" %}</a>
+        <a href="{% url 'stores:index' %}">{% trans "Stores" %}</a>
         <span class="divider">/</span>
     </li>
     <li class="active">{{ queryset_description }}</li>
@@ -63,7 +64,7 @@
                 <ul class="nav nav-tabs nav-stacked">
                 {% for store in all_stores %}
                 <li>
-                    <a href="{% url stores:detail store.slug store.pk %}">
+                    <a href="{% url 'stores:detail' store.slug store.pk %}">
                         {{ store.name }}
                     </a>
                 </li>
@@ -87,7 +88,7 @@
                             {% if store.distance %}
                                 <span class="distance">{{ store.distance.km|floatformat:2 }} km</span>
                             {% endif %}
-                            <a href="{% url stores:detail store.slug store.pk %}" class="btn pull-right">{% trans "View store details" %}</a></h4>
+                            <a href="{% url 'stores:detail' store.slug store.pk %}" class="btn pull-right">{% trans "View store details" %}</a></h4>
                         </div>
                     </div>
                 </div>

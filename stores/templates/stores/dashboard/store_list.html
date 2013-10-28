@@ -1,4 +1,5 @@
 {% extends 'dashboard/layout.html' %}
+{% load url from future %}
 {% load i18n %}
 
 {% block body_class %}stores{% endblock %}
@@ -10,12 +11,12 @@
 {% block breadcrumbs %}
     <ul class="breadcrumb">
         <li>
-            <a href="{% url dashboard:index %}">{% trans "Dashboard" %}</a>
+            <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
             <span class="divider">/</span>
         </li>
         {% if not filterform.is_empty %}
             <li>
-                <a href="{% url stores-dashboard:store-list %}">{% trans "Stores" %}</a>
+                <a href="{% url 'stores-dashboard:store-list' %}">{% trans "Stores" %}</a>
                 <span class="divider">/</span>
             </li>
         {% endif %}
@@ -25,7 +26,7 @@
 
 {% block header %}
     <div class="page-header">
-        <a href="{% url stores-dashboard:store-create %}" class="btn btn-large btn-primary pull-right"><i class="icon-plus"></i> {% trans "Create new store" %}</a>
+        <a href="{% url 'stores-dashboard:store-create' %}" class="btn btn-large btn-primary pull-right"><i class="icon-plus"></i> {% trans "Create new store" %}</a>
         <h1>{% trans "Store Management" %}</h1>
     </div>
 {% endblock header %}
@@ -65,7 +66,7 @@
                 </tr>
                 {% for store in store_list %}
                     <tr>
-                        <th><a href="{% url stores-dashboard:store-update store.pk %}">{{ store.name }}</a></th>
+                        <th><a href="{% url 'stores-dashboard:store-update' store.pk %}">{{ store.name }}</a></th>
                         <td>{{ store.address.street|linebreaks }}</td>
                         <td>{{ store.address.line4 }}</td>
                         <td>{{ store.address.postcode }}</td>
@@ -87,16 +88,16 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-info" href="{% url stores:detail store.slug store.id %}">{% trans "View on site" %}</a>
+                                <a class="btn btn-info" href="{% url 'stores:detail' store.slug store.id %}">{% trans "View on site" %}</a>
                                  <button class="btn dropdown-toggle" data-toggle="dropdown">
                                      <span class="caret"></span>
                                  </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="{% url stores-dashboard:store-update store.id %}">{% trans "Edit" %}</a>
+                                        <a href="{% url 'stores-dashboard:store-update' store.id %}">{% trans "Edit" %}</a>
                                     </li>
                                     <li>
-                                        <a href="{% url stores-dashboard:store-delete store.id %}">{% trans "Delete" %}</a>
+                                        <a href="{% url 'stores-dashboard:store-delete' store.id %}">{% trans "Delete" %}</a>
                                     </li>
                                 </ul>
                             </div>
