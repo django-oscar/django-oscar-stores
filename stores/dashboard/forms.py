@@ -187,7 +187,7 @@ class OpeningHoursFormset(object):
 
 
 class OpeningHoursInline(object):
-    def __init__(self, model, request, instance):
+    def __init__(self, model, request, instance, kwargs=None, view=None):
         self.data = request.POST
         self.instance = instance
 
