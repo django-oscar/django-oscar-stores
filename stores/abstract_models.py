@@ -1,6 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import slugify
 from django.contrib.gis.db.models import PointField
@@ -149,6 +149,10 @@ class OpeningPeriod(models.Model):
         ordering = ['weekday']
         verbose_name = _("Opening period")
         verbose_name_plural = _("Opening periods")
+
+    def clean(self):
+        if self.end <= self.start:
+            raise ValidationError(_("Start must be before end"))
 
 
 class StoreStock(models.Model):

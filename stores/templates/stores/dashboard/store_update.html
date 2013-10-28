@@ -39,6 +39,13 @@
 
 <form action="." method="post" class="form-horizontal wysiwyg" enctype="multipart/form-data">
     {% csrf_token %}
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-error control-group error">
+                <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
 
     <div class="table-header">
         <h3>{% trans "Store details" %}</h3>
@@ -69,6 +76,14 @@
         {% with formset=inlines.1 %}
             {{ formset.management_form }}
             {% for address_form in formset %}
+                {% if address_form.non_field_errors %}
+                    {% for error in address_form.non_field_errors %}
+                        <div class="alert alert-error control-group error">
+                            <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
                 {% for field in address_form %}
                     {% include "partials/form_field.html" %}
                 {% endfor %}
@@ -107,6 +122,13 @@
         {% with workhours=inlines.0 %}
             {{ formset.management_form }}
             {% for formset in workhours %}
+            {% if formset.non_field_errors %}
+                {% for error in formset.non_field_errors %}
+                    <div class="alert alert-error control-group error">
+                        <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
             <div class="weekday-block well">
                 <div class="span2">
                   <label>{{ formset.get_weekday_display }}</label>
@@ -153,6 +175,12 @@
                           <br />
                         {% endif %}
                       {% endfor %}
+
+                      {# Non-field errors #}
+                      {% if form.non_field_errors %}
+                        {{ form.non_field_errors }}
+                        <br />
+                      {% endif %}
                       </div>
                     </div>
                     {% endif %}
