@@ -1,4 +1,5 @@
 {% extends 'dashboard/layout.html' %}
+{% load url from future %}
 {% load i18n %}
 
 {% block body_class %}stores{% endblock %}
@@ -9,7 +10,7 @@
 {% block breadcrumbs %}
 <ul class="breadcrumb">
     <li>
-<a href="{% url dashboard:index %}">{% trans "Dashboard" %}</a>
+<a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
         <span class="divider">/</span>
     </li>
     <li class="active">{% trans "Store groups" %}</li>
@@ -18,7 +19,7 @@
 
 {% block header %}
 <div class="page-header">
-    <a href="{% url stores-dashboard:store-group-create %}" class="btn btn-large btn-primary pull-right"><i class="icon-plus"></i> {% trans "Create new store group" %}</a>
+    <a href="{% url 'stores-dashboard:store-group-create' %}" class="btn btn-large btn-primary pull-right"><i class="icon-plus"></i> {% trans "Create new store group" %}</a>
     <h1>{% trans "Store Groups" %}</h1>
 </div>
 {% endblock header %}
@@ -59,8 +60,8 @@
                 {% endwith %}
                 {% if forloop.first %}
                     <td rowspan="{{ group.stores.all|length }}">
-                        <a class="btn btn-info" href="{% url stores-dashboard:store-group-update group.id %}">{% trans "Edit" %}</a>
-                        <a class="btn btn-danger" href="{% url stores-dashboard:store-group-delete group.id %}">{% trans "Delete" %}</a>
+                        <a class="btn btn-info" href="{% url 'stores-dashboard:store-group-update' group.id %}">{% trans "Edit" %}</a>
+                        <a class="btn btn-danger" href="{% url 'stores-dashboard:store-group-delete' group.id %}">{% trans "Delete" %}</a>
                     </td>
                 {% endif%}
             </tr>
@@ -69,8 +70,8 @@
                 <td>{{ group.name }}</td>
                 <td colspan="6">{% trans "No stores assigned to this group." %}</td>
                 <td>
-                    <a class="btn btn-info" href="{% url stores-dashboard:store-group-update group.id %}">{% trans "Edit" %}</a>
-                    <a class="btn btn-danger" href="{% url stores-dashboard:store-group-delete group.id %}">{% trans "Delete" %}</a>
+                    <a class="btn btn-info" href="{% url 'stores-dashboard:store-group-update' group.id %}">{% trans "Edit" %}</a>
+                    <a class="btn btn-danger" href="{% url 'stores-dashboard:store-group-delete' group.id %}">{% trans "Delete" %}</a>
                 </td>
             </tr>
             {% endfor %}

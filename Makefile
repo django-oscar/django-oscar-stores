@@ -1,7 +1,7 @@
 .PHONY: install sandbox geoip css
 
 install:
-	pip install -r requirements.txt --use-mirrors
+	pip install -r requirements.txt
 	python setup.py develop
 
 geoip:
