@@ -39,7 +39,8 @@ Dependencies
 ------------
 
 GeoDjango_ is used so a spatial database is required.  We recommend PostGIS.
-Django's docs include some `installation instructions`_.
+Django's docs include some `installation instructions`_ although it is known
+for being tricky.
 
 .. _GeoDjango: https://docs.djangoproject.com/en/1.4/ref/contrib/gis
 .. _`installation instructions`: https://docs.djangoproject.com/en/1.4/ref/contrib/gis/install

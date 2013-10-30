@@ -2,6 +2,13 @@
 Changelog
 =========
 
+0.5
+===
+
+* Support Oscar 0.6
+
+* Support Django 0.5
+
 0.4.1
 =====
 
