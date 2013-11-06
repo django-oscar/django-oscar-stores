@@ -145,7 +145,7 @@
                 'postcode': '{{ store.address.postcode|escapejs }}',
                 'url': '{{ store.get_absolute_url|escapejs }}',
                 'email': '{{ store.email|escapejs }}',
-                'phone': '{{ store.phone|escapejs }}',
+                'phone': '{% if store.phone %}{{ store.phone|escapejs }}{% endif %}',
                 'group': '{{ store.group.name|upper }}'
             } {% if forloop.counter < store_list|length %},{% endif %}
             {% endfor %}

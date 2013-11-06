@@ -83,8 +83,26 @@ var stores = (function(s, gmaps, o) {
                 return map;
             },
 
+            getStoreInfoHTML: function(store) {
+                var infoHTML;
+
+                if (store.url) {
+                    infoHTML = '<h5><a href="' + store.url + '">' + store.name + '</a></h5>';
+                } else {
+                    infoHTML = '<h5>' + store.name + '</h5>';
+                }
+                if (store.phone) {
+                    infoHTML += '<p>' + store.phone + '</p>';
+                }
+                infoHTML += '<p>' + store.address1;
+                if (store.address2) infoHTML += '<br/>' + store.address2;
+                if (store.address3) infoHTML += '<br/>' + store.address3;
+                infoHTML += '<br/>' + store.postcode + ' ' + store.address4 + '</p>';
+                return infoHTML;
+            },
+
             addStoreMarkers: function(map, bounds, stores) {
-                var activeInfoWindow = null;
+                var activeInfoWindow = null, that = this;
                 $.each(stores, function(index, store) {
                     var storeMarker = new gmaps.Marker({
                         position: store.location,
@@ -95,14 +113,8 @@ var stores = (function(s, gmaps, o) {
                     bounds.extend(store.location);
                     map.fitBounds(bounds);
 
-                    var infoHTML = 
-                        '<h5><a href="' + store.url + '">' + store.name + '</a></h5>' +
-                        '<p>' + store.address1; 
-                    if (store.address2) infoHTML += '<br/>' + store.address2;
-                    if (store.address3) infoHTML += '<br/>' + store.address3;
-                    infoHTML += '<br/>' + store.postcode + '</p>';
                     var infowindow = new gmaps.InfoWindow({
-                        content: infoHTML
+                        content: that.getStoreInfoHTML(store)
                     });
 
                     // Open the infowindow on marker click
