@@ -1,6 +1,7 @@
 from django.views import generic
 from django.db.models import get_model
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from stores.forms import StoreSearchForm
 from stores.utils import get_geographic_srid, get_geodetic_srid
@@ -25,6 +26,10 @@ class StoreListView(generic.ListView):
     def is_form_submitted(self, request):
         return 'query' in request.GET
 
+    def get_max_distance(self):
+        """ Return max search distance when searching for stores """
+        return getattr(settings, 'STORES_MAX_SEARCH_DISTANCE', None)
+
     def get_queryset(self):
         queryset = self.model.objects.filter(is_active=True)
         if not self.form.is_valid():
@@ -38,13 +43,23 @@ class StoreListView(generic.ListView):
 
         latlng = self.form.point
         if latlng:
-            queryset = queryset.transform(
-                get_geographic_srid()
-            ).distance(
-                latlng
-            ).transform(
-                get_geodetic_srid()
-            ).order_by('distance')
+            # Convert to geographic coords
+            queryset = queryset.transform(get_geographic_srid())
+
+            # Constrain by distance if set up
+            max_distance = self.get_max_distance()
+            if max_distance:
+                queryset = queryset.filter(
+                    location__distance_lte=(latlng, max_distance))
+
+            # Add distance query
+            queryset = queryset.distance(latlng)
+
+            # Convert back to geodetic coords
+            queryset = queryset.transform(get_geodetic_srid())
+
+            # Order by distance
+            queryset = queryset.order_by('distance')
 
         return queryset
 

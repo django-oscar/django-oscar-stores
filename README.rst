@@ -105,6 +105,16 @@ Settings
 
 * ``STORES_GEODETIC_SRID`` (default: ``4326``).
 
+* ``STORES_MAX_SEARCH_DISTANCE`` (default: None). This filters stores
+  in queries by distance. Units can be set using distance object::
+
+    from django.contrib.gis.measure import D
+    # Maximal distance of 150 miles
+    STORES_MAX_SEARCH_DISTANCE = D(mi=150)
+    # Maximal distance of 150 kilometers
+    STORES_MAX_SEARCH_DISTANCE = D(km=150)
+
+
 Contributing
 ------------
 
