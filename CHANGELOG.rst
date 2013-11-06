@@ -2,6 +2,15 @@
 Changelog
 =========
 
+0.5.1
+=====
+
+A couple of extensions.
+
+* Fix cancel link for store form
+* Allow HTML map box to be more easily customised
+* Allow search results to be distance limited
+
 0.5
 ===
 
