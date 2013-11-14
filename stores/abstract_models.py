@@ -2,10 +2,10 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
-from django.template.defaultfilters import slugify
 from django.contrib.gis.db.models import PointField
 from django.contrib.gis.db.models import GeoManager
 
+from oscar.core.utils import slugify
 from oscar.apps.address.abstract_models import AbstractAddress
 
 from stores.managers import StoreManager
