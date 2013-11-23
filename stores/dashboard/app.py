@@ -7,16 +7,16 @@ from stores.dashboard import views
 
 class StoresDashboardApplication(Application):
     name = 'stores-dashboard'
-    default_permissions = ['is_staff', ], ['partner.dashboard_access']
-    permissions_map = _map = {
-        'store-list': (default_permissions),
-        'store-create': (default_permissions),
-        'store-update': (default_permissions),
-        'store-delete': (['is_staff', ],),
-        'store-group-list': (['is_staff', ],),
-        'store-group-create': (['is_staff', ],),
-        'store-group-update': (['is_staff', ],),
-        'store-group-delete': (['is_staff', ],),
+    default_permissions = ['is_staff',]
+    permissions_map = {
+        'store-list': (['is_staff'], ['partner.dashboard_access']),
+        'store-create': (['is_staff'], ['partner.dashboard_access']),
+        'store-update': (['is_staff'], ['partner.dashboard_access']),
+#        'store-delete': (['is_staff',],),
+#        'store-group-list': (['is_staff',],),
+#        'store-group-create': (['is_staff',],),
+#        'store-group-update': (['is_staff',],),
+#        'store-group-delete': (['is_staff',],),
     }
     
     
