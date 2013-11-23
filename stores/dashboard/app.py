@@ -12,11 +12,6 @@ class StoresDashboardApplication(Application):
         'store-list': (['is_staff'], ['partner.dashboard_access']),
         'store-create': (['is_staff'], ['partner.dashboard_access']),
         'store-update': (['is_staff'], ['partner.dashboard_access']),
-#        'store-delete': (['is_staff',],),
-#        'store-group-list': (['is_staff',],),
-#        'store-group-create': (['is_staff',],),
-#        'store-group-update': (['is_staff',],),
-#        'store-group-delete': (['is_staff',],),
     }
     
     
