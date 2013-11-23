@@ -9,7 +9,8 @@ class StoresApplication(Application):
     name = 'stores'
     list_view = views.StoreListView
     detail_view = views.StoreDetailView
-
+    permissions_map = {'index': (['is_staff', 'partner.dashboard_access'],)}
+    
     def get_urls(self):
         urlpatterns = super(StoresApplication, self).get_urls()
         urlpatterns += patterns('',
