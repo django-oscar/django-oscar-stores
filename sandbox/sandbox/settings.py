@@ -14,8 +14,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# Default to using Spatialite.  Use a settings_local.py file to use a different
-# database for testing (eg PostGIS)
+# Default to using PostGIS.  Use a settings_local.py file to use a different
+# database for testing (eg Spatialite)
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
