@@ -14,6 +14,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Default to using PostGIS.  Use a settings_local.py file to use a different
 # database for testing (eg Spatialite)
 DATABASES = {
