@@ -25,7 +25,7 @@ class TestDashboardStoreSearchForm(WebTestCase):
                         line1='Great Portland st., London')
         G(StoreAddress, store=self.store2,
                         line1='Sturt Street, Melbourne')
-        
+
     def test_list_with_search(self):
         resp = self.get(reverse('stores-dashboard:store-list') + '?address=portland+london')
         self.assertIn('form', resp.context)

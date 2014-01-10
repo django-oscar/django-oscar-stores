@@ -102,7 +102,7 @@ class TestASignedInUser(StoresWebTest):
 
         self.assertEquals(Store.objects.count(), 1)
 
-        store = Store.objects.get(id=1)
+        store = Store.objects.all()[0]
         self.assertEquals(store.name, 'Sample Store')
         self.assertEquals(store.location.x, 30.203332)
         self.assertEquals(store.location.y, 44.33333)
