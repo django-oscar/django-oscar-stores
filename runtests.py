@@ -20,8 +20,9 @@ def configure():
     pairs = dict(
         DATABASES={
             'default': {
-                'ENGINE': 'django.contrib.gis.db.backends.spatialite',
-                'NAME': ':memory:',
+                'ENGINE': 'django.contrib.gis.db.backends.postgis',
+                'NAME': 'oscar_stores',
+                'HOST': '127.0.0.1',
             }
         },
         MEDIA_ROOT=location('public/media'),
