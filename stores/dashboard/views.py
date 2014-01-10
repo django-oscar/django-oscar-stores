@@ -9,6 +9,7 @@ from extra_views import (CreateWithInlinesView, UpdateWithInlinesView,
 
 from stores.dashboard import forms
 from stores.utils import get_current_ip
+from stores.dashboard.forms import OpeningHoursInline
 
 Store = get_model('stores', 'Store')
 StoreGroup = get_model('stores', 'StoreGroup')
@@ -67,7 +68,6 @@ class OpeningPeriodInline(InlineFormSet):
     form_class = forms.OpeningPeriodForm
 
 
-from stores.dashboard.forms import OpeningHoursInline
 class StoreEditMixin(object):
     #inlines = [OpeningPeriodInline, StoreAddressInline]
     inlines = [OpeningHoursInline, StoreAddressInline]

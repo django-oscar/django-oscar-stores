@@ -117,6 +117,7 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
     absolute_max = 30
     fk = [f for f in OpeningPeriod._meta.fields if f.name == 'store'][0]
     model = OpeningPeriod
+    validate_max = True
 
     def __init__(self, weekday, data, instance):
         self.weekday = weekday
