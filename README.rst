@@ -114,7 +114,6 @@ Settings
     # Maximal distance of 150 kilometers
     STORES_MAX_SEARCH_DISTANCE = D(km=150)
 
-
 Contributing
 ------------
 

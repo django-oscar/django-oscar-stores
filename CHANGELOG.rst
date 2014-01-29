@@ -2,6 +2,12 @@
 Changelog
 =========
 
+0.6
+===
+
+* Support Django 1.6
+* Templates now load assets over HTTPS where appropriate
+
 0.5.1
 =====
 
