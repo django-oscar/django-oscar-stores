@@ -1,7 +1,8 @@
 {% load i18n %}
+{% load l10n %}
 
 <h3>{% trans "Address" %}</h3>
-<address data-name="{{ store.name }}" data-lat="{{ store.location.y }}" data-lng="{{ store.location.x }}">
+<address data-name="{{ store.name }}" data-lat="{{ store.location.y|unlocalize }}" data-lng="{{ store.location.x|unlocalize }}">
     <p>
         {{ store.address.line1|wordwrap:20|linebreaksbr }}<br />
         {% if store.address.line2 %}
