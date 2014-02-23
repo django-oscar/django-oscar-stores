@@ -90,6 +90,9 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``::
 
         # adds URLs for overview and detail pages
         url(r'^stores/', include(stores_app.urls)),
+
+        # adds internationalization URLs
+        (r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
     )
 
 You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
