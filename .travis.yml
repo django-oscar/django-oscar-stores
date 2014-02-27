@@ -1,12 +1,16 @@
 language: python
+
 python:
   - 2.7
-before_install:
- - sudo apt-get update -qq
- - sudo apt-get install -qq spatialite-bin libspatialite3 libgeos++-dev libgdal-dev libproj0
- - make geoip
+
 install:
   - "pip install -r requirements.txt --use-mirrors"
   - "python setup.py develop"
+
+before_script:
+  - psql -c 'CREATE DATABASE oscar_stores;' -U postgres
+  - psql -c 'CREATE EXTENSION postgis;' -U postgres -d oscar_stores
+  - psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d oscar_stores
+
 script:
   - coverage run ./runtests.py
