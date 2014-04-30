@@ -129,6 +129,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.gis',
+    'django.contrib.flatpages',
     'django_extensions',
     'debug_toolbar',
     'south',
