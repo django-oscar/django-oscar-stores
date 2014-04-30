@@ -147,9 +147,6 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = '/accounts/'
 APPEND_SLASH = True
 
-INTERNAL_IPS = ['127.0.0.1']
-DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
-
 # Oscar settings
 from oscar.defaults import *
 
