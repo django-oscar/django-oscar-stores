@@ -2,6 +2,10 @@
 Changelog
 =========
 
+0.6.1
+=====
+* Support Oscar 0.7
+
 0.6
 ===
 
