@@ -70,6 +70,7 @@ def configure():
             'django.contrib.staticfiles',
             'django.contrib.admin',
             'django.contrib.gis',
+            'django.contrib.flatpages',
             'compressor',
         ] + OSCAR_CORE_APPS + [
             'stores',
@@ -96,7 +97,7 @@ def configure():
     # Look for a settings_local module that provides overrides for these test
     # settings.
     try:
-        import settings_local
+        from sandbox.sandbox import settings_local
     except ImportError:
         pass
     else:
