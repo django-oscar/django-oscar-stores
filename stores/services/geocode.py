@@ -37,9 +37,20 @@ def get_response_exception(status):
     return code_to_exception_map.get(status, UnknownError)
 
 
-class GeoCodeService(object):
+class BaseGeoCodeService(object):
+    """
+    Base class to geocode a search query.
+    """
     get = staticmethod(requests.get)
 
+    def geocode(self, query):
+        return Point(0, 0)
+
+
+class GeoCodeService(BaseGeoCodeService):
+    """
+    Geocode a search query using Google's API
+    """
     def run_query(self, query):
         payload = {
             'address': query,
@@ -56,9 +67,6 @@ class GeoCodeService(object):
         return data
 
     def geocode(self, query):
-        """
-        Geocode a search query using Google's API
-        """
         data = self.run_query(query)
 
         if not data['status'] == 'OK':
