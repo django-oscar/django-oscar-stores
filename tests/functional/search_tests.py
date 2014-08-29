@@ -13,8 +13,8 @@ class TestTheListOfStores(WebTestCase):
 
     def setUp(self):
         super(TestTheListOfStores, self).setUp()
-        self.main_location = '{"type": "Point", "coordinates": [144.917908,-37.815751]}'
-        self.other_location = '{"type": "Point", "coordinates": [144.998401,-37.772895]}'
+        self.main_location = 'POINT(144.917908 -37.815751)'
+        self.other_location = 'POINT(144.998401 -37.772895)'
 
         self.main_store = G(
             Store,
