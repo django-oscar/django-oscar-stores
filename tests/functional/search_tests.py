@@ -2,7 +2,7 @@ from django.db.models import get_model
 from django.core.urlresolvers import reverse
 
 from django_dynamic_fixture import get as G
-from oscar_testsupport.testcases import WebTestCase
+from oscar.test.testcases import WebTestCase
 
 Store = get_model("stores", "Store")
 StoreGroup = get_model("stores", "StoreGroup")
