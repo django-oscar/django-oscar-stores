@@ -1,16 +1,25 @@
 language: python
 
 python:
-  - 2.7
+    - 2.7
+
+env:
+    matrix:
+        # Oscar 0.6
+        - COMBO="django-oscar==0.6.5 Django==1.5.10"
+        - COMBO="django-oscar==0.6.5 Django==1.6.7"
+        # Oscar 0.7
+        - COMBO="django-oscar==0.7.3 Django==1.5.10"
+        - COMBO="django-oscar==0.7.3 Django==1.6.7"
 
 install:
-  - "pip install -r requirements.txt --use-mirrors"
-  - "python setup.py develop"
+    - pip install $COMBO -r requirements.txt
+    - python setup.py develop
 
 before_script:
-  - psql -c 'CREATE DATABASE oscar_stores;' -U postgres
-  - psql -c 'CREATE EXTENSION postgis;' -U postgres -d oscar_stores
-  - psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d oscar_stores
+    - psql -c 'CREATE DATABASE oscar_stores;' -U postgres
+    - psql -c 'CREATE EXTENSION postgis;' -U postgres -d oscar_stores
+    - psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d oscar_stores
 
 script:
-  - coverage run ./runtests.py
+    - coverage run ./runtests.py
