@@ -53,7 +53,9 @@ for being tricky.
 .. _`installation instructions`: https://docs.djangoproject.com/en/1.4/ref/contrib/gis/install
 
 Spatialite is another option although it can be tricky to set up.  On Ubuntu,
-you can do the following::
+you can do the following:
+
+.. code:: bash
 
     $ sudo apt-get install spatialite-bin libspatialite3 libgeos++-dev libgdal-dev libproj0
 
@@ -62,19 +64,19 @@ extensions by default.  To work-around this, there are two options:
 
 1. Download the package, edit ``setup.cfg`` to enable C extensions and install:
 
-```bash
-$ pip install pysqlite --no-install
-$ vim $VIRTUAL_ENV/build/pysqlite/setup.cfg
-$ pip install pysqlite
-```
+.. code:: bash
+
+    $ pip install pysqlite --no-install
+    $ vim $VIRTUAL_ENV/build/pysqlite/setup.cfg
+    $ pip install pysqlite
 
 2. Use a custom branch:
 
-```bash
-$ pip install git+git://github.com/tinio/pysqlite.git@extension-enabled#egg=pysqlite
-```
+.. code:: bash
 
-.. _`geodjango's installation guide`: .. _`pysqlite`: http://code.google.com/p/pysqlite
+   $ pip install git+git://github.com/tinio/pysqlite.git@extension-enabled#egg=pysqlite
+
+.. _`pysqlite`: http://code.google.com/p/pysqlite
 
 Installation
 ------------
@@ -83,31 +85,30 @@ First, ensure you are using a spatial database and have django-oscar installed.
 
 Install package:
 
-```bash
-$ pip install django-oscar-stores
-```
+.. code:: bash
+    $ pip install django-oscar-stores
 
 then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
 
-```python
-from oscar.app import shop
-from stores.app import application as stores_app
-from stores.dashboard.app import application as dashboard_app
+.. code:: python
 
-urlpatterns = patterns('',
-    # basic configuration for Oscar
-    url(r'', include(shop.urls)),
+    from oscar.app import shop
+    from stores.app import application as stores_app
+    from stores.dashboard.app import application as dashboard_app
 
-    # adds URLs for the dashboard store manager
-    url(r'^dashboard/stores/', include(dashboard_app.urls)),
+    urlpatterns = patterns('',
+        # basic configuration for Oscar
+        url(r'', include(shop.urls)),
 
-    # adds URLs for overview and detail pages
-    url(r'^stores/', include(stores_app.urls)),
+        # adds URLs for the dashboard store manager
+        url(r'^dashboard/stores/', include(dashboard_app.urls)),
 
-    # adds internationalization URLs
-    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
-)
-```
+        # adds URLs for overview and detail pages
+        url(r'^stores/', include(stores_app.urls)),
+
+        # adds internationalization URLs
+        (r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
+    )
 
 You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
 appropriate directory.
@@ -123,7 +124,9 @@ Settings
 * ``STORES_GEODETIC_SRID`` (default: ``4326``).
 
 * ``STORES_MAX_SEARCH_DISTANCE`` (default: None). This filters stores
-  in queries by distance. Units can be set using distance object::
+  in queries by distance. Units can be set using distance object:
+
+.. code:: python
 
     from django.contrib.gis.measure import D
     # Maximal distance of 150 miles
@@ -137,15 +140,15 @@ Contributing
 There is sandbox site within the repo which is a sample Oscar project that uses
 the stores extension.  Set this up with:
 
-```bash
-$ make sandbox
-```
+.. code:: bash
 
-then fetch the GeoIP files with::
+    $ make sandbox
 
-```bash
-make geoip
-```
+then fetch the GeoIP files with:
+
+.. code:: bash
+
+    make geoip
 
 This loads a fixture which provides a superuser to test the dashboard with::
 
@@ -153,11 +156,11 @@ This loads a fixture which provides a superuser to test the dashboard with::
     username: superuser
     password: testing
 
-Run tests with::
+Run tests with:
 
-```bash
-$ ./runtests.py
-```
+.. code:: bash
+
+    $ ./runtests.py
 
 License
 -------
