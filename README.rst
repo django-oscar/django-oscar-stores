@@ -148,7 +148,7 @@ then fetch the GeoIP files with:
 
 .. code:: bash
 
-    make geoip
+    $ make geoip
 
 This loads a fixture which provides a superuser to test the dashboard with::
 
