@@ -2,8 +2,15 @@
 Changelog
 =========
 
+0.7
+===
+
+* Load geocode service dynamically
+* Drop support for Oscar 0.5
+
 0.6.1
 =====
+
 * Support Oscar 0.7
 
 0.6
