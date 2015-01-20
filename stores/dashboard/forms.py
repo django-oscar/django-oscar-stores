@@ -113,10 +113,12 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
     extra = 10
     can_order = False
     can_delete = True
+    min_num = 0
     max_num = 30 # Reasonably safe number of maximum period intervals per day
     absolute_max = 30
     fk = [f for f in OpeningPeriod._meta.fields if f.name == 'store'][0]
     model = OpeningPeriod
+    validate_min = True
     validate_max = True
 
     def __init__(self, weekday, data, instance):
@@ -163,8 +165,7 @@ class OpeningHoursFormset(object):
         self.data = data or None
         self.instance = instance
         self.forms = [self.construct_sub_formset(weekday) for weekday in
-            OpeningPeriod.WEEK_DAYS
-        ]
+                      OpeningPeriod.WEEK_DAYS]
 
     def __iter__(self):
         return iter(self.forms)

@@ -3,6 +3,7 @@ import os
 import sys
 import logging
 
+import django
 from django.conf import settings
 
 from oscar.defaults import OSCAR_SETTINGS
@@ -123,4 +124,6 @@ def run_tests(*test_args):
 
 if __name__ == '__main__':
     configure()
+    if hasattr(django, 'setup'):
+        django.setup()  # initialise app registry for Django 1.7+
     run_tests(*sys.argv[1:])
