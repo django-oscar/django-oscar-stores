@@ -1,5 +1,7 @@
 language: python
 
+sudo: false
+
 python:
     - 2.7
 
@@ -11,6 +13,9 @@ env:
         # Oscar 0.7
         - COMBO="django-oscar==0.7.3 Django==1.5.10"
         - COMBO="django-oscar==0.7.3 Django==1.6.7"
+        # Oscar 1.0
+        - COMBO="django-oscar==1.0.1 Django==1.6.7"
+        - COMBO="django-oscar==1.0.1 Django==1.7.3"
 
 install:
     - pip install $COMBO -r requirements.txt
