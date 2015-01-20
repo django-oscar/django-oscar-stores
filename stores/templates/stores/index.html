@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% load url from future %}
 {% load i18n %}
+{% load l10n %}
 {% load staticfiles %}
 {% load thumbnail %}
 {% load currency_filters %}
@@ -136,7 +137,7 @@
             {% for store in store_list %}
             {
                 'name': '{{ store.name|escapejs }}',
-                'location': new google.maps.LatLng({{ store.location.y }}, {{ store.location.x }}),
+                'location': new google.maps.LatLng({{ store.location.y|unlocalize }}, {{ store.location.x|unlocalize }}),
                 'imageURL': '{% if store.image %}{{ store.image.url }}{% endif %}',
                 'address1': '{{ store.address.line1|escapejs }}',
                 'address2': '{{ store.address.line2|escapejs }}',
