@@ -2,17 +2,17 @@
 Oscar stores
 ============
 
-.. image:: https://secure.travis-ci.org/tangentlabs/django-oscar-stores.png
-    :target: http://travis-ci.org/#!/tangentlabs/django-oscar-stores
+.. image:: https://secure.travis-ci.org/django-oscar/django-oscar-stores.png
+    :target: http://travis-ci.org/#!/django-oscar/django-oscar-stores
 
-.. image:: https://coveralls.io/repos/tangentlabs/django-oscar-stores/badge.png?branch=master
+.. image:: https://coveralls.io/repos/django-oscar/django-oscar-stores/badge.png?branch=master
     :alt: Coverage
-    :target: https://coveralls.io/r/tangentlabs/django-oscar-stores
+    :target: https://coveralls.io/r/django-oscar/django-oscar-stores
 
 This is an extension for django-oscar_ that adds support for stores.  It
 provides:
 
-.. _django-oscar: https://github.com/tangentlabs/django-oscar
+.. _django-oscar: https://github.com/django-oscar/django-oscar
 
 * A store locator page using Google maps for geocoding.  It also supports using
   the browser's location to show the nearest stores.
@@ -28,19 +28,19 @@ Screenshots
 
 Customer-facing pages:
 
-.. image:: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/locator.thumb.png
-    :target: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/locator.png
+.. image:: https://github.com/django-oscar/django-oscar-stores/raw/master/docs/images/locator.thumb.png
+    :target: https://github.com/django-oscar/django-oscar-stores/raw/master/docs/images/locator.png
 
-.. image:: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/detail.thumb.png
-    :target: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/detail.png
+.. image:: https://github.com/django-oscar/django-oscar-stores/raw/master/docs/images/detail.thumb.png
+    :target: https://github.com/django-oscar/django-oscar-stores/raw/master/docs/images/detail.png
 
 Dashboard pages:
 
-.. image:: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/dashboard-list.thumb.png
-    :target: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/dashboard-list.png
+.. image:: https://github.com/django-oscar/django-oscar-stores/raw/master/docs/images/dashboard-list.thumb.png
+    :target: https://github.com/django-oscar/django-oscar-stores/raw/master/docs/images/dashboard-list.png
 
-.. image:: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/dashboard-detail.thumb.png
-    :target: https://github.com/tangentlabs/django-oscar-stores/raw/master/docs/images/dashboard-detail.png
+.. image:: https://github.com/django-oscar/django-oscar-stores/raw/master/docs/images/dashboard-detail.thumb.png
+    :target: https://github.com/django-oscar/django-oscar-stores/raw/master/docs/images/dashboard-detail.png
 
 Dependencies
 ------------
@@ -167,4 +167,4 @@ License
 
 ``django-oscar-stores`` is released under the permissive `New BSD license`_.
 
-.. _`New BSD license`: http://github.com/tangentlabs/django-oscar-stores/blob/master/LICENSE
+.. _`New BSD license`: http://github.com/django-oscar/django-oscar-stores/blob/master/LICENSE
