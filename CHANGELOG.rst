@@ -2,6 +2,12 @@
 Changelog
 =========
 
+0.8
+===
+
+* Django 1.7 support
+* Fix localisation bug
+
 0.7
 ===
 

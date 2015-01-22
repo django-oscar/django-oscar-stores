@@ -4,10 +4,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-oscar-stores',
-    version="0.7",
-    url='https://github.com/tangentlabs/django-oscar-stores',
-    author="Tangent Snowball",
-    author_email="oscar@tangentlabs.co.uk",
+    version="0.8",
+    url='https://github.com/django-oscar/django-oscar-stores',
+    author="David Winterbottom",
+    author_email="david.winterbottom@gmail.com",
     description="An extension for Oscar to include stores",
     long_description=open(
         os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
