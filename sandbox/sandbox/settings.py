@@ -133,6 +133,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'stores',
     'compressor',
+    'widget_tweaks',
 ]
 
 from oscar import get_core_apps
