@@ -12,12 +12,10 @@
     <ul class="breadcrumb">
         <li>
             <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
-            <span class="divider">/</span>
         </li>
         {% if not filterform.is_empty %}
             <li>
                 <a href="{% url 'stores-dashboard:store-list' %}">{% trans "Stores" %}</a>
-                <span class="divider">/</span>
             </li>
         {% endif %}
         <li class="active">{{ queryset_description }}</li>
@@ -37,7 +35,7 @@
     </div>
     <div class="well">
         <form action="." method="get" class="form-inline">
-            {% include "partials/form_fields_inline.html" with form=filterform %}
+            {% include "dashboard/partials/form_fields_inline.html" with form=filterform %}
             <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
             {% if not filterform.is_empty %}
                 <a href="?" class="btn">{% trans "Reset" %}</a>
@@ -106,7 +104,7 @@
                 {% endfor %}
             </table>
 
-            {% include "partials/pagination.html" %}
+            {% include "dashboard/partials/pagination.html" %}
         </form>
 
     {% else %}

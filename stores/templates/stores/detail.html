@@ -16,22 +16,20 @@
     <ul class="breadcrumb">
         <li>
             <a href="{% url 'promotions:home' %}">{% trans "Home" %}</a>
-            <span class="divider">/</span>
         </li>
         <li>
             <a href="{% url 'stores:index' %}">{% trans "Stores" %}</a>
-            <span class="divider">/</span>
         </li>
         <li class="active">{{ store.name }}</li>
-        <li class="pull-right"><a href="{% url 'stores:index' %}"><i class="icon-arrow-left"></i> {% trans "View all stores" %}</a></li>
+        <span class="pull-right"><a href="{% url 'stores:index' %}"><i class="icon-arrow-left"></i> {% trans "View all stores" %}</a></span>
     </ul>
 {% endblock %}
 
 {% block headertext %}{{ store.name }}{% endblock %}
 
 {% block content %}
-    <div class="row-fluid">
-        <div class="span4 store-address-contact">
+    <div class="row">
+        <div class="col-md-4 store-address-contact">
             <div class="store-details">
                 {% if store.image %}
                     {% thumbnail store.image "400x400" as im %}
@@ -47,10 +45,10 @@
             {% include "stores/partials/store_opening_periods.html" %}
 
         </div>
-        <div class="span8">
-            <section class="row-fluid">
+        <div class="col-md-8">
+            <section class="row">
                 <map>
-                    <div class='store-map' style="width: 720px; height:450px;"></div>
+                    <div class="store-map" style="width: 720px; height:450px;"></div>
                 </map>
             </section>
             {{ store.description|safe }}

@@ -12,12 +12,9 @@
 <ul class="breadcrumb">
     <li>
         <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
-        <span class="divider">/</span>
     </li>
     <li>
-    <a href="{% url 'stores-dashboard:store-group-list' %}">{% trans "Store groups" %}</a>
-        <span class="divider">/</span>
-    </li>
+    <a href="{% url 'stores-dashboard:store-group-list' %}">{% trans "Store groups" %}</a></li>
     <li class="active">{{ title }}</li>
 </ul>
 {% endblock %}
@@ -35,10 +32,10 @@
         <div class="sub-header">
             <h3>{% trans "Store Group Details" %}</h3>
         </div>
-        {% include 'partials/form_fields.html' %}
+        {% include 'dashboard/partials/form_fields.html' %}
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
         <div class="pull-right">
             <a href="{% url 'stores-dashboard:store-group-list' %}">{% trans "Cancel" %}</a>
             {% trans "or" %}
