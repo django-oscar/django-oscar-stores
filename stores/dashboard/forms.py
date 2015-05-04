@@ -1,10 +1,11 @@
 from django import forms
 from django.forms import models as modelforms
-from django.db.models import Q, get_model
+from django.db.models import Q
 from django.contrib.gis.forms import fields
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.gis.geoip import HAS_GEOIP
 from django.conf import settings
+from oscar.core.loading import get_model
 
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
 assert OpeningPeriod
@@ -14,7 +15,8 @@ class StoreAddressForm(forms.ModelForm):
 
     class Meta:
         model = get_model('stores', 'StoreAddress')
-        exclude = ('title', 'first_name', 'last_name', 'search_text')
+        fields = [
+            'line1', 'line2', 'line3', 'line4', 'state', 'postcode', 'country']
 
 
 class StoreForm(forms.ModelForm):
@@ -22,7 +24,10 @@ class StoreForm(forms.ModelForm):
 
     class Meta:
         model = get_model('stores', 'Store')
-        exclude = ('slug', 'opening_periods', )
+        fields = [
+            'name', 'phone', 'email', 'reference', 'image', 'description',
+            'location', 'group', 'is_pickup_store', 'is_active',
+        ]
         widgets = {
             'description': forms.Textarea(attrs={'cols': 40, 'rows': 10}),
         }
@@ -61,7 +66,7 @@ class OpeningPeriodForm(forms.ModelForm):
 
     class Meta:
         model = OpeningPeriod
-        exclude = ('store', 'weekday', )
+        fields = ['start', 'end']
         widgets = {
             'name': forms.TextInput(
                 attrs={'placeholder': _("e.g. Christmas")}
@@ -114,7 +119,7 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
     can_order = False
     can_delete = True
     min_num = 0
-    max_num = 30 # Reasonably safe number of maximum period intervals per day
+    max_num = 30  # Reasonably safe number of maximum period intervals per day
     absolute_max = 30
     fk = [f for f in OpeningPeriod._meta.fields if f.name == 'store'][0]
     model = OpeningPeriod
@@ -143,10 +148,10 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
         return unicode(OpeningPeriod.WEEK_DAYS[self.weekday])
 
     def form(self, *args, **kwargs):
-         form = OpeningPeriodForm(*args, **kwargs)
-         form.instance.weekday = self.weekday
-         form.instance.store = self.instance
-         return form
+        form = OpeningPeriodForm(*args, **kwargs)
+        #form.instance.weekday = self.weekday
+        #form.instance.store = self.instance
+        return form
 
     def is_valid(self):
         return super(OpeningPeriodFormset, self).is_valid()

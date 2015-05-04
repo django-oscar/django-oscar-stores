@@ -69,7 +69,6 @@ class OpeningPeriodInline(InlineFormSet):
 
 
 class StoreEditMixin(object):
-    #inlines = [OpeningPeriodInline, StoreAddressInline]
     inlines = [OpeningHoursInline, StoreAddressInline]
 
     def get_form_kwargs(self):
@@ -148,6 +147,7 @@ class StoreGroupListView(generic.ListView):
 
 class StoreGroupCreateView(generic.CreateView):
     model = StoreGroup
+    fields = ['name', 'slug']
     template_name = "stores/dashboard/store_group_update.html"
     success_url = reverse_lazy('stores-dashboard:store-group-list')
 
