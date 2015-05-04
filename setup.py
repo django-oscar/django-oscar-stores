@@ -17,9 +17,13 @@ setup(
     packages=find_packages(exclude=["sandbox*", "tests*"]),
     include_package_data=True,
     install_requires=[
-        'django-oscar>=1.1',
+        'django-oscar>=1.1.0dev0',
         'requests>=1.1',
     ],
+    dependency_links=[
+        'https://github.com/django-oscar/django-oscar/archive/master.zip#egg=django-oscar-1.1.0dev0',
+    ],
+
     # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         'Development Status :: 4 - Beta',

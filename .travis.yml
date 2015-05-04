@@ -14,7 +14,7 @@ env:
     - TOXENV=py34-django18
 
 install:
-    - pip install -r requirements.txt
+    - pip install tox coverage
 
 before_script:
     - psql -c 'CREATE DATABASE oscar_stores;' -U postgres
@@ -22,4 +22,4 @@ before_script:
     - psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d oscar_stores
 
 script:
-    - coverage run tox
+    - tox

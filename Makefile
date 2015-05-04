@@ -1,7 +1,7 @@
 .PHONY: install sandbox geoip css
 
 install:
-	pip install -r requirements.txt
+	pip install -e . -r requirements.txt --process-dependency-links --allow-external django-oscar 
 
 geoip:
 	# Fetch GeoIP data
