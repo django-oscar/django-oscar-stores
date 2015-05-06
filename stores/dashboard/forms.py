@@ -56,14 +56,6 @@ class StoreForm(forms.ModelForm):
 
 class OpeningPeriodForm(forms.ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        super(OpeningPeriodForm, self).__init__(*args, **kwargs)
-        time_input = ['%H:%M', '%H', '%I:%M%p', '%I%p', '%I:%M %p', '%I %p']
-        self.fields['start'].input_formats = time_input
-        self.fields['start'].required = False
-        self.fields['end'].input_formats = time_input
-        self.fields['end'].required = False
-
     class Meta:
         model = OpeningPeriod
         fields = ['start', 'end']
@@ -80,6 +72,23 @@ class OpeningPeriodForm(forms.ModelForm):
                 attrs={'placeholder': _("e.g. 5 PM, 18:30, etc.")}
             ),
         }
+
+
+    def __init__(self, *args, **kwargs):
+        self.weekday = kwargs.pop('weekday')
+        self.store = kwargs.pop('store')
+
+        super(OpeningPeriodForm, self).__init__(*args, **kwargs)
+        time_input = ['%H:%M', '%H', '%I:%M%p', '%I%p', '%I:%M %p', '%I %p']
+        self.fields['start'].input_formats = time_input
+        self.fields['start'].required = False
+        self.fields['end'].input_formats = time_input
+        self.fields['end'].required = False
+
+    def save(self, commit=True):
+        self.instance.store = self.store
+        self.instance.weekday = self.weekday
+        return super(OpeningPeriodForm, self).save(commit=commit)
 
 
 class DashboardStoreSearchForm(forms.Form):
@@ -148,9 +157,8 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
         return unicode(OpeningPeriod.WEEK_DAYS[self.weekday])
 
     def form(self, *args, **kwargs):
-        form = OpeningPeriodForm(*args, **kwargs)
-        #form.instance.weekday = self.weekday
-        #form.instance.store = self.instance
+        form = OpeningPeriodForm(
+            *args, store=self.instance, weekday=self.weekday, **kwargs)
         return form
 
     def is_valid(self):
