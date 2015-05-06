@@ -164,6 +164,7 @@ class StoreGroupCreateView(generic.CreateView):
 
 class StoreGroupUpdateView(generic.UpdateView):
     model = StoreGroup
+    fields = ['name', 'slug']
     template_name = "stores/dashboard/store_group_update.html"
     success_url = reverse_lazy('stores-dashboard:store-group-list')
 
