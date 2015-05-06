@@ -1,9 +1,10 @@
 from django.db import models
+from django.contrib.gis.db.models import PointField
+from django.contrib.gis.db.models import GeoManager
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
-from django.contrib.gis.db.models import PointField
-from django.contrib.gis.db.models import GeoManager
+from django.utils.encoding import python_2_unicode_compatible
 
 from oscar.core.utils import slugify
 from oscar.apps.address.abstract_models import AbstractAddress
@@ -30,6 +31,7 @@ class StoreAddress(AbstractAddress):
         return "\n".join(filter(bool, [self.line1, self.line2, self.line3]))
 
 
+@python_2_unicode_compatible
 class StoreGroup(models.Model):
     name = models.CharField(_('Name'), max_length=100, unique=True)
     slug = models.SlugField(_('Slug'), max_length=100, unique=True)
@@ -42,10 +44,11 @@ class StoreGroup(models.Model):
             self.slug = slugify(self.name)
         super(StoreGroup, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
+@python_2_unicode_compatible
 class Store(models.Model):
     name = models.CharField(_('Name'), max_length=100)
     slug = models.SlugField(_('Slug'), max_length=100, null=True)
@@ -98,7 +101,7 @@ class Store(models.Model):
             self.slug = slugify(self.name)
         super(Store, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):
@@ -110,6 +113,7 @@ class Store(models.Model):
         return any([self.manager_name, self.phone, self.email])
 
 
+@python_2_unicode_compatible
 class OpeningPeriod(models.Model):
     PERIOD_FORMAT = _("%(start)s - %(end)s")
     (MONDAY, TUESDAY, WEDNESDAY, THURSDAY,
@@ -141,7 +145,7 @@ class OpeningPeriod(models.Model):
         blank=True,
         help_text=_("Leaving start and end time empty is displayed as 'Closed'"))
 
-    def __unicode__(self):
+    def __str__(self):
         return u"%s: %s to %s" % (self.weekday, self.start, self.end)
 
     class Meta:
@@ -155,6 +159,7 @@ class OpeningPeriod(models.Model):
             raise ValidationError(_("Start must be before end"))
 
 
+@python_2_unicode_compatible
 class StoreStock(models.Model):
     store = models.ForeignKey(
         'stores.Store',
@@ -202,7 +207,7 @@ class StoreStock(models.Model):
 
     objects = GeoManager()
 
-    def __unicode__(self):
+    def __str__(self):
         if self.store and self.product:
             return u"%s @ %s" % (self.product.title, self.store.name)
         return u"Store Stock"

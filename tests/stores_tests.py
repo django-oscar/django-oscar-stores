@@ -18,11 +18,12 @@ class TestStore(TestCase):
         StoreFactory(is_pickup_store=False, location=sample_location)
         store4 = StoreFactory(is_pickup_store=True, location=sample_location)
 
-        stores = Store.objects.pickup_stores()
-        self.assertItemsEqual(
-            list(stores),
-            [store1, store2, store4]
-        )
+        stores = list(Store.objects.pickup_stores())
+
+        self.assertEqual(len(stores), 3)
+        self.assertIn(store1, stores)
+        self.assertIn(store2, stores)
+        self.assertIn(store4, stores)
 
 
 def repr_opening_hours(store):
@@ -149,6 +150,7 @@ class TestASignedInUser(StoresWebTest):
             assert False, repr(resp.context['form'].errors)
 
         store = Store.objects.get(name='WorkingHoursTest')
+        assert store.opening_periods.count() == 3
 
         self.assertEquals(repr_opening_hours(store), {
             1: '10:00 - 11:00, 12:00 - 13:00',

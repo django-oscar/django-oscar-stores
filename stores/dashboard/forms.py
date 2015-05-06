@@ -2,6 +2,7 @@ from django import forms
 from django.forms import models as modelforms
 from django.db.models import Q
 from django.contrib.gis.forms import fields
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.gis.geoip import HAS_GEOIP
 from django.conf import settings
@@ -122,6 +123,9 @@ class IsOpenForm(forms.Form):
         self.is_valid()
         return self.cleaned_data['open']
 
+    def __bool__(self):
+        return self.__nonzero__()
+
 
 class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
     extra = 10
@@ -154,7 +158,7 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
                                                    queryset=queryset)
 
     def get_weekday_display(self):
-        return unicode(OpeningPeriod.WEEK_DAYS[self.weekday])
+        return force_text(OpeningPeriod.WEEK_DAYS[self.weekday])
 
     def form(self, *args, **kwargs):
         form = OpeningPeriodForm(

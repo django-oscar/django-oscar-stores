@@ -82,5 +82,6 @@ def pytest_configure():
         },
         GEOIP_PATH='sandbox/geoip',
         COMPRESS_ENABLED=False,
+        TEST_RUNNER='django.test.runner.DiscoverRunner',
     ))
     settings.configure(**test_settings)
