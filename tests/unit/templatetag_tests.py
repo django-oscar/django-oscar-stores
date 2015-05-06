@@ -1,24 +1,25 @@
 from django.test import TestCase
-from django.db.models import get_model
 from django.template import Template, Context
+from oscar.test.factories import ProductFactory
 
-from django_dynamic_fixture import get as G
-
-Product = get_model('catalogue', 'Product')
-Store = get_model('stores', 'Store')
-StoreStock = get_model('stores', 'StoreStock')
+from tests.factories import StoreFactory, StoreStockFactory
 
 
 class StoreStockTest(TestCase):
 
     def setUp(self):
-        self.product = G(Product)
+        self.product = ProductFactory()
         self.store1_location = '{"type": "Point", "coordinates": [87.39,12.02]}'
         self.store2_location = '{"type": "Point", "coordinates": [88.39,11.02]}'
-        self.store1 = G(Store, is_pickup_store=True, location=self.store1_location)
-        self.store2 = G(Store, is_pickup_store=True, location=self.store2_location)
-        self.store_stock1 = G(StoreStock, store=self.store1, product=self.product)
-        self.store_stock1 = G(StoreStock, store=self.store2, product=self.product)
+        self.store1 = StoreFactory(
+            is_pickup_store=True, location=self.store1_location)
+        self.store2 = StoreFactory(
+            is_pickup_store=True, location=self.store2_location)
+
+        self.store_stock1 = StoreStockFactory(
+            store=self.store1, product=self.product)
+        self.store_stock1 = StoreStockFactory(
+            store=self.store2, product=self.product)
 
     def test_store_stock_loads(self):
         Template(

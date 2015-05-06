@@ -9,6 +9,7 @@
 .coveralls.yml
 
 .tox/
+.cache/
 dist/
 cover/
 docs/_build/

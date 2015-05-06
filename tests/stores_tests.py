@@ -1,23 +1,22 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-
 from django_webtest import WebTest
-from django_dynamic_fixture import get as G
-
-from oscar.apps.address.models import Country
+from oscar.test.factories import CountryFactory
 
 from stores.models import Store
+
+from tests.factories import StoreFactory
 
 
 class TestStore(TestCase):
 
     def test_querying_available_pickup_stores(self):
         sample_location = '{"type": "Point", "coordinates": [88.39,11.02]}'
-        store1 = G(Store, is_pickup_store=True, location=sample_location)
-        store2 = G(Store, is_pickup_store=True, location=sample_location)
-        G(Store, is_pickup_store=False, location=sample_location)
-        store4 = G(Store, is_pickup_store=True, location=sample_location)
+        store1 = StoreFactory(is_pickup_store=True, location=sample_location)
+        store2 = StoreFactory(is_pickup_store=True, location=sample_location)
+        StoreFactory(is_pickup_store=False, location=sample_location)
+        store4 = StoreFactory(is_pickup_store=True, location=sample_location)
 
         stores = Store.objects.pickup_stores()
         self.assertItemsEqual(
@@ -70,8 +69,7 @@ class TestASignedInUser(StoresWebTest):
 
     def setUp(self):
         super(TestASignedInUser, self).setUp()
-        self.country = G(
-            Country,
+        self.country = CountryFactory(
             name="AUSTRALIA",
             printable_name="Australia",
             iso_3166_1_a2='AU',

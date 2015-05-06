@@ -1,11 +1,8 @@
-from django.db.models import get_model
 from django.core.urlresolvers import reverse
-
-from django_dynamic_fixture import get as G
 from oscar.test.testcases import WebTestCase
 
-Store = get_model("stores", "Store")
-StoreGroup = get_model("stores", "StoreGroup")
+from tests.factories import StoreFactory, StoreGroupFactory
+
 
 
 class TestTheListOfStores(WebTestCase):
@@ -16,19 +13,15 @@ class TestTheListOfStores(WebTestCase):
         self.main_location = 'POINT(144.917908 -37.815751)'
         self.other_location = 'POINT(144.998401 -37.772895)'
 
-        self.main_store = G(
-            Store,
+        self.main_store = StoreFactory(
             name="Main store in Southbank",
             is_pickup_store=True,
             location=self.main_location,
-            ignore_fields=['group'],
         )
-        self.other_store = G(
-            Store,
+        self.other_store = StoreFactory(
             name="Other store in Northcote",
             is_pickup_store=True,
             location=self.other_location,
-            ignore_fields=['group'],
         )
 
     def test_displays_all_stores_unfiltered(self):
@@ -50,8 +43,8 @@ class TestTheListOfStores(WebTestCase):
         self.assertSequenceEqual(stores, [self.other_store, self.main_store])
 
     def test_can_be_filtered_by_store_group(self):
-        north_group = StoreGroup.objects.create(name="North")
-        south_group = StoreGroup.objects.create(name="South")
+        north_group = StoreGroupFactory(name="North")
+        south_group = StoreGroupFactory(name="South")
 
         self.main_store.group = south_group
         self.main_store.save()

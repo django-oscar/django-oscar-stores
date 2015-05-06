@@ -6,19 +6,15 @@ python:
     - 2.7
 
 env:
-    matrix:
-        # Oscar 0.6
-        - COMBO="django-oscar==0.6.5 Django==1.5.10"
-        - COMBO="django-oscar==0.6.5 Django==1.6.7"
-        # Oscar 0.7
-        - COMBO="django-oscar==0.7.3 Django==1.5.10"
-        - COMBO="django-oscar==0.7.3 Django==1.6.7"
-        # Oscar 1.0
-        - COMBO="django-oscar==1.0.1 Django==1.6.7"
-        - COMBO="django-oscar==1.0.1 Django==1.7.3"
+    - TOXENV=py27-django17
+    - TOXENV=py27-django18
+    - TOXENV=py33-django17
+    - TOXENV=py33-django18
+    - TOXENV=py34-django17
+    - TOXENV=py34-django18
 
 install:
-    - pip install $COMBO -r requirements.txt
+    - pip install tox coverage
 
 before_script:
     - psql -c 'CREATE DATABASE oscar_stores;' -U postgres
@@ -26,4 +22,4 @@ before_script:
     - psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d oscar_stores
 
 script:
-    - coverage run ./runtests.py
+    - tox
