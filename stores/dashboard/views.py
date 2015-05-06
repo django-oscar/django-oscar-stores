@@ -1,11 +1,11 @@
 from django.views import generic
-from django.db.models import get_model
 from django.core.urlresolvers import reverse_lazy
 from django.template.loader import render_to_string
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _, ugettext
-from extra_views import (CreateWithInlinesView, UpdateWithInlinesView,
-                         InlineFormSet)
+from extra_views import (
+    CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet)
+from oscar.core.loading import get_model
 
 from stores.dashboard import forms
 from stores.utils import get_current_ip

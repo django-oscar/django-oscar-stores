@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.gis.geos import GEOSGeometry
-from django.db.models import get_model
 from django.utils.translation import ugettext as _
-from oscar.core.loading import get_class
+from oscar.core.loading import get_class, get_model
 
 
 geocode = get_class('stores.services', 'geocode')
