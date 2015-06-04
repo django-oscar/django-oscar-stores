@@ -13,7 +13,8 @@ sandbox: install
 	-rm -rf sandbox/public/media/cache sandbox/public/media/uploads
 	./sandbox/manage.py syncdb --noinput
 	./sandbox/manage.py migrate
-	./sandbox/manage.py loaddata sandbox/fixtures/auth.json countries.json
+	./sandbox/manage.py loaddata sandbox/fixtures/auth.json
+	./sandbox/manage.py loaddata sandbox/fixtures/countries.json
 	./sandbox/manage.py loaddata sandbox/fixtures/stores.json
 	./sandbox/manage.py thumbnail clear
 
