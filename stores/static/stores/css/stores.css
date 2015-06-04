@@ -34,6 +34,7 @@
   font-size: 12px;
   padding: 8px 0 8px 4px;
   box-shadow: none;
+  width: 100%;
 }
 .view-stores .stores-postcode-search .icon-search {
   background: #fff;
@@ -43,7 +44,7 @@
   vertical-align: middle;
   position: absolute;
   right: 0;
-  top: 10px;
+  top: 5px;
 }
 .view-stores .nav-tabs.nav-stacked > li > a {
   padding-left: 0;
