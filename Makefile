@@ -11,8 +11,6 @@ geoip:
 
 sandbox: install
 	-rm -rf sandbox/public/media/cache sandbox/public/media/uploads
-	# command below will break if using PostGIS without a template database
-	./sandbox/manage.py reset_db --router=default --noinput
 	./sandbox/manage.py syncdb --noinput
 	./sandbox/manage.py migrate
 	./sandbox/manage.py loaddata sandbox/fixtures/auth.json countries.json
