@@ -22,7 +22,7 @@ class StoreAddressForm(forms.ModelForm):
 
 
 class StoreForm(gisforms.ModelForm):
-    location = fields.GeometryField(widget=forms.HiddenInput())
+    location = fields.PointField(widget=forms.HiddenInput())
 
     class Meta:
         model = get_model('stores', 'Store')
