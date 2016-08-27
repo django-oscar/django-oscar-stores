@@ -13,8 +13,5 @@ class StoreManager(GeoManager):
     def get_queryset(self):
         return StoreQuerySet(self.model)
 
-    # for Django 1.6 backward compatibility
-    get_query_set = get_queryset
-    
     def pickup_stores(self):
         return self.get_queryset().pickup_stores()
