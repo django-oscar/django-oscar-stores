@@ -5,6 +5,13 @@ from oscar.defaults import OSCAR_SETTINGS
 from oscar import OSCAR_MAIN_TEMPLATE_DIR, get_core_apps
 
 
+ROOT_DIR = os.path.join(os.path.dirname(__file__), '..')
+location = lambda x: os.path.join(ROOT_DIR, x)
+GEOIP_PATH = location('sandbox/geoip')
+GEOIP_COUNTRY = location('sandbox/geoip/GeoIP.dat')
+GEOIP_CITY = location('sandbox/geoip/GeoIPCity.dat')
+
+
 def pytest_configure():
     location = lambda x: os.path.join(
         os.path.dirname(os.path.realpath(__file__)), x)
@@ -15,7 +22,10 @@ def pytest_configure():
             'default': {
                 'ENGINE': 'django.contrib.gis.db.backends.postgis',
                 'NAME': 'oscar_stores',
+                'USER': 'sample_role',
+                'PASSWORD': 'sample_password',
                 'HOST': '127.0.0.1',
+                'PORT': 5432,
             }
         },
         SITE_ID=1,
@@ -80,7 +90,9 @@ def pytest_configure():
                 'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
             },
         },
-        GEOIP_PATH='sandbox/geoip',
+        GEOIP_PATH = GEOIP_PATH,
+        GEOIP_COUNTRY = GEOIP_COUNTRY,
+        GEOIP_CITY = GEOIP_CITY,
         COMPRESS_ENABLED=False,
         TEST_RUNNER='django.test.runner.DiscoverRunner',
     ))
