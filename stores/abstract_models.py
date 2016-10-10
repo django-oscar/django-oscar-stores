@@ -155,7 +155,10 @@ class OpeningPeriod(models.Model):
         verbose_name_plural = _("Opening periods")
 
     def clean(self):
-        if self.end <= self.start:
+        start_end = [self.start, self.end]
+        if any(start_end) and not all(start_end):
+            raise ValidationError(_("You must set both start and end values"))
+        if all(start_end) and self.end <= self.start:
             raise ValidationError(_("Start must be before end"))
 
 
