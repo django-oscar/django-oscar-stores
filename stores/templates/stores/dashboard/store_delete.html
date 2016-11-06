@@ -27,9 +27,7 @@
 {% block dashboard_content %}
 <form action="." method="post">
     {% csrf_token %}
-    {% blocktrans with store_name=object.name %}
-    <p>Delete store <strong>{{ store_name }}</strong> - are you sure?</p>
-    {% endblocktrans %}
+    {% blocktrans with store_name=object.name %}<p>Delete store <strong>{{ store_name }}</strong> - are you sure?</p>{% endblocktrans %}
     <div class="form-actions">
         <button type="submit" class="btn btn-large btn-danger">{% trans "Delete" %}</button>
         {% trans "or" %}

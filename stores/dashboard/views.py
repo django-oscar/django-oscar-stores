@@ -33,7 +33,8 @@ class StoreListView(generic.ListView):
         if name and not address:
             return ugettext('Stores matching "%s"') % (name)
         elif name and address:
-            return ugettext('Stores matching "%s" near "%s"') % (name, address)
+            title = ugettext('Stores matching "%(name)s" near "%(address)s"')
+            return title % {'name': name, 'address': address}
         elif address:
             return ugettext('Stores near "%s"') % (address)
         else:
@@ -91,7 +92,9 @@ class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
     def forms_invalid(self, form, inlines):
         messages.error(
             self.request,
-            "Your submitted data was not valid - please correct the below errors")
+            ugettext("Your submitted data was not valid - "
+                     "please correct the below errors")
+        )
         return super(StoreCreateView, self).forms_invalid(form, inlines)
 
     def forms_valid(self, form, inlines):
@@ -117,7 +120,9 @@ class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
     def forms_invalid(self, form, inlines):
         messages.error(
             self.request,
-            "Your submitted data was not valid - please correct the below errors")
+            ugettext("Your submitted data was not valid - "
+                     "please correct the below errors")
+        )
         return super(StoreUpdateView, self).forms_invalid(form, inlines)
 
     def forms_valid(self, form, inlines):

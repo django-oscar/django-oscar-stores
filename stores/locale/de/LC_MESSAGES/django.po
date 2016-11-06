@@ -1,0 +1,533 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-06 14:55+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: abstract_models.py:20 abstract_models.py:130 abstract_models.py:169
+#: templates/stores/dashboard/store_group_list.html:38
+msgid "Store"
+msgstr ""
+
+#: abstract_models.py:36 abstract_models.py:53
+#: templates/stores/dashboard/store_list.html:55
+msgid "Name"
+msgstr ""
+
+#: abstract_models.py:37 abstract_models.py:54
+msgid "Slug"
+msgstr ""
+
+#: abstract_models.py:58
+msgid "Manager name"
+msgstr ""
+
+#: abstract_models.py:59
+msgid "Phone"
+msgstr "Telefon"
+
+#: abstract_models.py:60
+msgid "Email"
+msgstr "E-Mail-Adresse"
+
+#: abstract_models.py:63
+msgid "Reference"
+msgstr "Referenz"
+
+#: abstract_models.py:68
+msgid "A reference number that uniquely identifies this store"
+msgstr ""
+
+#: abstract_models.py:71
+msgid "Image"
+msgstr "Bild"
+
+#: abstract_models.py:75
+msgid "Description"
+msgstr "Beschreibung"
+
+#: abstract_models.py:79 templates/stores/dashboard/store_update.html:93
+msgid "Location"
+msgstr "Ort"
+
+#: abstract_models.py:86
+msgid "Group"
+msgstr "Gruppe"
+
+#: abstract_models.py:90
+msgid "Is pickup store"
+msgstr ""
+
+#: abstract_models.py:91
+msgid "Is active"
+msgstr ""
+
+#: abstract_models.py:118
+#, python-format
+msgid "%(start)s - %(end)s"
+msgstr ""
+
+#: abstract_models.py:122
+msgid "Monday"
+msgstr "Montag"
+
+#: abstract_models.py:123
+msgid "Tuesday"
+msgstr "Dienstag"
+
+#: abstract_models.py:124
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+#: abstract_models.py:125
+msgid "Thursday"
+msgstr "Donnerstag"
+
+#: abstract_models.py:126
+msgid "Friday"
+msgstr "Freitag"
+
+#: abstract_models.py:127
+msgid "Saturday"
+msgstr "Samstag"
+
+#: abstract_models.py:128
+msgid "Sunday"
+msgstr "Sonntag"
+
+#: abstract_models.py:135
+msgid "Weekday"
+msgstr ""
+
+#: abstract_models.py:138
+msgid "Start"
+msgstr ""
+
+#: abstract_models.py:141 abstract_models.py:146
+msgid "Leaving start and end time empty is displayed as 'Closed'"
+msgstr ""
+
+#: abstract_models.py:143
+msgid "End"
+msgstr ""
+
+#: abstract_models.py:154
+msgid "Opening period"
+msgstr ""
+
+#: abstract_models.py:155
+msgid "Opening periods"
+msgstr ""
+
+#: abstract_models.py:160
+msgid "You must set both start and end values"
+msgstr ""
+
+#: abstract_models.py:162
+msgid "Start must be before end"
+msgstr ""
+
+#: abstract_models.py:173
+msgid "Product"
+msgstr "Produkt"
+
+#: abstract_models.py:178
+msgid "Number in stock"
+msgstr "Anzahl auf Lager"
+
+#: abstract_models.py:185
+msgid "Number allocated"
+msgstr "Anzahl zugeordnet"
+
+#: abstract_models.py:191
+msgid "In store location"
+msgstr ""
+
+#: abstract_models.py:198
+msgid "Date created"
+msgstr "Erstellungsdatum"
+
+#: abstract_models.py:201
+msgid "Date updated"
+msgstr "Aktualisierungsdatum"
+
+#: abstract_models.py:207
+msgid "Store stock record"
+msgstr ""
+
+#: abstract_models.py:208
+msgid "Store stock records"
+msgstr ""
+
+#: dashboard/forms.py:66
+msgid "e.g. Christmas"
+msgstr ""
+
+#: dashboard/forms.py:70
+msgid "e.g. 9 AM, 11:30, etc."
+msgstr ""
+
+#: dashboard/forms.py:74
+msgid "e.g. 5 PM, 18:30, etc."
+msgstr ""
+
+#: dashboard/forms.py:97
+msgid "Store name"
+msgstr ""
+
+#: dashboard/forms.py:98 templates/stores/dashboard/store_update.html:71
+#: templates/stores/partials/store_address.html:4
+msgid "Address"
+msgstr "Adresse"
+
+#: dashboard/forms.py:121
+msgid "Open"
+msgstr "Offen"
+
+#: dashboard/views.py:34
+#, python-format
+msgid "Stores matching \"%s\""
+msgstr ""
+
+#: dashboard/views.py:36
+#, python-format
+msgid "Stores matching \"%(name)s\" near \"%(address)s\""
+msgstr ""
+
+#: dashboard/views.py:39
+#, python-format
+msgid "Stores near \"%s\""
+msgstr ""
+
+#: dashboard/views.py:41 templates/stores/dashboard/store_delete.html:12
+#: templates/stores/dashboard/store_list.html:18
+#: templates/stores/dashboard/store_update.html:22
+#: templates/stores/detail.html:21 templates/stores/index.html:24 views.py:68
+msgid "Stores"
+msgstr ""
+
+#: dashboard/views.py:89 templates/stores/dashboard/store_list.html:27
+msgid "Create new store"
+msgstr ""
+
+#: dashboard/views.py:95 dashboard/views.py:123
+msgid "Your submitted data was not valid - please correct the below errors"
+msgstr ""
+
+#: dashboard/views.py:161 templates/stores/dashboard/store_group_list.html:21
+msgid "Create new store group"
+msgstr ""
+
+#: dashboard/views.py:166
+msgid "Store group created"
+msgstr ""
+
+#: dashboard/views.py:183
+msgid "Store group updated"
+msgstr ""
+
+#: dashboard/views.py:194
+msgid "Store group deleted"
+msgstr ""
+
+#: forms.py:17
+msgid "Enter your postcode or address..."
+msgstr ""
+
+#: forms.py:37
+msgid "No location could be found for your search"
+msgstr ""
+
+#: templates/stores/dashboard/messages/store_saved.html:3
+#, python-format
+msgid "<strong>%(name)s</strong> store saved."
+msgstr ""
+
+#: templates/stores/dashboard/messages/store_saved.html:4
+#: templates/stores/dashboard/store_list.html:89
+msgid "View on site"
+msgstr "Auf der Website anzeigen"
+
+#: templates/stores/dashboard/messages/store_saved.html:5
+msgid "Edit again"
+msgstr "Erneut bearbeiten"
+
+#: templates/stores/dashboard/store_delete.html:8
+#: templates/stores/dashboard/store_group_delete.html:12
+#: templates/stores/dashboard/store_group_list.html:13
+#: templates/stores/dashboard/store_group_update.html:14
+#: templates/stores/dashboard/store_list.html:14
+#: templates/stores/dashboard/store_update.html:19
+msgid "Dashboard"
+msgstr ""
+
+#: templates/stores/dashboard/store_delete.html:19
+#: templates/stores/dashboard/store_delete.html:24
+msgid "Delete store?"
+msgstr ""
+
+#: templates/stores/dashboard/store_delete.html:30
+#, python-format
+msgid "<p>Delete store <strong>%(store_name)s</strong> - are you sure?</p>"
+msgstr ""
+
+#: templates/stores/dashboard/store_delete.html:32
+#: templates/stores/dashboard/store_group_delete.html:33
+#: templates/stores/dashboard/store_group_list.html:63
+#: templates/stores/dashboard/store_group_list.html:73
+#: templates/stores/dashboard/store_list.html:98
+msgid "Delete"
+msgstr "Löschen"
+
+#: templates/stores/dashboard/store_delete.html:33
+#: templates/stores/dashboard/store_group_delete.html:34
+#: templates/stores/dashboard/store_group_update.html:41
+#: templates/stores/dashboard/store_update.html:204
+#: templates/stores/index.html:42
+msgid "or"
+msgstr "oder"
+
+#: templates/stores/dashboard/store_delete.html:34
+#: templates/stores/dashboard/store_group_delete.html:35
+msgid "cancel"
+msgstr "abbrechen"
+
+#: templates/stores/dashboard/store_group_delete.html:6
+#: templates/stores/dashboard/store_group_delete.html:25
+msgid "Delete store group?"
+msgstr ""
+
+#: templates/stores/dashboard/store_group_delete.html:15
+#: templates/stores/dashboard/store_group_list.html:15
+#: templates/stores/dashboard/store_group_update.html:17
+msgid "Store groups"
+msgstr ""
+
+#: templates/stores/dashboard/store_group_delete.html:20
+msgid "Delete?"
+msgstr "Löschen?"
+
+#: templates/stores/dashboard/store_group_delete.html:31
+#, python-format
+msgid ""
+"<p>Delete store group <strong>%(group_name)s</strong> - are you sure?</p>"
+msgstr ""
+
+#: templates/stores/dashboard/store_group_list.html:7
+#: templates/stores/dashboard/store_list.html:8
+msgid "Store management"
+msgstr ""
+
+#: templates/stores/dashboard/store_group_list.html:22
+msgid "Store Groups"
+msgstr ""
+
+#: templates/stores/dashboard/store_group_list.html:37
+msgid "Group Name"
+msgstr ""
+
+#: templates/stores/dashboard/store_group_list.html:39
+#: templates/stores/dashboard/store_list.html:56
+msgid "Street"
+msgstr ""
+
+#: templates/stores/dashboard/store_group_list.html:40
+#: templates/stores/dashboard/store_list.html:57
+msgid "City"
+msgstr "Stadt"
+
+#: templates/stores/dashboard/store_group_list.html:41
+#: templates/stores/dashboard/store_list.html:58
+msgid "Post Code"
+msgstr ""
+
+#: templates/stores/dashboard/store_group_list.html:42
+#: templates/stores/dashboard/store_list.html:59
+msgid "State"
+msgstr "Status"
+
+#: templates/stores/dashboard/store_group_list.html:43
+#: templates/stores/dashboard/store_list.html:60
+msgid "Country"
+msgstr "Land"
+
+#: templates/stores/dashboard/store_group_list.html:62
+#: templates/stores/dashboard/store_group_list.html:72
+#: templates/stores/dashboard/store_list.html:95
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: templates/stores/dashboard/store_group_list.html:70
+msgid "No stores assigned to this group."
+msgstr ""
+
+#: templates/stores/dashboard/store_group_list.html:86
+msgid "No store groups found."
+msgstr ""
+
+#: templates/stores/dashboard/store_group_update.html:33
+msgid "Store Group Details"
+msgstr ""
+
+#: templates/stores/dashboard/store_group_update.html:40
+#: templates/stores/dashboard/store_update.html:203
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: templates/stores/dashboard/store_group_update.html:42
+msgid "Save store group"
+msgstr ""
+
+#: templates/stores/dashboard/store_list.html:28
+msgid "Store Management"
+msgstr ""
+
+#: templates/stores/dashboard/store_list.html:34
+msgid "Search Stores"
+msgstr ""
+
+#: templates/stores/dashboard/store_list.html:39
+msgid "Search"
+msgstr "Suchen"
+
+#: templates/stores/dashboard/store_list.html:41
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: templates/stores/dashboard/store_list.html:61
+msgid "Is pick up store?"
+msgstr ""
+
+#: templates/stores/dashboard/store_list.html:62
+msgid "Status"
+msgstr ""
+
+#: templates/stores/dashboard/store_list.html:75
+msgid "Yes"
+msgstr "Ja"
+
+#: templates/stores/dashboard/store_list.html:77
+msgid "No"
+msgstr "Nein"
+
+#: templates/stores/dashboard/store_list.html:82
+msgid "Active"
+msgstr "Aktiv"
+
+#: templates/stores/dashboard/store_list.html:84
+msgid "Inactive"
+msgstr "Inaktiv"
+
+#: templates/stores/dashboard/store_list.html:111
+msgid "No stores found."
+msgstr ""
+
+#: templates/stores/dashboard/store_update.html:34
+msgid ""
+"Your submitted data did not validate - please correct the below errors and "
+"resubmit."
+msgstr ""
+
+#: templates/stores/dashboard/store_update.html:49
+msgid "Store details"
+msgstr ""
+
+#: templates/stores/dashboard/store_update.html:62
+msgid "Contact details"
+msgstr ""
+
+#: templates/stores/dashboard/store_update.html:97
+msgid ""
+"Enter an adddress in the location input and select your address from the "
+"options that appear. You can drag the marker around on the map to fine-tune "
+"the location."
+msgstr ""
+
+#: templates/stores/dashboard/store_update.html:104
+msgid "Please select a location for your store."
+msgstr ""
+
+#: templates/stores/dashboard/store_update.html:112
+#: templates/stores/detail.html:44
+msgid "Opening hours"
+msgstr ""
+
+#: templates/stores/dashboard/store_update.html:205
+msgid "Save"
+msgstr "Sichern"
+
+#: templates/stores/detail.html:18 templates/stores/index.html:21
+msgid "Home"
+msgstr "Start"
+
+#: templates/stores/detail.html:24
+msgid "View all stores"
+msgstr ""
+
+#: templates/stores/index.html:40
+msgid "Use my location"
+msgstr ""
+
+#: templates/stores/index.html:57
+msgid "Filter by group"
+msgstr ""
+
+#: templates/stores/index.html:62
+msgid "All stores"
+msgstr ""
+
+#: templates/stores/index.html:89
+msgid "km"
+msgstr ""
+
+#: templates/stores/index.html:91
+msgid "View store details"
+msgstr ""
+
+#: templates/stores/index.html:116
+msgid "No stores found in the area."
+msgstr ""
+
+#: templates/stores/index.html:120
+msgid "No store data available."
+msgstr ""
+
+#: templates/stores/partials/store_contact.html:4
+msgid "Contact"
+msgstr "Kontakt"
+
+#: templatetags/opening_hours.py:10
+msgid "Closed"
+msgstr "Geschlossen"
+
+#: templatetags/opening_hours.py:18
+msgid "Unknown weekday"
+msgstr ""
+
+#: views.py:76
+#, python-format
+msgid "%(group)s stores"
+msgstr ""
+
+#: views.py:83
+#, python-format
+msgid "nearest to %(query)s"
+msgstr ""
+
+#: views.py:86
+msgid "nearest to me"
+msgstr ""
