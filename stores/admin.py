@@ -12,6 +12,5 @@ class StoreAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Store, StoreAdmin)
-admin.site.register(Store)
 admin.site.register(OpeningPeriod)
 admin.site.register(StoreStock)
