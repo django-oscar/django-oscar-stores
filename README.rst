@@ -59,6 +59,14 @@ you can do the following:
 
     $ sudo apt-get install spatialite-bin libspatialite3 libgeos++-dev libgdal-dev libproj0
 
+Easy way to setup PostGIS 2.x for Ubuntu is to setup it from the following PPA:
+
+.. code:: bash
+
+    sudo apt-add-repository ppa:ubuntugis/ppa
+    sudo aptitude update
+    sudo aptitude install postgis
+
 The ``pysqlite`` python package is also required although it doesn't support C
 extensions by default.  To work-around this, there are two options:
 

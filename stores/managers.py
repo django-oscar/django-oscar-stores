@@ -10,8 +10,8 @@ class StoreQuerySet(GeoQuerySet):
 
 class StoreManager(GeoManager):
 
-    def get_query_set(self):
+    def get_queryset(self):
         return StoreQuerySet(self.model)
 
     def pickup_stores(self):
-        return self.get_query_set().pickup_stores()
+        return self.get_queryset().pickup_stores()

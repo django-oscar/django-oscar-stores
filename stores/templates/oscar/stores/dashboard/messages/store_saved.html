@@ -1,7 +1,5 @@
 {% load i18n %}
 {% load url from future %}
-{% blocktrans with name=store.name %}
-<strong>{{ name }}</strong> store saved.
-{% endblocktrans %}
+{% blocktrans with name=store.name %}<strong>{{ name }}</strong> store saved.{% endblocktrans %}
 <a href="{{ store.get_absolute_url }}" class="btn btn-success btn-small">{% trans "View on site" %}</a> 
 <a href="{% url 'stores-dashboard:store-update' store.pk %}" class="btn btn-warning btn-small">{% trans "Edit again" %}</a> 

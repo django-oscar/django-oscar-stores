@@ -15,7 +15,8 @@ sandbox: install
 	./sandbox/manage.py reset_db --router=default --noinput
 	./sandbox/manage.py syncdb --noinput
 	./sandbox/manage.py migrate
-	./sandbox/manage.py loaddata sandbox/fixtures/auth.json countries.json
+	./sandbox/manage.py loaddata sandbox/fixtures/auth.json
+	./sandbox/manage.py oscar_populate_countries --initial-only
 	./sandbox/manage.py loaddata sandbox/fixtures/stores.json
 	./sandbox/manage.py thumbnail clear
 

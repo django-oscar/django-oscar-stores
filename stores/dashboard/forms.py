@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.gis import forms as gisforms
 from django.forms import models as modelforms
 from django.db.models import Q
 from django.contrib.gis.forms import fields
@@ -20,8 +21,8 @@ class StoreAddressForm(forms.ModelForm):
             'line1', 'line2', 'line3', 'line4', 'state', 'postcode', 'country']
 
 
-class StoreForm(forms.ModelForm):
-    location = fields.GeometryField(widget=forms.HiddenInput())
+class StoreForm(gisforms.ModelForm):
+    location = fields.PointField(widget=forms.HiddenInput())
 
     class Meta:
         model = get_model('stores', 'Store')
