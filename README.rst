@@ -57,7 +57,11 @@ you can do the following:
 
 .. code:: bash
 
-    $ sudo apt-get install spatialite-bin libspatialite3 libgeos++-dev libgdal-dev libproj0
+    $ sudo apt-get install spatialite-bin libspatialite7 libgeos++-dev libgdal-dev libproj9
+    $ sudo apt-get install libproj-dev libsqlite3-mod-spatialite
+    $ sudo add-apt-repository ppa:maxmind/ppa
+    $ sudo apt-get update
+    $ sudo apt-get install libmaxminddb0 libmaxminddb-dev mmdb-bin
 
 Easy way to setup PostGIS 2.x for Ubuntu is to setup it from the following PPA:
 
@@ -94,7 +98,7 @@ First, ensure you are using a spatial database and have django-oscar installed.
 Install package:
 
 .. code:: bash
-    $ pip install django-oscar-stores
+    $ pip install git+https://github.com/ashishnitinpatil/django-oscar-stores.git
 
 then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
 
@@ -104,9 +108,10 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
     from stores.app import application as stores_app
     from stores.dashboard.app import application as dashboard_app
 
-    urlpatterns = patterns('',
-        # basic configuration for Oscar
-        url(r'', include(shop.urls)),
+    urlpatterns = [
+        # adds internationalization URLs
+        url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
+        url(r'^i18n/', include('django.conf.urls.i18n')),
 
         # adds URLs for the dashboard store manager
         url(r'^dashboard/stores/', include(dashboard_app.urls)),
@@ -114,17 +119,43 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
         # adds URLs for overview and detail pages
         url(r'^stores/', include(stores_app.urls)),
 
-        # adds internationalization URLs
-        (r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
-    )
+        # basic configuration for Oscar
+        url(r'', include(shop.urls)),
+    ]
 
 You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
 appropriate directory.
 
 .. _`GeoIP data files`: https://docs.djangoproject.com/en/dev/ref/contrib/gis/geoip/
 
+For the Stores drop-down menu in dashboard, you may add the following to your
+``templates/dashboard/layout.html``:
+
+.. code:: html
+
+    <!-- Stores dashboard urls -->
+     <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="icon-shopping-cart"></i>
+            Stores <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'stores-dashboard:store-list' %}">Stores list</a></li>
+            <li><a href="{% url 'stores-dashboard:store-group-list' %}">Store Groups</a></li>
+            <li><a href="{% url 'stores:index' %}">View on website</a></li>
+        </ul>
+    </li>
+
 Settings
 --------
+
+* ``GOOGLE_MAPS_API_KEY`` Required key for using the `Google Maps Javascript API`_ and
+  `Google Places API Web Service`_. Go to the `Google APIs Console`_, enable these APIs
+  and create a key for the same.
+
+.. _`Google Maps Javascript API`: https://developers.google.com/maps/documentation/javascript/
+.. _`Google Places API Web Service`: https://developers.google.com/places/web-service/
+.. _`Google APIs Console`: https://console.developers.google.com/apis/dashboard
 
 * ``STORES_GEOGRAPHIC_SRID`` (default: ``3577``).  This is used for distance
   calculations.  See http://spatialreference.org for more details.

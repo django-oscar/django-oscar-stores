@@ -8,6 +8,10 @@ from stores.utils import get_geographic_srid, get_geodetic_srid
 
 Store = get_model('stores', 'store')
 
+GOOGLE_MAPS_API_KEY = getattr(settings, 'GOOGLE_MAPS_API_KEY', None)
+if not GOOGLE_MAPS_API_KEY:
+    raise ValueError('Google Maps API key is missing')
+
 
 class StoreListView(generic.ListView):
     model = Store
@@ -99,6 +103,7 @@ class StoreListView(generic.ListView):
             ctx['longitude'] = coords[0]
 
         ctx['queryset_description'] = self.get_title()
+        ctx['google_maps_api_key'] = GOOGLE_MAPS_API_KEY
 
         return ctx
 
@@ -107,3 +112,9 @@ class StoreDetailView(generic.DetailView):
     model = Store
     template_name = 'stores/detail.html'
     context_object_name = 'store'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(StoreDetailView, self).get_context_data(**kwargs)
+        ctx['google_maps_api_key'] = GOOGLE_MAPS_API_KEY
+
+        return ctx

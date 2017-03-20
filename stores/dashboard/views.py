@@ -2,6 +2,7 @@ from django.views import generic
 from django.core.urlresolvers import reverse_lazy
 from django.template.loader import render_to_string
 from django.contrib import messages
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _, ugettext
 from extra_views import (
     CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet)
@@ -15,6 +16,10 @@ Store = get_model('stores', 'Store')
 StoreGroup = get_model('stores', 'StoreGroup')
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
 StoreAddress = get_model('stores', 'StoreAddress')
+
+GOOGLE_MAPS_API_KEY = getattr(settings, 'GOOGLE_MAPS_API_KEY', None)
+if not GOOGLE_MAPS_API_KEY:
+    raise ValueError('Google Maps API key is missing')
 
 
 class StoreListView(generic.ListView):
@@ -87,6 +92,7 @@ class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
     def get_context_data(self, **kwargs):
         ctx = super(StoreCreateView, self).get_context_data(**kwargs)
         ctx['title'] = _("Create new store")
+        ctx['google_maps_api_key'] = GOOGLE_MAPS_API_KEY
         return ctx
 
     def forms_invalid(self, form, inlines):
@@ -115,6 +121,7 @@ class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
     def get_context_data(self, **kwargs):
         ctx = super(StoreUpdateView, self).get_context_data(**kwargs)
         ctx['title'] = self.object.name
+        ctx['google_maps_api_key'] = GOOGLE_MAPS_API_KEY
         return ctx
 
     def forms_invalid(self, form, inlines):
