@@ -2,38 +2,37 @@
 {% load url from future %}
 {% load i18n %}
 
+{% block title %}
+{% trans "Delete store group?" %} | {{ block.super }}
+{% endblock %}
+
 {% block breadcrumbs %}
 <ul class="breadcrumb">
     <li>
         <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
-        <span class="divider">/</span>
     </li>
     <li>
-        <a href="{% url 'stores-dashboard:store-list' %}">{% trans "Stores" %}</a>
-        <span class="divider">/</span>
+        <a href="{% url 'stores-dashboard:store-list' %}">{% trans "Store groups" %}</a>
     </li>
     <li>
         {{ object.name }}
-        <span class="divider">/</span>
     </li>
-    <li class="active">{% trans "Delete store?" %}</li>
+    <li class="active">{% trans "Delete?" %}</li>
 </ul>
 {% endblock %}
 
 {% block headertext %}
-    {% trans "Delete store?" %}
-{% endblock %}
+    {% trans "Delete store group?" %}
+{% endblock headertext %}
 
 {% block dashboard_content %}
 <form action="." method="post">
     {% csrf_token %}
-    {% blocktrans with store_name=object.name %}
-    <p>Delete store <strong>{{ store_name }}</strong> - are you sure?</p>
-    {% endblocktrans %}
+    {% blocktrans with group_name=object.name %}<p>Delete store group <strong>{{ group_name }}</strong> - are you sure?</p>{% endblocktrans %}
     <div class="form-actions">
         <button type="submit" class="btn btn-large btn-danger">{% trans "Delete" %}</button>
         {% trans "or" %}
-        <a href="{% url 'stores-dashboard:store-list' %}">{% trans "cancel" %}</a>.
+        <a href="{% url 'stores-dashboard:store-group-list' %}">{% trans "cancel" %}</a>.
     </div>
 </form>
 {% endblock %}

@@ -14,7 +14,7 @@ from stores.utils import get_geodetic_srid
 
 
 # Re-use Oscar's address model
-class StoreAddress(AbstractAddress):
+class AbstractStoreAddress(AbstractAddress):
     store = models.OneToOneField(
         'stores.Store',
         verbose_name=_("Store"),
@@ -22,6 +22,7 @@ class StoreAddress(AbstractAddress):
 
     class Meta:
         abstract = True
+        app_label = 'stores'
 
     @property
     def street(self):
@@ -32,24 +33,25 @@ class StoreAddress(AbstractAddress):
 
 
 @python_2_unicode_compatible
-class StoreGroup(models.Model):
+class AbstractStoreGroup(models.Model):
     name = models.CharField(_('Name'), max_length=100, unique=True)
     slug = models.SlugField(_('Slug'), max_length=100, unique=True)
 
     class Meta:
         abstract = True
+        app_label = 'stores'
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
-        super(StoreGroup, self).save(*args, **kwargs)
+        super(AbstractStoreGroup, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
 
 @python_2_unicode_compatible
-class Store(models.Model):
+class AbstractStore(models.Model):
     name = models.CharField(_('Name'), max_length=100)
     slug = models.SlugField(_('Slug'), max_length=100, null=True)
 
@@ -94,12 +96,13 @@ class Store(models.Model):
 
     class Meta:
         abstract = True
+        app_label = 'stores'
         ordering = ('name',)
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
-        super(Store, self).save(*args, **kwargs)
+        super(AbstractStore, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -114,7 +117,7 @@ class Store(models.Model):
 
 
 @python_2_unicode_compatible
-class OpeningPeriod(models.Model):
+class AbstractOpeningPeriod(models.Model):
     PERIOD_FORMAT = _("%(start)s - %(end)s")
     (MONDAY, TUESDAY, WEDNESDAY, THURSDAY,
      FRIDAY, SATURDAY, SUNDAY) = range(1, 8)
@@ -150,17 +153,21 @@ class OpeningPeriod(models.Model):
 
     class Meta:
         abstract = True
+        app_label = 'stores'
         ordering = ['weekday']
         verbose_name = _("Opening period")
         verbose_name_plural = _("Opening periods")
 
     def clean(self):
-        if self.end <= self.start:
+        start_end = [self.start, self.end]
+        if any(start_end) and not all(start_end):
+            raise ValidationError(_("You must set both start and end values"))
+        if all(start_end) and self.end <= self.start:
             raise ValidationError(_("Start must be before end"))
 
 
 @python_2_unicode_compatible
-class StoreStock(models.Model):
+class AbstractStoreStock(models.Model):
     store = models.ForeignKey(
         'stores.Store',
         verbose_name=_("Store"),
@@ -201,6 +208,7 @@ class StoreStock(models.Model):
 
     class Meta:
         abstract = True
+        app_label = 'stores'
         verbose_name = _("Store stock record")
         verbose_name_plural = _("Store stock records")
         unique_together = ("store", "product")

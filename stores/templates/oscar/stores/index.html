@@ -59,7 +59,7 @@
                 {% endif %}
             </form>
 
-                <h3>All stores</h3>
+                <h3>{% trans "All stores" %}</h3>
                 <ul class="nav nav-tabs nav-stacked">
                 {% for store in all_stores %}
                 <li>
@@ -86,7 +86,7 @@
                             <div class="sub-header">
                                 <h4>{{ store.name }}
                                 {% if store.distance %}
-                                    <span class="distance">{{ store.distance.km|floatformat:2 }} km</span>
+                                    <span class="distance">{{ store.distance.km|floatformat:2 }} {% trans "km" %}</span>
                                 {% endif %}
                                 <a href="{% url 'stores:detail' store.slug store.pk %}" class="btn pull-right">{% trans "View store details" %}</a></h4>
                             </div>

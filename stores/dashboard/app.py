@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from oscar.core.application import Application
 from oscar.views.decorators import staff_member_required
@@ -20,7 +20,7 @@ class StoresDashboardApplication(Application):
     store_group_delete_view = views.StoreGroupDeleteView
 
     def get_urls(self):
-        urlpatterns = patterns('',
+        urlpatterns = [
             url(
                 r'^$',
                 self.store_list_view.as_view(),
@@ -61,7 +61,7 @@ class StoresDashboardApplication(Application):
                 self.store_group_delete_view.as_view(),
                 name='store-group-delete'
             ),
-        )
+        ]
         return self.post_process_urls(urlpatterns)
 
     def get_url_decorator(self, url_name):

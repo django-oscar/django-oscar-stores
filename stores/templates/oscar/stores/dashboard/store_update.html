@@ -94,10 +94,7 @@
     </div>
     <div class="well">
         <p>
-            {% blocktrans %}
-            Enter an adddress in the location input and select your address from the options that appear.
-            You can drag the marker around on the map to fine-tune the location.
-            {% endblocktrans %}
+            {% blocktrans %}Enter an adddress in the location input and select your address from the options that appear. You can drag the marker around on the map to fine-tune the location.{% endblocktrans %}
         </p>
         {% include "dashboard/partials/form_field.html" with field=form.location %}
         <div class="well well-blank">
@@ -213,7 +210,7 @@
 
 {% block extrascripts %}
     {{ block.super }}
-    <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+    <script type="text/javascript" src="//maps.google.com/maps/api/js?libraries=places&key={{ google_maps_api_key }}"></script>
     <script type="text/javascript" src="{% static "stores/js/dashboard.js" %}"></script>
 {% endblock %}
 
