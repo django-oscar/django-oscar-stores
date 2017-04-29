@@ -1,14 +1,20 @@
 from django.conf.urls import patterns, url
 
 from oscar.core.application import Application
-from oscar.views.decorators import staff_member_required
 
 from stores.dashboard import views
 
 
 class StoresDashboardApplication(Application):
     name = 'stores-dashboard'
-
+    default_permissions = ['is_staff',]
+    permissions_map = {
+        'store-list': (['is_staff'], ['partner.dashboard_access']),
+        'store-create': (['is_staff'], ['partner.dashboard_access']),
+        'store-update': (['is_staff'], ['partner.dashboard_access']),
+    }
+    
+    
     store_list_view = views.StoreListView
     store_create_view = views.StoreCreateView
     store_update_view = views.StoreUpdateView
@@ -64,8 +70,6 @@ class StoresDashboardApplication(Application):
         )
         return self.post_process_urls(urlpatterns)
 
-    def get_url_decorator(self, url_name):
-        return staff_member_required
 
 
 application = StoresDashboardApplication()
