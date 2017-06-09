@@ -11,8 +11,7 @@ class StoresApplication(Application):
     detail_view = views.StoreDetailView
 
     def get_urls(self):
-        urlpatterns = super(StoresApplication, self).get_urls()
-        urlpatterns += ['',
+        urlpatterns = [
             url(r'^$', self.list_view.as_view(),
                 name='index'),
             url(r'^(?P<dummyslug>[\w-]+)/(?P<pk>\d+)/$',
