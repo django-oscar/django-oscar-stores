@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from oscar.core.application import Application
 
@@ -12,12 +12,12 @@ class StoresApplication(Application):
 
     def get_urls(self):
         urlpatterns = super(StoresApplication, self).get_urls()
-        urlpatterns += patterns('',
+        urlpatterns += ['',
             url(r'^$', self.list_view.as_view(),
                 name='index'),
             url(r'^(?P<dummyslug>[\w-]+)/(?P<pk>\d+)/$',
                 self.detail_view.as_view(), name='detail'),
-        )
+        ]
         return self.post_process_urls(urlpatterns)
 
 
