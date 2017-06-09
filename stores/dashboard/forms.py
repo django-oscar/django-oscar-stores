@@ -134,7 +134,7 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
     min_num = 0
     max_num = 30  # Reasonably safe number of maximum period intervals per day
     absolute_max = 30
-    fk = [f for f in OpeningPeriod._meta.fields if f.name == 'store'][0]
+    fk = [f for f in OpeningPeriod._meta.get_fields() if f.name == 'store'][0]
     model = OpeningPeriod
     validate_min = True
     validate_max = True
