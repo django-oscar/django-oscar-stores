@@ -1,4 +1,4 @@
-from django import forms
+from django import forms, VERSION
 from django.conf import settings
 from django.contrib.gis.forms import fields
 from django.contrib.gis.geoip import HAS_GEOIP
@@ -158,6 +158,11 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
 
     def get_weekday_display(self):
         return force_text(OpeningPeriod.WEEK_DAYS[self.weekday])
+
+    # Backward compatibility with Django 1.8, which doesn't have get_form_kwargs
+    if VERSION < (1, 9):
+        def form(self, *args, **kwargs):
+            return OpeningPeriodForm(*args, store=self.instance, weekday=self.weekday, **kwargs)
 
     def get_form_kwargs(self, index):
         return {
