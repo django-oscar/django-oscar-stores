@@ -1,5 +1,8 @@
-# Django settings for sandbox project.
 import os
+
+from django.utils.translation import ugettext_lazy as _
+
+import oscar
 
 PROJECT_DIR = os.path.join(os.path.dirname(__file__), '..')
 location = lambda x: os.path.join(PROJECT_DIR, x)
@@ -106,14 +109,12 @@ ROOT_URLCONF = 'sandbox.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'sandbox.wsgi.application'
 
-from oscar import OSCAR_MAIN_TEMPLATE_DIR
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             location('templates'),
-            OSCAR_MAIN_TEMPLATE_DIR,
+            oscar.OSCAR_MAIN_TEMPLATE_DIR,
         ],
         'OPTIONS': {
             'loaders': [
@@ -158,8 +159,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
 ]
 
-from oscar import get_core_apps
-INSTALLED_APPS += get_core_apps()
+
+INSTALLED_APPS += oscar.get_core_apps()
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',
@@ -170,9 +171,8 @@ LOGIN_REDIRECT_URL = '/accounts/'
 APPEND_SLASH = True
 
 # Oscar settings
-from oscar.defaults import *
+from oscar.defaults import * # noqa E402
 
-from django.utils.translation import ugettext_lazy as _
 OSCAR_DASHBOARD_NAVIGATION.append(
     {
         'label': _('Stores'),
@@ -250,6 +250,6 @@ if spatialite_lib is not None:
 
 # Allow local overrides
 try:
-    from .settings_local import *
+    from .settings_local import *   # noqa F403
 except ImportError:
     pass

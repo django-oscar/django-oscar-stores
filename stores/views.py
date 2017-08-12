@@ -1,10 +1,10 @@
-from django.views import generic
-from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+from django.views import generic
 from oscar.core.loading import get_model
 
 from stores.forms import StoreSearchForm
-from stores.utils import get_geographic_srid, get_geodetic_srid
+from stores.utils import get_geodetic_srid, get_geographic_srid
 
 Store = get_model('stores', 'store')
 

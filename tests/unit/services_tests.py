@@ -1,6 +1,8 @@
 from unittest import TestCase
+
+from mock import Mock, patch
+
 from stores.services import geocode
-from mock import patch, Mock
 
 
 class GeoCodeTest(TestCase):

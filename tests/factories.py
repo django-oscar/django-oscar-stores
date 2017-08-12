@@ -1,5 +1,4 @@
 import factory
-
 from oscar.core.loading import get_model
 from oscar.test.factories import CountryFactory
 

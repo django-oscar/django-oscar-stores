@@ -1,5 +1,5 @@
-from django.test import TestCase
 from django.contrib.gis.geos.point import Point
+from django.test import TestCase
 
 from tests.factories import StoreFactory
 

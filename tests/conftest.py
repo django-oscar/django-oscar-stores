@@ -1,8 +1,8 @@
 import os
 
 from django.conf import settings
-from oscar.defaults import OSCAR_SETTINGS
 from oscar import OSCAR_MAIN_TEMPLATE_DIR, get_core_apps
+from oscar.defaults import OSCAR_SETTINGS
 
 
 def pytest_configure():
@@ -27,7 +27,7 @@ def pytest_configure():
             'django.contrib.staticfiles.finders.FileSystemFinder',
             'django.contrib.staticfiles.finders.AppDirectoriesFinder',
         ),
-        TEMPLATES = [
+        TEMPLATES=[
             {
                 'BACKEND': 'django.template.backends.django.DjangoTemplates',
                 'DIRS': [

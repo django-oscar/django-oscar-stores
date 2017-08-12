@@ -2,8 +2,7 @@ from django.test import TestCase
 from oscar.core.loading import get_model
 
 from stores.dashboard.forms import DashboardStoreSearchForm
-
-from tests.factories import StoreFactory, StoreAddressFactory
+from tests.factories import StoreAddressFactory, StoreFactory
 
 
 class TestDashboardStoreSearchForm(TestCase):

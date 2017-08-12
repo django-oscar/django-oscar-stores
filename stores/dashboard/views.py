@@ -1,15 +1,16 @@
-from django.views import generic
+from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.template.loader import render_to_string
-from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _, ugettext
-from extra_views import (
-    CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet)
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
+from django.views import generic
+from extra_views import (CreateWithInlinesView, InlineFormSet,
+                         UpdateWithInlinesView)
 from oscar.core.loading import get_model
 
 from stores.dashboard import forms
-from stores.utils import get_current_ip
 from stores.dashboard.forms import OpeningHoursInline
+from stores.utils import get_current_ip
 
 Store = get_model('stores', 'Store')
 StoreGroup = get_model('stores', 'StoreGroup')

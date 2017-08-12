@@ -1,11 +1,11 @@
 from django import forms
-from django.forms import models as modelforms
-from django.db.models import Q
+from django.conf import settings
 from django.contrib.gis.forms import fields
+from django.contrib.gis.geoip import HAS_GEOIP
+from django.db.models import Q
+from django.forms import models as modelforms
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.gis.geoip import HAS_GEOIP
-from django.conf import settings
 from oscar.core.loading import get_model
 
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
@@ -72,7 +72,6 @@ class OpeningPeriodForm(forms.ModelForm):
                 attrs={'placeholder': _("e.g. 5 PM, 18:30, etc.")}
             ),
         }
-
 
     def __init__(self, *args, **kwargs):
         self.weekday = kwargs.pop('weekday')
