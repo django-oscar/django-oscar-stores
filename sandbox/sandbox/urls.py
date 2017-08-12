@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.i18n import javascript_catalog
 from oscar.app import application
 
 from stores.app import application as stores_app
@@ -15,13 +16,12 @@ js_info_dict = {
 }
 
 urlpatterns = [
-    url(r'^dashboard/stores/', include(dashboard_app.urls)),
-    url(r'^stores/', include(stores_app.urls)),
-    url(r'^', include(application.urls)),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^dashboard/stores/', dashboard_app.urls),
+    url(r'^stores/', stores_app.urls),
+    url(r'^', application.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
-    url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name="javascript-catalogue"),
 ]
 
 

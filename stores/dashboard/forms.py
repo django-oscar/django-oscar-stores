@@ -9,7 +9,6 @@ from django.conf import settings
 from oscar.core.loading import get_model
 
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
-assert OpeningPeriod
 
 
 class StoreAddressForm(forms.ModelForm):
@@ -134,7 +133,8 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
     min_num = 0
     max_num = 30  # Reasonably safe number of maximum period intervals per day
     absolute_max = 30
-    fk = [f for f in OpeningPeriod._meta.fields if f.name == 'store'][0]
+    fk = [f for f in OpeningPeriod._meta.get_fields() if f.name == 'store'][0]
+    form = OpeningPeriodForm
     model = OpeningPeriod
     validate_min = True
     validate_max = True
@@ -160,10 +160,11 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
     def get_weekday_display(self):
         return force_text(OpeningPeriod.WEEK_DAYS[self.weekday])
 
-    def form(self, *args, **kwargs):
-        form = OpeningPeriodForm(
-            *args, store=self.instance, weekday=self.weekday, **kwargs)
-        return form
+    def get_form_kwargs(self, index):
+        return {
+            'store': self.instance,
+            'weekday': self.weekday,
+        }
 
     def is_valid(self):
         return super(OpeningPeriodFormset, self).is_valid()

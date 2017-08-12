@@ -49,8 +49,8 @@ GeoDjango_ is used so a spatial database is required.  We recommend PostGIS.
 Django's docs include some `installation instructions`_ although it is renowned
 for being tricky.
 
-.. _GeoDjango: https://docs.djangoproject.com/en/1.4/ref/contrib/gis
-.. _`installation instructions`: https://docs.djangoproject.com/en/1.4/ref/contrib/gis/install
+.. _GeoDjango: https://docs.djangoproject.com/en/stable/ref/contrib/gis
+.. _`installation instructions`: https://docs.djangoproject.com/en/stable/ref/contrib/gis/install
 
 Spatialite is another option although it can be tricky to set up.  On Ubuntu,
 you can do the following:
@@ -92,28 +92,29 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
 
 .. code:: python
 
+    from django.views.i18n import javascript_catalog
     from oscar.app import shop
     from stores.app import application as stores_app
     from stores.dashboard.app import application as dashboard_app
 
-    urlpatterns = patterns('',
+    urls = [
         # basic configuration for Oscar
-        url(r'', include(shop.urls)),
+        url(r'', shop.urls),
 
         # adds URLs for the dashboard store manager
-        url(r'^dashboard/stores/', include(dashboard_app.urls)),
+        url(r'^dashboard/stores/', dashboard_app.urls),
 
         # adds URLs for overview and detail pages
-        url(r'^stores/', include(stores_app.urls)),
+        url(r'^stores/', stores_app.urls),
 
         # adds internationalization URLs
-        (r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
-    )
+        (r'^jsi18n/$', javascript_catalog, name="javascript-catalogue"),
+    ]
 
 You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
 appropriate directory.
 
-.. _`GeoIP data files`: https://docs.djangoproject.com/en/dev/ref/contrib/gis/geoip/
+.. _`GeoIP data files`: https://docs.djangoproject.com/en/stable/ref/contrib/gis/geoip/
 
 Settings
 --------
@@ -160,7 +161,7 @@ Run tests with:
 
 .. code:: bash
 
-    $ ./runtests.py
+    $ pytest
 
 License
 -------

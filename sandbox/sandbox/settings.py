@@ -75,20 +75,13 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'sba9ti)x&amp;^fkod-g91@^_yi6y_#&amp;3mo#m5@n)i&amp;k+0h=+zsfkb'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
-
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-#    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'oscar.apps.basket.middleware.BasketMiddleware',
 )
 
@@ -114,10 +107,40 @@ ROOT_URLCONF = 'sandbox.urls'
 WSGI_APPLICATION = 'sandbox.wsgi.application'
 
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
-TEMPLATE_DIRS = (
-    location('templates'),
-    OSCAR_MAIN_TEMPLATE_DIR,
-)
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            location('templates'),
+            OSCAR_MAIN_TEMPLATE_DIR,
+        ],
+        'OPTIONS': {
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                # 'django.template.loaders.eggs.Loader',
+            ],
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.request',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.contrib.messages.context_processors.messages',
+
+                # Oscar specific
+                'oscar.apps.search.context_processors.search_form',
+                'oscar.apps.customer.notifications.context_processors.notifications',
+                'oscar.apps.promotions.context_processors.promotions',
+                'oscar.apps.checkout.context_processors.checkout',
+                'oscar.core.context_processors.metadata',
+            ],
+            'debug': DEBUG,
+        }
+    }
+]
 
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -132,7 +155,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'stores',
-    'compressor',
     'widget_tweaks',
 ]
 
@@ -140,7 +162,7 @@ from oscar import get_core_apps
 INSTALLED_APPS += get_core_apps()
 
 AUTHENTICATION_BACKENDS = (
-    'oscar.apps.customer.auth_backends.Emailbackend',
+    'oscar.apps.customer.auth_backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -228,6 +250,6 @@ if spatialite_lib is not None:
 
 # Allow local overrides
 try:
-    from settings_local import *
+    from .settings_local import *
 except ImportError:
     pass

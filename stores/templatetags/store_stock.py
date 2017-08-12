@@ -1,12 +1,13 @@
 from django import template
-from django.db.models import get_model
+
+from oscar.core.loading import get_model
 
 StoreStock = get_model('stores', 'StoreStock')
 
 register = template.Library()
 
 
-@register.assignment_tag
+@register.simple_tag
 def store_stock_for_product(product, location=None, limit=20):
     query_set = StoreStock.objects.filter(product=product)
     if location:
