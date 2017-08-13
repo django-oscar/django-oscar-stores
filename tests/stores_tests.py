@@ -1,11 +1,10 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.test import TestCase
 from django_webtest import WebTest
 from oscar.test.factories import CountryFactory
 
 from stores.models import Store
-
 from tests.factories import StoreFactory
 
 
@@ -99,26 +98,26 @@ class TestASignedInUser(StoresWebTest):
 
         self.assertRedirects(page, reverse('stores-dashboard:store-list'))
 
-        self.assertEquals(Store.objects.count(), 1)
+        self.assertEqual(Store.objects.count(), 1)
 
         store = Store.objects.all()[0]
-        self.assertEquals(store.name, 'Sample Store')
-        self.assertEquals(store.location.x, 30.203332)
-        self.assertEquals(store.location.y, 44.33333)
-        self.assertEquals(
+        self.assertEqual(store.name, 'Sample Store')
+        self.assertEqual(store.location.x, 30.203332)
+        self.assertEqual(store.location.y, 44.33333)
+        self.assertEqual(
             store.description,
             'A short description of the store'
         )
-        self.assertEquals(store.is_pickup_store, False)
-        self.assertEquals(store.is_active, True)
+        self.assertEqual(store.is_pickup_store, False)
+        self.assertEqual(store.is_active, True)
 
-        self.assertEquals(store.address.line1, '123 Invisible Street')
-        self.assertEquals(store.address.line4, 'Awesometown')
-        self.assertEquals(store.address.state, 'Victoria')
-        self.assertEquals(store.address.postcode, '3456')
-        self.assertEquals(store.address.country, self.country)
+        self.assertEqual(store.address.line1, '123 Invisible Street')
+        self.assertEqual(store.address.line4, 'Awesometown')
+        self.assertEqual(store.address.state, 'Victoria')
+        self.assertEqual(store.address.postcode, '3456')
+        self.assertEqual(store.address.country, self.country)
 
-        self.assertEquals(store.opening_periods.count(), 0)
+        self.assertEqual(store.opening_periods.count(), 0)
 
     def test_workinghours_form(self):
         url = reverse('stores-dashboard:store-create')
@@ -152,7 +151,7 @@ class TestASignedInUser(StoresWebTest):
         store = Store.objects.get(name='WorkingHoursTest')
         assert store.opening_periods.count() == 3
 
-        self.assertEquals(repr_opening_hours(store), {
+        self.assertEqual(repr_opening_hours(store), {
             1: '10:00 - 11:00, 12:00 - 13:00',
             2: '12:00 - 13:00',
         })

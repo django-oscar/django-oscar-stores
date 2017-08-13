@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from oscar.test.testcases import WebTestCase
 
-from tests.factories import StoreFactory, StoreAddressFactory
+from tests.factories import StoreAddressFactory, StoreFactory
 
 
 class TestDashboardStoreSearchForm(WebTestCase):

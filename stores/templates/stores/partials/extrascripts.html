@@ -1,9 +1,8 @@
 {% load staticfiles %}
-{% load url from future %}
-<script type="text/javascript">
+<script>
 if (typeof gettext === 'undefined') {
-    jQuery.getScript('{% url 'django.views.i18n.javascript_catalog' %}');
+    jQuery.getScript('{% url 'javascript-catalogue' %}');
 }
 </script>
-<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
-<script type="text/javascript" src="{% static "stores/js/stores.js" %}"></script>
+<script src="//maps.google.com/maps/api/js?libraries=places"></script>
+<script src="{% static "stores/js/stores.js" %}"></script>

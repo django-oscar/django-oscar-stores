@@ -4,7 +4,6 @@ from oscar.test.testcases import WebTestCase
 from tests.factories import StoreFactory, StoreGroupFactory
 
 
-
 class TestTheListOfStores(WebTestCase):
     anonymous = True
 

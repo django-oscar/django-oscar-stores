@@ -1,13 +1,11 @@
-from django.db import models
-from django.contrib.gis.db.models import PointField
-from django.contrib.gis.db.models import GeoManager
+from django.contrib.gis.db.models import GeoManager, PointField
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext as _
+from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-
-from oscar.core.utils import slugify
+from django.utils.translation import ugettext as _
 from oscar.apps.address.abstract_models import AbstractAddress
+from oscar.core.utils import slugify
 
 from stores.managers import StoreManager
 from stores.utils import get_geodetic_srid

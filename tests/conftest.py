@@ -1,8 +1,8 @@
 import os
 
 from django.conf import settings
-from oscar.defaults import OSCAR_SETTINGS
 from oscar import OSCAR_MAIN_TEMPLATE_DIR, get_core_apps
+from oscar.defaults import OSCAR_SETTINGS
 
 
 def pytest_configure():
@@ -15,7 +15,6 @@ def pytest_configure():
             'default': {
                 'ENGINE': 'django.contrib.gis.db.backends.postgis',
                 'NAME': 'oscar_stores',
-                'HOST': '127.0.0.1',
             }
         },
         SITE_ID=1,
@@ -28,19 +27,30 @@ def pytest_configure():
             'django.contrib.staticfiles.finders.FileSystemFinder',
             'django.contrib.staticfiles.finders.AppDirectoriesFinder',
         ),
-        TEMPLATE_LOADERS=(
-            'django.template.loaders.filesystem.Loader',
-            'django.template.loaders.app_directories.Loader',
-        ),
-        TEMPLATE_CONTEXT_PROCESSORS=(
-            "django.contrib.auth.context_processors.auth",
-            "django.core.context_processors.request",
-            "django.core.context_processors.debug",
-            "django.core.context_processors.i18n",
-            "django.core.context_processors.media",
-            "django.core.context_processors.static",
-            "django.contrib.messages.context_processors.messages",
-        ),
+        TEMPLATES=[
+            {
+                'BACKEND': 'django.template.backends.django.DjangoTemplates',
+                'DIRS': [
+                    location('templates'),
+                    OSCAR_MAIN_TEMPLATE_DIR,
+                ],
+                'OPTIONS': {
+                    'loaders': [
+                        'django.template.loaders.filesystem.Loader',
+                        'django.template.loaders.app_directories.Loader',
+                    ],
+                    'context_processors': [
+                        'django.contrib.auth.context_processors.auth',
+                        'django.template.context_processors.request',
+                        'django.template.context_processors.debug',
+                        'django.template.context_processors.i18n',
+                        'django.template.context_processors.media',
+                        'django.template.context_processors.static',
+                        'django.contrib.messages.context_processors.messages',
+                    ],
+                }
+            }
+        ],
         MIDDLEWARE_CLASSES=(
             'django.middleware.common.CommonMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
@@ -64,13 +74,12 @@ def pytest_configure():
             'django.contrib.admin',
             'django.contrib.gis',
             'django.contrib.flatpages',
-            'compressor',
             'widget_tweaks',
         ] + get_core_apps() + [
             'stores',
         ],
         AUTHENTICATION_BACKENDS=(
-            'oscar.apps.customer.auth_backends.Emailbackend',
+            'oscar.apps.customer.auth_backends.EmailBackend',
             'django.contrib.auth.backends.ModelBackend',
         ),
         LOGIN_REDIRECT_URL='/accounts/',
@@ -84,4 +93,5 @@ def pytest_configure():
         COMPRESS_ENABLED=False,
         TEST_RUNNER='django.test.runner.DiscoverRunner',
     ))
+
     settings.configure(**test_settings)

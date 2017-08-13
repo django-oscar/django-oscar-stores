@@ -2,8 +2,7 @@ from django.test import TestCase
 from oscar.core.loading import get_model
 
 from stores.dashboard.forms import DashboardStoreSearchForm
-
-from tests.factories import StoreFactory, StoreAddressFactory
+from tests.factories import StoreAddressFactory, StoreFactory
 
 
 class TestDashboardStoreSearchForm(TestCase):
@@ -25,12 +24,12 @@ class TestDashboardStoreSearchForm(TestCase):
 
         f.cleaned_data = {'address': 'portland st, london'}
         qs = f.apply_filters(Store.objects.all())
-        self.assertEquals(list(qs), [store1])
+        self.assertEqual(list(qs), [store1])
 
         f.cleaned_data = {'name': 'store2'}
         qs = f.apply_filters(Store.objects.all())
-        self.assertEquals(list(qs), [store2])
+        self.assertEqual(list(qs), [store2])
 
         f.cleaned_data = {'name': 'store2', 'address': 'london'}
         qs = f.apply_filters(Store.objects.all())
-        self.assertEquals(list(qs), [])
+        self.assertEqual(list(qs), [])

@@ -5,20 +5,26 @@ from django.contrib.gis.geos import Point
 class ServiceError(Exception):
     pass
 
+
 class InvalidResponse(ServiceError):
     pass
+
 
 class ZeroResuls(ServiceError):
     pass
 
+
 class OverQueryLimit(ServiceError):
     pass
+
 
 class RequestDenied(ServiceError):
     pass
 
+
 class InvalidRequest(ServiceError):
     pass
+
 
 class UnknownError(ServiceError):
     pass
