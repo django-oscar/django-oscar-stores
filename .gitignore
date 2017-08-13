@@ -6,7 +6,6 @@
 
 .vagrant
 .coverage
-.coveralls.yml
 
 .tox/
 .cache/

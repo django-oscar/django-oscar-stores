@@ -6,7 +6,6 @@ flake8==3.4.1
 
 # Testing
 coverage==4.4.1
-coveralls==1.1
 django-webtest==1.9.2
 factory-boy>=2.9,<2.10
 mock==2.0.0

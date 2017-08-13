@@ -5,9 +5,9 @@ Oscar stores
 .. image:: https://secure.travis-ci.org/django-oscar/django-oscar-stores.png
     :target: http://travis-ci.org/#!/django-oscar/django-oscar-stores
 
-.. image:: https://coveralls.io/repos/django-oscar/django-oscar-stores/badge.png?branch=master
-    :alt: Coverage
-    :target: https://coveralls.io/r/django-oscar/django-oscar-stores
+    .. image:: http://codecov.io/github/django-oscar/django-oscar-stores/coverage.svg?branch=master
+        :alt: Coverage
+        :target: http://codecov.io/github/django-oscar/django-oscar-stores?branch=master
 
 This is an extension for django-oscar_ that adds support for stores.  It
 provides:
