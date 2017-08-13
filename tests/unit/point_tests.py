@@ -11,5 +11,5 @@ class TestALocation(TestCase):
             name='Test Store', location=Point(30.3333, 123.323))
 
         store = store.__class__.objects.get(id=store.id)
-        self.assertEquals(store.location.x, 30.3333)
-        self.assertEquals(store.location.y, 123.323)
+        self.assertEqual(store.location.x, 30.3333)
+        self.assertEqual(store.location.y, 123.323)
