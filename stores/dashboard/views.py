@@ -55,16 +55,20 @@ class StoreListView(generic.ListView):
 
 
 class StoreAddressInline(InlineFormSet):
-    extra = 1
-    max_num = 1
-    can_delete = False
+    factory_kwargs = {
+        'extra': 1,
+        'max_num': 1,
+        'can_delete': False
+    }
     model = StoreAddress
     form_class = forms.StoreAddressForm
 
 
 class OpeningPeriodInline(InlineFormSet):
-    extra = 7
-    max_num = 7
+    factory_kwargs = {
+        'extra': 7,
+        'max_num': 7
+    }
     model = OpeningPeriod
     form_class = forms.OpeningPeriodForm
 
