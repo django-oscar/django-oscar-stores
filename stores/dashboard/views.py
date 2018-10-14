@@ -1,8 +1,8 @@
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from extra_views import (CreateWithInlinesView, InlineFormSet,
                          UpdateWithInlinesView)
@@ -11,6 +11,7 @@ from oscar.core.loading import get_model
 from stores.dashboard import forms
 from stores.dashboard.forms import OpeningHoursInline
 from stores.utils import get_current_ip
+from stores.views import MapsContextMixin
 
 Store = get_model('stores', 'Store')
 StoreGroup = get_model('stores', 'StoreGroup')
@@ -55,11 +56,14 @@ class StoreListView(generic.ListView):
 
 
 class StoreAddressInline(InlineFormSet):
-    extra = 1
-    max_num = 1
-    can_delete = False
+
     model = StoreAddress
     form_class = forms.StoreAddressForm
+    factory_kwargs = {
+        'extra': 1,
+        'max_num': 1,
+        'can_delete': False,
+    }
 
 
 class OpeningPeriodInline(InlineFormSet):
@@ -69,7 +73,7 @@ class OpeningPeriodInline(InlineFormSet):
     form_class = forms.OpeningPeriodForm
 
 
-class StoreEditMixin(object):
+class StoreEditMixin(MapsContextMixin):
     inlines = [OpeningHoursInline, StoreAddressInline]
 
     def get_form_kwargs(self):

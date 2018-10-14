@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('phone', models.CharField(max_length=64, null=True, verbose_name='Phone', blank=True)),
                 ('email', models.CharField(max_length=100, null=True, verbose_name='Email', blank=True)),
                 ('reference', models.CharField(null=True, max_length=32, blank=True, help_text='A reference number that uniquely identifies this store', unique=True, verbose_name='Reference')),
-                ('image', models.ImageField(upload_to=b'uploads/store-images', null=True, verbose_name='Image', blank=True)),
+                ('image', models.ImageField(upload_to='uploads/store-images', null=True, verbose_name='Image', blank=True)),
                 ('description', models.CharField(max_length=2000, null=True, verbose_name='Description', blank=True)),
                 ('location', django.contrib.gis.db.models.fields.PointField(srid=4326, verbose_name='Location')),
                 ('is_pickup_store', models.BooleanField(default=True, verbose_name='Is pickup store')),
@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
             name='StoreAddress',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(blank=True, max_length=64, verbose_name='Title', choices=[(b'Mr', 'Mr'), (b'Miss', 'Miss'), (b'Mrs', 'Mrs'), (b'Ms', 'Ms'), (b'Dr', 'Dr')])),
+                ('title', models.CharField(blank=True, max_length=64, verbose_name='Title', choices=[('Mr', 'Mr'), ('Miss', 'Miss'), ('Mrs', 'Mrs'), ('Ms', 'Ms'), ('Dr', 'Dr')])),
                 ('first_name', models.CharField(max_length=255, verbose_name='First name', blank=True)),
                 ('last_name', models.CharField(max_length=255, verbose_name='Last name', blank=True)),
                 ('line1', models.CharField(max_length=255, verbose_name='First line of address')),
@@ -64,8 +64,8 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(max_length=255, verbose_name='State/County', blank=True)),
                 ('postcode', oscar.models.fields.UppercaseCharField(max_length=64, verbose_name='Post/Zip-code', blank=True)),
                 ('search_text', models.TextField(verbose_name='Search text - used only for searching addresses', editable=False)),
-                ('country', models.ForeignKey(verbose_name='Country', to='address.Country')),
-                ('store', models.OneToOneField(related_name='address', verbose_name='Store', to='stores.Store')),
+                ('country', models.ForeignKey(verbose_name='Country', to='address.Country', on_delete=models.CASCADE)),
+                ('store', models.OneToOneField(related_name='address', verbose_name='Store', to='stores.Store', on_delete=models.PROTECT)),
             ],
             options={
                 'abstract': False,
@@ -91,8 +91,8 @@ class Migration(migrations.Migration):
                 ('location', models.CharField(max_length=50, null=True, verbose_name='In store location', blank=True)),
                 ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='Date created')),
                 ('date_updated', models.DateTimeField(auto_now=True, verbose_name='Date updated', db_index=True)),
-                ('product', models.ForeignKey(related_name='store_stock', verbose_name='Product', to='catalogue.Product')),
-                ('store', models.ForeignKey(related_name='stock', verbose_name='Store', to='stores.Store')),
+                ('product', models.ForeignKey(related_name='store_stock', verbose_name='Product', to='catalogue.Product', on_delete=models.CASCADE)),
+                ('store', models.ForeignKey(related_name='stock', verbose_name='Store', to='stores.Store', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -103,12 +103,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='store',
             name='group',
-            field=models.ForeignKey(related_name='stores', verbose_name='Group', blank=True, to='stores.StoreGroup', null=True),
+            field=models.ForeignKey(related_name='stores', verbose_name='Group', blank=True, to='stores.StoreGroup', null=True, on_delete=models.PROTECT),
         ),
         migrations.AddField(
             model_name='openingperiod',
             name='store',
-            field=models.ForeignKey(related_name='opening_periods', verbose_name='Store', to='stores.Store'),
+            field=models.ForeignKey(related_name='opening_periods', verbose_name='Store', to='stores.Store', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='storestock',

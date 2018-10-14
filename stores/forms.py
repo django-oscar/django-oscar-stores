@@ -3,6 +3,8 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.utils.translation import ugettext as _
 from oscar.core.loading import get_class, get_model
 
+from stores.utils import get_geodetic_srid
+
 geocode = get_class('stores.services', 'geocode')
 StoreGroup = get_model('stores', 'StoreGroup')
 
@@ -50,7 +52,7 @@ class StoreSearchForm(forms.Form):
         latitude = data.get('latitude', None)
         longitude = data.get('longitude', None)
         if latitude and longitude:
-            return GEOSGeometry('POINT(%s %s)' % (longitude, latitude))
+            return GEOSGeometry('POINT(%s %s)' % (longitude, latitude), get_geodetic_srid())
 
         query = data.get('query', None)
         if query is not None:

@@ -1,4 +1,5 @@
 import requests
+from django.conf import settings
 from django.contrib.gis.geos import Point
 
 
@@ -61,9 +62,9 @@ class GeoCodeService(BaseGeoCodeService):
         payload = {
             'address': query,
             'sensor': 'false',
+            'key': settings.GOOGLE_MAPS_API_KEY,
         }
-        response = self.get(
-            'http://maps.googleapis.com/maps/api/geocode/json', params=payload)
+        response = self.get('https://maps.googleapis.com/maps/api/geocode/json', params=payload)
 
         if response.status_code != 200:
             raise InvalidResponse(response.status_code, response.content)

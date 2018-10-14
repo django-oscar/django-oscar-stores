@@ -1,7 +1,7 @@
-from django.contrib.gis.db.models import GeoManager, PointField
+from django.contrib.gis.db.models import Manager, PointField
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
 from django.db import models
+from django.urls import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext as _
 from oscar.apps.address.abstract_models import AbstractAddress
@@ -15,8 +15,10 @@ from stores.utils import get_geodetic_srid
 class StoreAddress(AbstractAddress):
     store = models.OneToOneField(
         'stores.Store',
+        models.PROTECT,
         verbose_name=_("Store"),
-        related_name="address")
+        related_name="address"
+    )
 
     class Meta:
         abstract = True
@@ -80,10 +82,12 @@ class Store(models.Model):
 
     group = models.ForeignKey(
         'stores.StoreGroup',
+        models.PROTECT,
         related_name='stores',
         verbose_name=_("Group"),
         null=True,
-        blank=True)
+        blank=True
+    )
 
     is_pickup_store = models.BooleanField(_("Is pickup store"), default=True)
     is_active = models.BooleanField(_("Is active"), default=True)
@@ -125,7 +129,7 @@ class OpeningPeriod(models.Model):
         SATURDAY: _("Saturday"),
         SUNDAY: _("Sunday"),
     }
-    store = models.ForeignKey('stores.Store', verbose_name=_("Store"),
+    store = models.ForeignKey('stores.Store', models.CASCADE, verbose_name=_("Store"),
                               related_name='opening_periods')
 
     weekday_choices = [(k, v) for k, v in WEEK_DAYS.items()]
@@ -161,12 +165,16 @@ class OpeningPeriod(models.Model):
 class StoreStock(models.Model):
     store = models.ForeignKey(
         'stores.Store',
+        models.CASCADE,
         verbose_name=_("Store"),
-        related_name='stock')
+        related_name='stock'
+    )
     product = models.ForeignKey(
         'catalogue.Product',
+        models.CASCADE,
         verbose_name=_("Product"),
-        related_name="store_stock")
+        related_name="store_stock"
+    )
 
     # Stock level information
     num_in_stock = models.PositiveIntegerField(
@@ -203,7 +211,7 @@ class StoreStock(models.Model):
         verbose_name_plural = _("Store stock records")
         unique_together = ("store", "product")
 
-    objects = GeoManager()
+    objects = Manager()
 
     def __str__(self):
         if self.store and self.product:

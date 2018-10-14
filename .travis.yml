@@ -1,32 +1,32 @@
 language: python
 sudo: false
 
+addons:
+  postgresql: 9.6
+  apt:
+    packages:
+    - postgresql-9.6-postgis-2.3
+
 matrix:
   include:
     - python: 2.7
-      env: TOXENV=py27-django18
-    - python: 2.7
-      env: TOXENV=py27-django110
-    - python: 2.7
       env: TOXENV=py27-django111
-    - python: 3.3
-      env: TOXENV=py33-django18
-    - python: 3.4
-      env: TOXENV=py34-django18
-    - python: 3.4
-      env: TOXENV=py34-django110
     - python: 3.4
       env: TOXENV=py34-django111
-    - python: 3.5
-      env: TOXENV=py35-django18
-    - python: 3.5
-      env: TOXENV=py35-django110
     - python: 3.5
       env: TOXENV=py35-django111
     - python: 3.6
       env: TOXENV=py36-django111
-
     - python: 3.5
+      env: TOXENV=py35-django2
+    - python: 3.5
+      env: TOXENV=py35-django21
+    - python: 3.6
+      env: TOXENV=py36-django2
+    - python: 3.6
+      env: TOXENV=py36-django21
+
+    - python: 3.6
       env: TOXENV=lint
 
 install:
