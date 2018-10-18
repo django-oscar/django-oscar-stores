@@ -1,7 +1,7 @@
-from django import forms, VERSION
+from django import VERSION, forms
 from django.conf import settings
 from django.contrib.gis.forms import fields
-from django.contrib.gis.geoip import HAS_GEOIP
+from django.contrib.gis.geoip2 import HAS_GEOIP2
 from django.db.models import Q
 from django.forms import models as modelforms
 from django.utils.encoding import force_text
@@ -41,9 +41,9 @@ class StoreForm(forms.ModelForm):
         instance = kwargs.get('instance', None)
         if instance:
             self.initial['location'] = instance.location.geojson
-        elif HAS_GEOIP and getattr(settings, 'GEOIP_ENABLED', True):
-            from django.contrib.gis.geoip import GeoIP
-            point = GeoIP().geos(current_ip)
+        elif HAS_GEOIP2 and getattr(settings, 'GEOIP_ENABLED', True):
+            from django.contrib.gis.geoip2 import GeoIP2
+            point = GeoIP2().geos(current_ip)
             if point:
                 self.initial['location'] = point.geojson
 

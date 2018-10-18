@@ -2,6 +2,12 @@
 Changelog
 =========
 
+1.0
+===
+
+* Added support for Oscar 1.6, and Django 1.11 to 2.1
+* Dropped support for Django 1.10 and lower.
+
 0.8
 ===
 

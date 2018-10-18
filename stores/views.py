@@ -1,15 +1,23 @@
 from django.conf import settings
+from django.contrib.gis.db.models.functions import Distance
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from oscar.core.loading import get_model
 
 from stores.forms import StoreSearchForm
-from stores.utils import get_geodetic_srid, get_geographic_srid
 
 Store = get_model('stores', 'store')
 
 
-class StoreListView(generic.ListView):
+class MapsContextMixin(object):
+
+    def get_context_data(self, **kwargs):
+        ctx = super(MapsContextMixin, self).get_context_data(**kwargs)
+        ctx['maps_api_key'] = settings.GOOGLE_MAPS_API_KEY
+        return ctx
+
+
+class StoreListView(MapsContextMixin, generic.ListView):
     model = Store
     template_name = 'stores/index.html'
     context_object_name = 'store_list'
@@ -42,21 +50,14 @@ class StoreListView(generic.ListView):
             queryset = queryset.filter(group=group)
 
         latlng = self.form.point
+
         if latlng:
-            # Convert to geographic coords
-            queryset = queryset.transform(get_geographic_srid())
+            queryset = queryset.annotate(distance=Distance('location', latlng))
 
             # Constrain by distance if set up
             max_distance = self.get_max_distance()
             if max_distance:
-                queryset = queryset.filter(
-                    location__distance_lte=(latlng, max_distance))
-
-            # Add distance query
-            queryset = queryset.distance(latlng)
-
-            # Convert back to geodetic coords
-            queryset = queryset.transform(get_geodetic_srid())
+                queryset = queryset.filter(distance__lte=max_distance)
 
             # Order by distance
             queryset = queryset.order_by('distance')
@@ -103,7 +104,7 @@ class StoreListView(generic.ListView):
         return ctx
 
 
-class StoreDetailView(generic.DetailView):
+class StoreDetailView(MapsContextMixin, generic.DetailView):
     model = Store
     template_name = 'stores/detail.html'
     context_object_name = 'store'

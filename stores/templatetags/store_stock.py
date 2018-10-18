@@ -1,5 +1,7 @@
 from django import template
+from django.contrib.gis.db.models.functions import Distance
 from oscar.core.loading import get_model
+
 
 StoreStock = get_model('stores', 'StoreStock')
 
@@ -10,12 +12,8 @@ register = template.Library()
 def store_stock_for_product(product, location=None, limit=20):
     query_set = StoreStock.objects.filter(product=product)
     if location:
-        # FIXME: this query currently only works on PostGIS. This is described in
-        # the geodjango docs. This restricts the use of the stores package to only
-        # be used with that backend which should be changed.
-        query_set = query_set.distance(
-            location,
-            field_name='store__location'
+        query_set = query_set.annotate(
+            distance=Distance('store__location', location)
         ).order_by('distance')
     else:
         query_set = query_set.order_by('store__name')

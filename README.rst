@@ -92,7 +92,7 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
 
 .. code:: python
 
-    from django.views.i18n import javascript_catalog
+    from django.views.i18n import JavaScriptCatalog
     from oscar.app import shop
     from stores.app import application as stores_app
     from stores.dashboard.app import application as dashboard_app
@@ -108,7 +108,7 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
         url(r'^stores/', stores_app.urls),
 
         # adds internationalization URLs
-        (r'^jsi18n/$', javascript_catalog, name="javascript-catalogue"),
+        (r'^jsi18n/$', JavaScriptCatalog.as_view(), name="javascript-catalogue"),
     ]
 
 You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
@@ -118,6 +118,9 @@ appropriate directory.
 
 Settings
 --------
+
+* ``GOOGLE_MAPS_API_KEY`` (default: not set).  Maps API key for use with Maps and Geocode APIs.
+  You must provide this key.
 
 * ``STORES_GEOGRAPHIC_SRID`` (default: ``3577``).  This is used for distance
   calculations.  See http://spatialreference.org for more details.
