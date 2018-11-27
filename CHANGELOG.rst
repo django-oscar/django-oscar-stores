@@ -2,6 +2,12 @@
 Changelog
 =========
 
+1.1
+===
+
+* Load app models dynamically to allow overriding.
+* Add a `PUBLIC_HOLIDAYS` option to `OpeningPeriod.weekday` choices.
+
 1.0
 ===
 

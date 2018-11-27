@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='django-oscar-stores',
-    version="1.0.0",
+    version="1.1.0",
     url='https://github.com/django-oscar/django-oscar-stores',
     author="David Winterbottom",
     author_email="david.winterbottom@gmail.com",
