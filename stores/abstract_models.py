@@ -22,6 +22,7 @@ class StoreAddress(AbstractAddress):
 
     class Meta:
         abstract = True
+        app_label = 'stores'
 
     @property
     def street(self):
@@ -38,6 +39,7 @@ class StoreGroup(models.Model):
 
     class Meta:
         abstract = True
+        app_label = 'stores'
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -97,6 +99,7 @@ class Store(models.Model):
     class Meta:
         abstract = True
         ordering = ('name',)
+        app_label = 'stores'
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -155,6 +158,7 @@ class OpeningPeriod(models.Model):
         ordering = ['weekday']
         verbose_name = _("Opening period")
         verbose_name_plural = _("Opening periods")
+        app_label = 'stores'
 
     def clean(self):
         if self.end <= self.start:
@@ -210,6 +214,7 @@ class StoreStock(models.Model):
         verbose_name = _("Store stock record")
         verbose_name_plural = _("Store stock records")
         unique_together = ("store", "product")
+        app_label = 'stores'
 
     objects = Manager()
 
