@@ -162,7 +162,7 @@ class OpeningPeriod(models.Model):
         app_label = 'stores'
 
     def clean(self):
-        if self.end <= self.start:
+        if self.start and self.end and self.end <= self.start:
             raise ValidationError(_("Start must be before end"))
 
 
