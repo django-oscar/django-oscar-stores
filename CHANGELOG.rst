@@ -2,6 +2,11 @@
 Changelog
 =========
 
+1.1.1
+=====
+
+* Fix validation of empty start and end times on opening periods.
+
 1.1
 ===
 
