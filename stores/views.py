@@ -2,10 +2,9 @@ from django.conf import settings
 from django.contrib.gis.db.models.functions import Distance
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
-from oscar.core.loading import get_model
+from oscar.core.loading import get_class, get_model
 
-from stores.forms import StoreSearchForm
-
+StoreSearchForm = get_class('stores.forms', 'StoreSearchForm')
 Store = get_model('stores', 'store')
 
 

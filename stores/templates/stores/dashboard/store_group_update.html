@@ -1,4 +1,4 @@
-{% extends 'dashboard/layout.html' %}
+{% extends 'oscar/dashboard/layout.html' %}
 {% load i18n %}
 
 {% block body_class %}stores{% endblock %}
@@ -31,7 +31,7 @@
         <div class="sub-header">
             <h3>{% trans "Store Group Details" %}</h3>
         </div>
-        {% include 'dashboard/partials/form_fields.html' %}
+        {% include 'oscar/dashboard/partials/form_fields.html' %}
     </div>
 
     <div class="form-group">

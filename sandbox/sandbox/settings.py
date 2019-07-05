@@ -98,7 +98,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     # Oscar specific
     'oscar.apps.search.context_processors.search_form',
-    'oscar.apps.promotions.context_processors.promotions',
     'oscar.apps.checkout.context_processors.checkout',
     'oscar.apps.customer.notifications.context_processors.notifications',
     'oscar.core.context_processors.metadata',
@@ -114,7 +113,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             location('templates'),
-            oscar.OSCAR_MAIN_TEMPLATE_DIR,
         ],
         'OPTIONS': {
             'loaders': [
@@ -134,7 +132,6 @@ TEMPLATES = [
                 # Oscar specific
                 'oscar.apps.search.context_processors.search_form',
                 'oscar.apps.customer.notifications.context_processors.notifications',
-                'oscar.apps.promotions.context_processors.promotions',
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.core.context_processors.metadata',
             ],
@@ -144,23 +141,12 @@ TEMPLATES = [
 ]
 
 INSTALLED_APPS = [
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.admin',
     'django.contrib.gis',
-    'django.contrib.flatpages',
-    'django_extensions',
-    'debug_toolbar',
+    'sorl.thumbnail',
     'stores',
-    'widget_tweaks',
-]
+    'stores.dashboard',
+] + oscar.INSTALLED_APPS
 
-
-INSTALLED_APPS += oscar.get_core_apps()
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',

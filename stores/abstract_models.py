@@ -2,8 +2,7 @@ from django.contrib.gis.db.models import Manager, PointField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from oscar.apps.address.abstract_models import AbstractAddress
 from oscar.core.utils import slugify
 
@@ -15,7 +14,7 @@ from stores.utils import get_geodetic_srid
 class StoreAddress(AbstractAddress):
     store = models.OneToOneField(
         'stores.Store',
-        models.PROTECT,
+        models.CASCADE,
         verbose_name=_("Store"),
         related_name="address"
     )
@@ -32,7 +31,6 @@ class StoreAddress(AbstractAddress):
         return "\n".join(filter(bool, [self.line1, self.line2, self.line3]))
 
 
-@python_2_unicode_compatible
 class StoreGroup(models.Model):
     name = models.CharField(_('Name'), max_length=100, unique=True)
     slug = models.SlugField(_('Slug'), max_length=100, unique=True)
@@ -50,7 +48,6 @@ class StoreGroup(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class Store(models.Model):
     name = models.CharField(_('Name'), max_length=100)
     slug = models.SlugField(_('Slug'), max_length=100, null=True)
@@ -118,7 +115,6 @@ class Store(models.Model):
         return any([self.manager_name, self.phone, self.email])
 
 
-@python_2_unicode_compatible
 class OpeningPeriod(models.Model):
     PERIOD_FORMAT = _("%(start)s - %(end)s")
     (MONDAY, TUESDAY, WEDNESDAY, THURSDAY,
@@ -166,7 +162,6 @@ class OpeningPeriod(models.Model):
             raise ValidationError(_("Start must be before end"))
 
 
-@python_2_unicode_compatible
 class StoreStock(models.Model):
     store = models.ForeignKey(
         'stores.Store',

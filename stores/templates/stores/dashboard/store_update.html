@@ -1,4 +1,4 @@
-{% extends 'dashboard/layout.html' %}
+{% extends 'oscar/dashboard/layout.html' %}
 {% load i18n %}
 {% load staticfiles %}
 
@@ -48,22 +48,22 @@
         <h3>{% trans "Store details" %}</h3>
     </div>
     <div class="well">
-        {% include "dashboard/partials/form_field.html" with field=form.name %}
-        {% include "dashboard/partials/form_field.html" with field=form.description %}
-        {% include "dashboard/partials/form_field.html" with field=form.reference %}
-        {% include "dashboard/partials/form_field.html" with field=form.group %}
-        {% include "dashboard/partials/form_field.html" with field=form.image %}
-        {% include "dashboard/partials/form_field.html" with field=form.is_pickup_store %}
-        {% include "dashboard/partials/form_field.html" with field=form.is_active %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.name %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.description %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.reference %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.group %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.image %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.is_pickup_store %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.is_active %}
     </div>
 
     <div class="table-header">
         <h3>{% trans "Contact details" %}</h3>
     </div>
     <div class="well">
-        {% include "dashboard/partials/form_field.html" with field=form.manager_name %}
-        {% include "dashboard/partials/form_field.html" with field=form.phone %}
-        {% include "dashboard/partials/form_field.html" with field=form.email %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.manager_name %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.phone %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.email %}
     </div>
 
     <div class="table-header">
@@ -82,7 +82,7 @@
                 {% endif %}
 
                 {% for field in address_form %}
-                    {% include "dashboard/partials/form_field.html" %}
+                    {% include "oscar/dashboard/partials/form_field.html" %}
                 {% endfor %}
             {% endfor %}
         {% endwith %}
@@ -98,7 +98,7 @@
             You can drag the marker around on the map to fine-tune the location.
             {% endblocktrans %}
         </p>
-        {% include "dashboard/partials/form_field.html" with field=form.location %}
+        {% include "oscar/dashboard/partials/form_field.html" with field=form.location %}
         <div class="well well-blank">
             <div class="controls">
                 <input type="text" id="search-text-field" class="col-md-12" style="margin-bottom: 10px; width: 968px;"/>
