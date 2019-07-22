@@ -108,7 +108,7 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
         url(r'^stores/', stores_app.urls),
 
         # adds internationalization URLs
-        (r'^jsi18n/$', JavaScriptCatalog.as_view(), name="javascript-catalogue"),
+        url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name="javascript-catalogue"),
     ]
 
 You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
