@@ -9,7 +9,8 @@
 
 .tox/
 .cache/
-dist/
+/dist/
+/build/
 cover/
 docs/_build/
 sandbox/public/media/uploads
