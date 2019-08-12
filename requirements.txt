@@ -1,7 +1,7 @@
 # Development
 django-debug-toolbar>=1.10,<1.11
 django-extensions>=2.1,<2.2
-flake8>=3.5,<3.6
+flake8>=3.5,<3.8
 
 # Testing
 coverage>=4.5,<4.6
