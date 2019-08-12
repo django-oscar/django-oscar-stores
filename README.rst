@@ -94,19 +94,16 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
 .. code:: python
 
     from django.views.i18n import JavaScriptCatalog
-    from oscar.app import shop
-    from stores.app import application as stores_app
-    from stores.dashboard.app import application as dashboard_app
 
     urls = [
         # basic configuration for Oscar
-        url(r'', shop.urls),
+        url(r'^', include(apps.get_app_config('oscar').urls[0])),
 
         # adds URLs for the dashboard store manager
-        url(r'^dashboard/stores/', dashboard_app.urls),
+        url(r'^dashboard/stores/', apps.get_app_config('stores_dashboard').urls),
 
         # adds URLs for overview and detail pages
-        url(r'^stores/', stores_app.urls),
+        url(r'^stores/', apps.get_app_config('stores').urls),
 
         # adds internationalization URLs
         url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name="javascript-catalogue"),
