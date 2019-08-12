@@ -25,6 +25,10 @@ matrix:
     - python: 3.6
       env: TOXENV=lint
 
+branches:
+  only:
+    - master
+
 install:
     - pip install tox codecov
 
