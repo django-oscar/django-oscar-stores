@@ -86,6 +86,7 @@ First, ensure you are using a spatial database and have django-oscar installed.
 Install package:
 
 .. code:: bash
+
     $ pip install django-oscar-stores
 
 then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
