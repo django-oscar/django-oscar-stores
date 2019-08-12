@@ -6,13 +6,20 @@ from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from extra_views import (CreateWithInlinesView, InlineFormSet,
                          UpdateWithInlinesView)
-from oscar.core.loading import get_model
+from oscar.core.loading import get_class, get_classes, get_model
 
-from stores.dashboard import forms
-from stores.dashboard.forms import OpeningHoursInline
 from stores.utils import get_current_ip
-from stores.views import MapsContextMixin
 
+MapsContextMixin = get_class('stores.views', 'MapsContextMixin')
+(DashboardStoreSearchForm,
+ OpeningHoursInline,
+ OpeningPeriodForm,
+ StoreAddressForm,
+ StoreForm) = get_classes('stores.dashboard.forms', ('DashboardStoreSearchForm',
+                                                     'OpeningHoursInline',
+                                                     'OpeningPeriodForm',
+                                                     'StoreAddressForm',
+                                                     'StoreForm'))
 Store = get_model('stores', 'Store')
 StoreGroup = get_model('stores', 'StoreGroup')
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
@@ -24,7 +31,7 @@ class StoreListView(generic.ListView):
     template_name = "stores/dashboard/store_list.html"
     context_object_name = "store_list"
     paginate_by = 20
-    filterform_class = forms.DashboardStoreSearchForm
+    filterform_class = DashboardStoreSearchForm
 
     def get_title(self):
         data = getattr(self.filterform, 'cleaned_data', {})
@@ -58,7 +65,7 @@ class StoreListView(generic.ListView):
 class StoreAddressInline(InlineFormSet):
 
     model = StoreAddress
-    form_class = forms.StoreAddressForm
+    form_class = StoreAddressForm
     factory_kwargs = {
         'extra': 1,
         'max_num': 1,
@@ -70,7 +77,7 @@ class OpeningPeriodInline(InlineFormSet):
     extra = 7
     max_num = 7
     model = OpeningPeriod
-    form_class = forms.OpeningPeriodForm
+    form_class = OpeningPeriodForm
 
 
 class StoreEditMixin(MapsContextMixin):
@@ -85,7 +92,7 @@ class StoreEditMixin(MapsContextMixin):
 class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
     model = Store
     template_name = "stores/dashboard/store_update.html"
-    form_class = forms.StoreForm
+    form_class = StoreForm
     success_url = reverse_lazy('stores-dashboard:store-list')
 
     def get_context_data(self, **kwargs):
@@ -111,7 +118,7 @@ class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
 class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
     model = Store
     template_name = "stores/dashboard/store_update.html"
-    form_class = forms.StoreForm
+    form_class = StoreForm
     success_url = reverse_lazy('stores-dashboard:store-list')
 
     def get_context_data(self, **kwargs):

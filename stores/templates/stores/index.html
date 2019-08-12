@@ -1,9 +1,9 @@
-{% extends "layout.html" %}
+{% extends "oscar/layout.html" %}
 {% load i18n %}
 {% load l10n %}
 {% load staticfiles %}
-{% load thumbnail %}
 {% load currency_filters %}
+{% load image_tags %}
 
 {% block extrahead %}
     <style>map img { max-width: none; }</style>
@@ -17,7 +17,7 @@
 {% block breadcrumbs %}
 <ul class="breadcrumb">
     <li>
-        <a href="{% url 'promotions:home' %}">{% trans "Home" %}</a>
+        <a href="{% url 'home' %}">{% trans "Home" %}</a>
     </li>
     <li>
         <a href="{% url 'stores:index' %}">{% trans "Stores" %}</a>
@@ -93,9 +93,8 @@
                     </div>
                     <div class="row-fluid">
                         <div class="col-md-4">
-                            {% thumbnail store.image "400x400" as im %}
+                            {% oscar_thumbnail store.image "400x400" as im %}
                             <a href="{{ store.get_absolute_url }}"><img alt="{{ store.name }}" src="{{ im.url }}" width="{{ im.width}}" height="{{ im.height }}" /></a>
-                            {% endthumbnail %}
                         </div>
 
                         <div class="col-md-4 store-address-contact">

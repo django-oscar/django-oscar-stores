@@ -1,6 +1,6 @@
 import os
 
-from oscar import OSCAR_MAIN_TEMPLATE_DIR, get_core_apps
+import oscar
 from oscar.defaults import *  # noqa
 
 location = lambda x: os.path.join(
@@ -34,7 +34,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             location('templates'),
-            OSCAR_MAIN_TEMPLATE_DIR,
         ],
         'OPTIONS': {
             'loaders': [
@@ -65,25 +64,12 @@ MIDDLEWARE = (
 
 ROOT_URLCONF = 'sandbox.sandbox.urls'
 
-TEMPLATE_DIRS = (
-    location('templates'),
-    OSCAR_MAIN_TEMPLATE_DIR,
-)
-
 INSTALLED_APPS = [
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.admin',
     'django.contrib.gis',
-    'django.contrib.flatpages',
-    'widget_tweaks',
-] + get_core_apps() + [
+    'sorl.thumbnail',
     'stores',
-]
+    'stores.dashboard',
+] + oscar.INSTALLED_APPS
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',

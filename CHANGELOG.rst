@@ -2,6 +2,12 @@
 Changelog
 =========
 
+2.0
+===
+
+* Add support for Oscar 2.0
+* Drop support for Oscar 1.6 and lower, and drop support for Python 2.
+
 1.1.1
 =====
 
