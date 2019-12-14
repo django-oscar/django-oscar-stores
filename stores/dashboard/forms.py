@@ -25,8 +25,8 @@ class StoreForm(forms.ModelForm):
     class Meta:
         model = get_model('stores', 'Store')
         fields = [
-            'name', 'phone', 'email', 'reference', 'image', 'description',
-            'location', 'group', 'is_pickup_store', 'is_active',
+            'name', 'manager_name', 'phone', 'email', 'reference', 'image',
+            'description', 'location', 'group', 'is_pickup_store', 'is_active',
         ]
         widgets = {
             'description': forms.Textarea(attrs={'cols': 40, 'rows': 10}),
