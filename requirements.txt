@@ -4,7 +4,7 @@ django-extensions>=2.1,<2.3
 flake8>=3.7,<3.8
 
 # Testing
-coverage>=4.5,<4.6
+coverage>=4.5,<5.1
 django-webtest>=1.9,<1.10
 factory-boy>=2.12,<2.13
 pinocchio==0.4.2
