@@ -20,7 +20,7 @@ setup(
     install_requires=[
         'django-oscar>=2.0,<2.1',
         'requests>=1.1',
-        'sorl-thumbnail>=12.4.1,<12.5',
+        'sorl-thumbnail>=12.4.1,<12.7',
     ],
 
     # See http://pypi.python.org/pypi?%3Aaction=list_classifiers
