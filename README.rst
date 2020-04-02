@@ -100,10 +100,12 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
         url(r'^', include(apps.get_app_config('oscar').urls[0])),
 
         # adds URLs for the dashboard store manager
-        url(r'^dashboard/stores/', apps.get_app_config('stores_dashboard').urls),
+        url(r'^dashboard/stores/', apps.get_app_config('stores_dashboard').urls),  # Django 1
+        # path('dashboard/stores/', include('stores.dashboard.urls', namespace="stores-dashboard")),  # Django 2
 
         # adds URLs for overview and detail pages
-        url(r'^stores/', apps.get_app_config('stores').urls),
+        url(r'^stores/', apps.get_app_config('stores').urls),  # Django 1
+        # path('stores/', include('stores.urls', namespace="stores")),  # Django 2
 
         # adds internationalization URLs
         url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name="javascript-catalogue"),
@@ -112,7 +114,7 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
 You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
 appropriate directory.
 
-.. _`GeoIP data files`: https://docs.djangoproject.com/en/stable/ref/contrib/gis/geoip/
+.. _`GeoIP data files`: https://docs.djangoproject.com/en/stable/ref/contrib/gis/geoip2/
 
 Settings
 --------
