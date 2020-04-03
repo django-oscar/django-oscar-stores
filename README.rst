@@ -89,7 +89,9 @@ Install package:
 
     $ pip install django-oscar-stores
 
-then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
+Then add ``stores`` and ``stores.dashboard`` to ``INSTALLED_APPS``.
+
+Now update your root ``urls.py``:
 
 .. code:: python
 
@@ -106,13 +108,13 @@ then add ``stores`` to ``INSTALLED_APPS``.  Now update your root ``urls.py``:
         url(r'^stores/', apps.get_app_config('stores').urls),
 
         # adds internationalization URLs
-        url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name="javascript-catalogue"),
+        url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalogue'),
     ]
 
 You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
 appropriate directory.
 
-.. _`GeoIP data files`: https://docs.djangoproject.com/en/stable/ref/contrib/gis/geoip/
+.. _`GeoIP data files`: https://docs.djangoproject.com/en/stable/ref/contrib/gis/geoip2/
 
 Settings
 --------
