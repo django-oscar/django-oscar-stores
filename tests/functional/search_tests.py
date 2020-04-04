@@ -8,7 +8,7 @@ class TestTheListOfStores(WebTestCase):
     anonymous = True
 
     def setUp(self):
-        super(TestTheListOfStores, self).setUp()
+        super().setUp()
         self.main_location = 'POINT(144.917908 -37.815751)'
         self.other_location = 'POINT(144.998401 -37.772895)'
 

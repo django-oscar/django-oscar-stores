@@ -2,7 +2,6 @@ from django import template
 from django.contrib.gis.db.models.functions import Distance
 from oscar.core.loading import get_model
 
-
 StoreStock = get_model('stores', 'StoreStock')
 
 register = template.Library()

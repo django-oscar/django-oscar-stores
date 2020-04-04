@@ -1,9 +1,9 @@
-from django import VERSION, forms
+from django import forms
 from django.contrib.gis.forms import fields
 from django.db.models import Q
 from django.forms import models as modelforms
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from oscar.core.loading import get_model
 
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
@@ -68,7 +68,7 @@ class OpeningPeriodForm(forms.ModelForm):
         self.weekday = kwargs.pop('weekday')
         self.store = kwargs.pop('store')
 
-        super(OpeningPeriodForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         time_input = ['%H:%M', '%H', '%I:%M%p', '%I%p', '%I:%M %p', '%I %p']
         self.fields['start'].input_formats = time_input
         self.fields['start'].required = False
@@ -78,7 +78,7 @@ class OpeningPeriodForm(forms.ModelForm):
     def save(self, commit=True):
         self.instance.store = self.store
         self.instance.weekday = self.weekday
-        return super(OpeningPeriodForm, self).save(commit=commit)
+        return super().save(commit=commit)
 
 
 class DashboardStoreSearchForm(forms.Form):
@@ -143,17 +143,10 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
 
         self.open = self.openform['open']
 
-        super(OpeningPeriodFormset, self).__init__(data=data, instance=instance,
-                                                   prefix=prefix,
-                                                   queryset=queryset)
+        super().__init__(data=data, instance=instance, prefix=prefix, queryset=queryset)
 
     def get_weekday_display(self):
         return force_text(OpeningPeriod.WEEK_DAYS[self.weekday])
-
-    # Backward compatibility with Django 1.8, which doesn't have get_form_kwargs
-    if VERSION < (1, 9):
-        def form(self, *args, **kwargs):
-            return OpeningPeriodForm(*args, store=self.instance, weekday=self.weekday, **kwargs)
 
     def get_form_kwargs(self, index):
         return {
@@ -161,16 +154,13 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
             'weekday': self.weekday,
         }
 
-    def is_valid(self):
-        return super(OpeningPeriodFormset, self).is_valid()
-
     def save(self, *args, **kwargs):
         if not self.openform:
             for form in self:
                 if form.instance.pk:
                     form.instance.delete()
         else:
-            return super(OpeningPeriodFormset, self).save(*args, **kwargs)
+            return super().save(*args, **kwargs)
 
 
 class OpeningHoursFormset(object):

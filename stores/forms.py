@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.gis.geos import GEOSGeometry
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from oscar.core.loading import get_class, get_model
 
 from stores.utils import get_geodetic_srid
@@ -26,11 +26,11 @@ class StoreSearchForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        super(StoreSearchForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['group'].queryset = StoreGroup.objects.all()
 
     def clean(self):
-        cleaned_data = super(StoreSearchForm, self).clean()
+        cleaned_data = super().clean()
         self.point = self.geocoordinates(cleaned_data)
 
         query = cleaned_data.get('query', None)
