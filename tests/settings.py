@@ -86,5 +86,4 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-GEOIP_PATH = 'sandbox/geoip'
 GOOGLE_MAPS_API_KEY = 'test'

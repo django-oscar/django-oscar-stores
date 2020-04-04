@@ -8,8 +8,6 @@ from extra_views import (CreateWithInlinesView, InlineFormSet,
                          UpdateWithInlinesView)
 from oscar.core.loading import get_class, get_classes, get_model
 
-from stores.utils import get_current_ip
-
 MapsContextMixin = get_class('stores.views', 'MapsContextMixin')
 (DashboardStoreSearchForm,
  OpeningHoursInline,
@@ -82,11 +80,6 @@ class OpeningPeriodInline(InlineFormSet):
 
 class StoreEditMixin(MapsContextMixin):
     inlines = [OpeningHoursInline, StoreAddressInline]
-
-    def get_form_kwargs(self):
-        kwargs = super(StoreEditMixin, self).get_form_kwargs()
-        kwargs['current_ip'] = get_current_ip(self.request)
-        return kwargs
 
 
 class StoreCreateView(StoreEditMixin, CreateWithInlinesView):

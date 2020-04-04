@@ -2,6 +2,11 @@
 Changelog
 =========
 
+In Development
+==============
+
+* Remove GeoIP-based location detection in the dashboard.
+
 2.0
 ===
 

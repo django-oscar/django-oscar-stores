@@ -1,13 +1,7 @@
-.PHONY: install sandbox geoip css
+.PHONY: install sandbox css
 
 install:
 	pip install -e . -r requirements.txt django-oscar
-
-geoip:
-	# Fetch GeoIP data
-	wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
-	gunzip GeoLiteCity.dat.gz
-	mv GeoLiteCity.dat sandbox/geoip
 
 sandbox: install
 	-rm -rf sandbox/public/media/cache sandbox/public/media/uploads

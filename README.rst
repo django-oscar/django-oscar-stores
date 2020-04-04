@@ -111,11 +111,6 @@ Now update your root ``urls.py``:
         url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalogue'),
     ]
 
-You also need to download the `GeoIP data files`_ and set ``GEOIP_PATH`` to point to the
-appropriate directory.
-
-.. _`GeoIP data files`: https://docs.djangoproject.com/en/stable/ref/contrib/gis/geoip2/
-
 Settings
 --------
 
@@ -147,12 +142,6 @@ the stores extension.  Set this up with:
 .. code:: bash
 
     $ make sandbox
-
-then fetch the GeoIP files with:
-
-.. code:: bash
-
-    $ make geoip
 
 This loads a fixture which provides a superuser to test the dashboard with::
 
