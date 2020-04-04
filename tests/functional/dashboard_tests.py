@@ -9,7 +9,7 @@ class TestDashboardStoreSearchForm(WebTestCase):
     is_anonymous = False
 
     def setUp(self):
-        super(TestDashboardStoreSearchForm, self).setUp()
+        super().setUp()
 
         location = '{"type": "Point", "coordinates": [144.917908,-37.815751]}'
         location = 'POINT(144.917908 -37.815751)'

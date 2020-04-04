@@ -2,7 +2,6 @@ from oscar.core.loading import is_model_registered
 
 from . import abstract_models
 
-
 __all__ = []
 
 

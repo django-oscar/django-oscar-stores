@@ -24,11 +24,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (location('static/'),)
 STATIC_ROOT = location('public')
 
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -68,7 +68,7 @@ class TestASignedInUser(StoresWebTest):
     is_anonymous = False
 
     def setUp(self):
-        super(TestASignedInUser, self).setUp()
+        super().setUp()
         self.country = CountryFactory(
             name="AUSTRALIA",
             printable_name="Australia",

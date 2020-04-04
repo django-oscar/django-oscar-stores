@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.gis.db.models.functions import Distance
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from oscar.core.loading import get_class, get_model
 
@@ -11,7 +11,7 @@ Store = get_model('stores', 'store')
 class MapsContextMixin(object):
 
     def get_context_data(self, **kwargs):
-        ctx = super(MapsContextMixin, self).get_context_data(**kwargs)
+        ctx = super().get_context_data(**kwargs)
         ctx['maps_api_key'] = settings.GOOGLE_MAPS_API_KEY
         return ctx
 
@@ -28,7 +28,7 @@ class StoreListView(MapsContextMixin, generic.ListView):
             self.form = self.form_class(data=request.GET)
         else:
             self.form = self.form_class()
-        return super(StoreListView, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def is_form_submitted(self, request):
         return 'query' in request.GET
@@ -88,7 +88,7 @@ class StoreListView(MapsContextMixin, generic.ListView):
         return _(self.title_template) % title_kwargs
 
     def get_context_data(self, **kwargs):
-        ctx = super(StoreListView, self).get_context_data(**kwargs)
+        ctx = super().get_context_data(**kwargs)
 
         ctx['form'] = self.form
         ctx['all_stores'] = self.model.objects.select_related('group', 'address').all()

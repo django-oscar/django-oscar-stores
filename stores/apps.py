@@ -2,7 +2,6 @@ from django.conf import settings
 from django.conf.urls import url
 from django.core.checks import Warning, register
 from django.utils.translation import gettext_lazy as _
-
 from oscar.core.application import OscarConfig
 from oscar.core.loading import get_class
 

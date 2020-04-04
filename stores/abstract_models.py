@@ -42,7 +42,7 @@ class StoreGroup(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
-        super(StoreGroup, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -101,7 +101,7 @@ class Store(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
-        super(Store, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -148,7 +148,7 @@ class OpeningPeriod(models.Model):
         help_text=_("Leaving start and end time empty is displayed as 'Closed'"))
 
     def __str__(self):
-        return u"%s: %s to %s" % (self.weekday, self.start, self.end)
+        return "%s: %s to %s" % (self.weekday, self.start, self.end)
 
     class Meta:
         abstract = True
@@ -216,8 +216,8 @@ class StoreStock(models.Model):
 
     def __str__(self):
         if self.store and self.product:
-            return u"%s @ %s" % (self.product.title, self.store.name)
-        return u"Store Stock"
+            return "%s @ %s" % (self.product.title, self.store.name)
+        return "Store Stock"
 
     @property
     def is_available_to_buy(self):

@@ -1,11 +1,10 @@
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
-from extra_views import (CreateWithInlinesView, InlineFormSet,
-                         UpdateWithInlinesView)
+from extra_views import CreateWithInlinesView, InlineFormSet, UpdateWithInlinesView
 from oscar.core.loading import get_class, get_classes, get_model
 
 MapsContextMixin = get_class('stores.views', 'MapsContextMixin')
@@ -38,16 +37,16 @@ class StoreListView(generic.ListView):
         address = data.get('address', None)
 
         if name and not address:
-            return ugettext('Stores matching "%s"') % (name)
+            return gettext('Stores matching "%s"') % (name)
         elif name and address:
-            return ugettext('Stores matching "%s" near "%s"') % (name, address)
+            return gettext('Stores matching "%s" near "%s"') % (name, address)
         elif address:
-            return ugettext('Stores near "%s"') % (address)
+            return gettext('Stores near "%s"') % (address)
         else:
-            return ugettext('Stores')
+            return gettext('Stores')
 
     def get_context_data(self, **kwargs):
-        data = super(StoreListView, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
         data['filterform'] = self.filterform
         data['queryset_description'] = self.get_title()
         return data
@@ -89,7 +88,7 @@ class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
     success_url = reverse_lazy('stores-dashboard:store-list')
 
     def get_context_data(self, **kwargs):
-        ctx = super(StoreCreateView, self).get_context_data(**kwargs)
+        ctx = super().get_context_data(**kwargs)
         ctx['title'] = _("Create new store")
         return ctx
 
@@ -97,10 +96,10 @@ class StoreCreateView(StoreEditMixin, CreateWithInlinesView):
         messages.error(
             self.request,
             "Your submitted data was not valid - please correct the below errors")
-        return super(StoreCreateView, self).forms_invalid(form, inlines)
+        return super().forms_invalid(form, inlines)
 
     def forms_valid(self, form, inlines):
-        response = super(StoreCreateView, self).forms_valid(form, inlines)
+        response = super().forms_valid(form, inlines)
 
         msg = render_to_string('stores/dashboard/messages/store_saved.html',
                                {'store': self.object})
@@ -115,7 +114,7 @@ class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
     success_url = reverse_lazy('stores-dashboard:store-list')
 
     def get_context_data(self, **kwargs):
-        ctx = super(StoreUpdateView, self).get_context_data(**kwargs)
+        ctx = super().get_context_data(**kwargs)
         ctx['title'] = self.object.name
         return ctx
 
@@ -123,13 +122,13 @@ class StoreUpdateView(StoreEditMixin, UpdateWithInlinesView):
         messages.error(
             self.request,
             "Your submitted data was not valid - please correct the below errors")
-        return super(StoreUpdateView, self).forms_invalid(form, inlines)
+        return super().forms_invalid(form, inlines)
 
     def forms_valid(self, form, inlines):
         msg = render_to_string('stores/dashboard/messages/store_saved.html',
                                {'store': self.object})
         messages.success(self.request, msg, extra_tags='safe')
-        return super(StoreUpdateView, self).forms_valid(form, inlines)
+        return super().forms_valid(form, inlines)
 
 
 class StoreDeleteView(generic.DeleteView):
@@ -141,7 +140,7 @@ class StoreDeleteView(generic.DeleteView):
         self.object = self.get_object()
         for time in self.object.opening_periods.all():
             time.delete()
-        return super(StoreDeleteView, self).delete(request, *args, **kwargs)
+        return super().delete(request, *args, **kwargs)
 
 
 class StoreGroupListView(generic.ListView):
@@ -157,12 +156,12 @@ class StoreGroupCreateView(generic.CreateView):
     success_url = reverse_lazy('stores-dashboard:store-group-list')
 
     def get_context_data(self, **kwargs):
-        ctx = super(StoreGroupCreateView, self).get_context_data(**kwargs)
+        ctx = super().get_context_data(**kwargs)
         ctx['title'] = _("Create new store group")
         return ctx
 
     def form_valid(self, form):
-        response = super(StoreGroupCreateView, self).form_valid(form)
+        response = super().form_valid(form)
         messages.success(self.request, _("Store group created"))
         return response
 
@@ -174,12 +173,12 @@ class StoreGroupUpdateView(generic.UpdateView):
     success_url = reverse_lazy('stores-dashboard:store-group-list')
 
     def get_context_data(self, **kwargs):
-        ctx = super(StoreGroupUpdateView, self).get_context_data(**kwargs)
+        ctx = super().get_context_data(**kwargs)
         ctx['title'] = self.object.name
         return ctx
 
     def form_valid(self, form):
-        response = super(StoreGroupUpdateView, self).form_valid(form)
+        response = super().form_valid(form)
         messages.success(self.request, _("Store group updated"))
         return response
 
@@ -190,6 +189,6 @@ class StoreGroupDeleteView(generic.DeleteView):
     success_url = reverse_lazy('stores-dashboard:store-group-list')
 
     def form_valid(self, form):
-        response = super(StoreGroupDeleteView, self).form_valid(form)
+        response = super().form_valid(form)
         messages.success(self.request, _("Store group deleted"))
         return response
