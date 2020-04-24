@@ -91,7 +91,7 @@
                         <div class="col-md-4">
                             {% if store.image %}
                                 {% oscar_thumbnail store.image "400x400" as im %}
-                                <a href="{{ store.get_absolute_url }}"><img alt="{{ store.name }}" src="{{ im.url }}" width="{{ im.width}}" height="{{ im.height }}" /></a>
+                                <a href="{{ store.get_absolute_url }}"><img alt="{{ store.name }}" src="{{ im.url }}" width="{{ im.width}}" height="{{ im.height }}" class="img-responsive"></a>
                             {% else %}
                                 <a href="{{ store.get_absolute_url }}">{{ store.name }}</a>
                             {% endif %}
@@ -113,7 +113,7 @@
             {% else %}
                 <p>{% trans "No stores found in the area." %}</p>
             {% endif %}
-        </section>
+        </div>
         {% else %}
         <p>{% trans "No store data available." %}</p>
         {% endif %}
