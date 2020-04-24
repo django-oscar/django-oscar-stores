@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='django-oscar-stores',
-    version="2.0",
+    version="2.1",
     url='https://github.com/django-oscar/django-oscar-stores',
     author="David Winterbottom",
     author_email="david.winterbottom@gmail.com",
@@ -20,7 +20,7 @@ setup(
     install_requires=[
         'django-oscar>=2.0,<2.1',
         'requests>=1.1',
-        'sorl-thumbnail>=12.4.1,<12.7',
+        'sorl-thumbnail>=12.4.1',
     ],
 
     # See http://pypi.python.org/pypi?%3Aaction=list_classifiers

@@ -2,10 +2,12 @@
 Changelog
 =========
 
-In Development
-==============
+2.1
+===
 
 * Remove GeoIP-based location detection in the dashboard.
+* Fix handling of missing images in store list view.
+* Fix images in store list/detail view to be responsive.
 
 2.0
 ===
