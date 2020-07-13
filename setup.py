@@ -18,7 +18,7 @@ setup(
     packages=find_packages(exclude=["sandbox*", "tests*"]),
     include_package_data=True,
     install_requires=[
-        'django-oscar>=2.0,<2.1',
+        'django-oscar>=2.0,<2.2',
         'requests>=1.1',
         'sorl-thumbnail>=12.4.1',
     ],
