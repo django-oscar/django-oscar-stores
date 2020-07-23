@@ -2,6 +2,13 @@
 Changelog
 =========
 
+2.2
+===
+
+* Declare support for Oscar 2.1 and Django 3.0.
+* Drop support for Django 1.11.
+* Drop support for Python 3.5.
+
 2.1
 ===
 
