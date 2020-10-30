@@ -8,7 +8,6 @@ PROJECT_DIR = os.path.join(os.path.dirname(__file__), '..')
 location = lambda x: os.path.join(PROJECT_DIR, x)
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -124,16 +123,13 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_REDIRECT_URL = '/accounts/'
-APPEND_SLASH = True
-
 # Oscar settings
 from oscar.defaults import * # noqa E402
 
 OSCAR_DASHBOARD_NAVIGATION.append(
     {
         'label': _('Stores'),
-        'icon': 'icon-shopping-cart',
+        'icon': 'fas fa-shopping-cart',
         'children': [
             {
                 'label': _('Stores'),

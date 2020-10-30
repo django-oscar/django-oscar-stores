@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.conf.urls import url
 from django.core.checks import Warning, register
+from django.urls import path
 from django.utils.translation import gettext_lazy as _
 from oscar.core.application import OscarConfig
 from oscar.core.loading import get_class
@@ -19,10 +19,8 @@ class StoresConfig(OscarConfig):
 
     def get_urls(self):
         urls = [
-            url(r'^$', self.list_view.as_view(),
-                name='index'),
-            url(r'^(?P<dummyslug>[\w-]+)/(?P<pk>\d+)/$',
-                self.detail_view.as_view(), name='detail'),
+            path('', self.list_view.as_view(), name='index'),
+            path('<slug:dummyslug>/<int:pk>/', self.detail_view.as_view(), name='detail'),
         ]
         return self.post_process_urls(urls)
 

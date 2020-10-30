@@ -172,22 +172,11 @@ stores.dashboard = {
             var inputs = $(this).closest('.weekday-block').find('input[type=text],button');
             inputs.prop('disabled', !isopen);
         }
-        $('#opening_hours_form input[name$=open]').each(isOpenCallback)
-                                                   .click(isOpenCallback);
+        $('#opening_hours_form input[name$=open]').each(isOpenCallback).click(isOpenCallback);
 
         $('#opening_hours_form button.add-more').click(function(e){
             e.preventDefault();
-            $(this).closest('.weekday-block').find('.hour-input.hide').first().removeClass('hide');
-            return false;
+            $(this).closest('.weekday-block').find('.hour-input.d-none').first().removeClass('d-none');
         });
     }
 };
-
-
-$(document).ready(function() {
-    // Adds error icon if there are erros in the product form
-    $('[data-behaviour="affix-nav-errors"].tab-pane').each(function (){
-        var productErrorListener = $(this).find('[class*="error"]').closest('.tab-pane').attr('id');
-        $('[data-spy="affix"] a[href="#' + productErrorListener + '"]').append('<i class="icon-exclamation-sign pull-right"></i>');
-    });
-});

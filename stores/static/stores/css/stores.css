@@ -2,63 +2,15 @@
 .store-map img {
   max-width: none;
 }
-.view-stores .location {
-  line-height: 16px;
-  padding: 10px 14px;
-  vertical-align: middle;
-  width: 100%;
-}
-.view-stores .location i {
-  font-size: 24px;
-  padding-right: 8px;
-  vertical-align: middle;
-}
-.view-stores input[type="text"] {
-  padding: 8px 0 8px 4px;
-}
-.view-stores > select {
-  width: 100%;
-}
-.view-stores .stores-postcode-search {
-  border: 1px solid #999;
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  display: inline-block;
-  position: relative;
-  width: 100%;
-}
-.view-stores .stores-postcode-search .search-query {
-  border: none;
-  float: left;
-  font-size: 12px;
-  padding: 8px 0 8px 4px;
-  box-shadow: none;
-  width: 100%;
-}
-.view-stores .stores-postcode-search .icon-search {
-  background: #fff;
-  border: medium none;
-  color: #999;
-  font-size: 20px;
-  vertical-align: middle;
-  position: absolute;
-  right: 0;
-  top: 5px;
-}
-.view-stores .nav-tabs.nav-stacked > li > a {
-  padding-left: 0;
-  padding-right: 0;
-  border-left: none;
-  border-right: none;
-  border-bottom: none;
+.view-stores .nav .nav-item {
   border-top: 1px solid #DDDDDD;
 }
-.view-stores .nav-tabs.nav-stacked > li > a .distance {
-  color: #999;
-}
-.nav-tabs.nav-stacked > li:first-child > a {
+.view-stores .nav .nav-item:first-child {
   border-top: none;
+}
+.view-stores .nav .nav-item .nav-link {
+  padding-left: 0;
+  padding-right: 0;
 }
 .divide-header {
   height: 18px;
@@ -84,13 +36,6 @@
 .store-map {
   margin-bottom: 28px;
 }
-.stores-list i,
-.store-details i {
-  color: #b6b6b6;
-  font-size: 18px;
-  padding-right: 5px;
-  float: left;
-}
 .stores-list {
   margin: 30px 0;
 }
@@ -98,141 +43,8 @@
   margin-bottom: 18px;
   padding-bottom: 14px;
 }
-.stores-list .sub-header .distance {
-  color: #aaa;
-  font-size: 18px;
-}
 .stores-list a.email {
-  width: 90%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  float: right;
-}
-.store-address-contact div {
-  padding: 4px 0;
-}
-.stores-list .table-condensed th,
-.table-condensed td {
-  padding: 5px 10px;
-}
-.store-details {
-  margin-bottom: 20px;
-}
-.store-name h1 {
-  float: left;
-  margin-bottom: 20px;
-}
-.store-name a > button {
-  float: right;
-  margin: 10px 0 20px;
-}
-/* CMS Area - needs to be added into the dashboard less file */
-.stores .well {
-  background-color: #fff;
-}
-.stores label {
-  font-weight: bold;
-}
-.stores [data-spy="affix"] {
-  width: 266px;
-}
-div[data-spy="affix"].affix {
-  top: 18px;
-}
-.stores .bs-docs-sidenav {
-  background-color: #FFFFFF;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
-  padding: 0;
-}
-.stores .bs-docs-sidenav > li > a {
-  border: 1px solid #E5E5E5;
-  color: #0088CC;
-  display: block;
-  margin: 0 0 -1px;
-  padding: 8px 14px;
-  outline: none;
-}
-.stores .bs-docs-sidenav > .active a:after {
-  border-bottom: 10px solid transparent;
-  border-left: 10px solid #F1FAFF;
-  border-top: 10px solid transparent;
-  content: "";
-  display: inline-block;
-  position: absolute;
-  right: -9px;
-  top: 9px;
-}
-.stores .bs-docs-sidenav > .active a:before {
-  border-bottom: 11px solid transparent;
-  border-left: 11px solid #CCCCCC;
-  border-top: 11px solid transparent;
-  content: "";
-  display: inline-block;
-  position: absolute;
-  right: -10px;
-  top: 8px;
-}
-.stores .bs-docs-sidenav > .active > a {
-  background: none repeat scroll 0 0 #F1FAFF;
-  border-left: 0 none;
-  border-right: 0 none;
-  box-shadow: 1px 0 0 rgba(0, 0, 0, 0.1) inset, -1px 0 0 rgba(0, 0, 0, 0.1) inset;
-  color: #0088CC;
-  font-weight: bold;
-  padding: 9px 15px;
-  position: relative;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  z-index: 2;
-}
-ul.wysihtml5-toolbar > li {
-  display: list-item;
-  float: left;
-  list-style: none outside none;
-  margin: 0 5px 10px 0;
-}
-.fixed-actions {
-  margin-bottom: 100px;
-}
-.fixed-actions .fixed-actions-group {
-  margin: 0;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-.fixed-actions .form-actions {
-  margin: 0;
-  background: #2a2a2a;
-}
-.stores .form-horizontal input[type="text"],
-.stores .form-stacked input[type="text"],
-.stores .form-horizontal textarea,
-.stores .form-stacked textarea,
-.stores .form-horizontal select,
-.stores .form-stacked select {
-  width: 95%;
-}
-.bs-docs-sidenav > li > a {
-  display: block;
-  width: 190px \9;
-  margin: 0 0 -1px;
-  padding: 8px 14px;
-  border: 1px solid #e5e5e5;
-  color: #0088cc;
-}
-.bs-docs-sidenav > li > a:hover {
-  background: #f1faff;
-}
-.bs-docs-sidenav > li > a i.icon-exclamation-sign {
-  color: #ea0001;
-  font-size: 16px;
-  vertical-align: middle;
-}
-#opening_hours .line-divide {
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
-}
-#opening_hours_form .hour-input input[type=text] {
-  width: 100px;
 }

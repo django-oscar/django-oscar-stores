@@ -7,13 +7,13 @@
     {{ store.manager_name }}<br />
 {% endif %}
 {% if store.phone %}
-<div>
-    <i class="icon-phone"></i> {{ store.phone }}<br />
-</div>
+<p>
+    <i class="fas fa-phone"></i> {{ store.phone }}<br />
+</p>
 {% endif %}
 {% if store.email %}
-<div>
-    <i class="icon-envelope-alt"></i>
+<p>
+    <i class="fas fa-envelope"></i>
     <a class="email" href="mailto:{{ store.email }}">{{ store.email }}</a><br />
-</div>
+</p>
 {% endif %}

@@ -58,7 +58,7 @@ var stores = (function(s, gmaps, o) {
             // Create the initial map
             createOverviewMap: function(stores, markerLatLng) {
                 var map = new gmaps.Map($('#store-map')[0], {
-                    // We use a default center as adding the stores will 
+                    // We use a default center as adding the stores will
                     // centre the map.
                     center: new gmaps.LatLng(0, 0),
                     mapTypeId: gmaps.MapTypeId.ROADMAP,
@@ -138,7 +138,7 @@ var stores = (function(s, gmaps, o) {
         initStore: function() {
             $('.store-map').each(function(elem) {
                 s.maps.createIndividualMap(this, $('.store-details address'), 16);
-                $(this).css({width: $(this).parents('.row-fluid').width()});
+                $(this).css({width: $(this).parents('.row').width()});
             });
         },
 

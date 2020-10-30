@@ -1,5 +1,6 @@
 {% extends "oscar/partials/nav_primary.html" %}
 
-{% block nav_extra %}
-    <li><a href="{% url 'stores:index' %}">Store locator</a></li>
+{% block nav_dropdown_extra_items %}
+    {{ block.super }}
+    <a class="dropdown-item" href="{% url 'stores:index' %}">Store locator</a>
 {% endblock %}

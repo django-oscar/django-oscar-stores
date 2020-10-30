@@ -1,26 +1,18 @@
 {% extends 'oscar/dashboard/layout.html' %}
 {% load i18n static %}
 
-{% block body_class %}stores{% endblock %}
-
-{% block extrahead %}
-    <link rel='stylesheet' type='text/css' href="{% static "stores/css/stores.css" %}" />
-{% endblock %}
-
 {% block title %}
 {{ title }} | {{ block.super }}
 {% endblock %}
 
 {% block breadcrumbs %}
-<ul class="breadcrumb">
-    <li>
-        <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
-    </li>
-    <li>
-        <a href="{% url 'stores-dashboard:store-list' %}">{% trans "Stores" %}</a>
-    </li>
-    <li class="active">{{ title }}</li>
-</ul>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'stores-dashboard:store-list' %}">{% trans "Stores" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
 {% endblock %}
 
 {% block headertext %}{{ title }}{% endblock %}
@@ -33,12 +25,12 @@
 </div>
 {% endif %}
 
-<form action="." method="post" class="form-vertical wysiwyg" enctype="multipart/form-data">
+<form method="post" class="form-vertical wysiwyg" enctype="multipart/form-data">
     {% csrf_token %}
     {% if form.non_field_errors %}
         {% for error in form.non_field_errors %}
-            <div class="alert alert-danger form-group danger">
-                <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+            <div class="alert alert-danger">
+                <span class="help-inline"><i class="fas fa-exclamation"></i> {{ error }}</span>
             </div>
         {% endfor %}
     {% endif %}
@@ -46,7 +38,7 @@
     <div class="table-header">
         <h3>{% trans "Store details" %}</h3>
     </div>
-    <div class="well">
+    <div class="card card-body">
         {% include "oscar/dashboard/partials/form_field.html" with field=form.name %}
         {% include "oscar/dashboard/partials/form_field.html" with field=form.description %}
         {% include "oscar/dashboard/partials/form_field.html" with field=form.reference %}
@@ -59,7 +51,7 @@
     <div class="table-header">
         <h3>{% trans "Contact details" %}</h3>
     </div>
-    <div class="well">
+    <div class="card card-body">
         {% include "oscar/dashboard/partials/form_field.html" with field=form.manager_name %}
         {% include "oscar/dashboard/partials/form_field.html" with field=form.phone %}
         {% include "oscar/dashboard/partials/form_field.html" with field=form.email %}
@@ -68,14 +60,14 @@
     <div class="table-header">
         <h3>{% trans "Address" %}</h3>
     </div>
-    <div class="well">
+    <div class="card card-body">
         {% with formset=inlines.1 %}
             {{ formset.management_form }}
             {% for address_form in formset %}
                 {% if address_form.non_field_errors %}
                     {% for error in address_form.non_field_errors %}
-                        <div class="alert alert-danger form-group danger">
-                            <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                        <div class="alert alert-danger">
+                            <span class="help-inline"><i class="fas fa-exclamation"></i> {{ error }}</span>
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -90,22 +82,20 @@
     <div class="table-header">
         <h3>{% trans "Location" %}</h3>
     </div>
-    <div class="well">
+    <div class="card card-body">
         <p>
             {% blocktrans %}
-            Enter an adddress in the location input and select your address from the options that appear.
+            Enter an address in the location input and select your address from the options that appear.
             You can drag the marker around on the map to fine-tune the location.
             {% endblocktrans %}
         </p>
         {% include "oscar/dashboard/partials/form_field.html" with field=form.location %}
-        <div class="well well-blank">
-            <div class="controls">
-                <input type="text" id="search-text-field" class="col-md-12" style="margin-bottom: 10px; width: 968px;"/>
-                {% if form.location.errors %}
-                    <div class="alert alert-danger">{% trans "Please select a location for your store." %}</div>
-                {% endif %}
-                <div id="store-map" style="width: 968px; height: 380px"></div>
-            </div>
+        <div class="controls">
+            <input type="text" id="search-text-field" style="margin-bottom: 10px; width: 968px;"/>
+            {% if form.location.errors %}
+                <div class="alert alert-danger">{% trans "Please select a location for your store." %}</div>
+            {% endif %}
+            <div id="store-map" style="width: 968px; height: 380px"></div>
         </div>
     </div>
 
@@ -113,19 +103,19 @@
         <h3>{% trans "Opening hours" %}</h3>
     </div>
 
-    <div class="well form-horizontal" id="opening_hours_form">
+    <div class="card card-body form-horizontal" id="opening_hours_form">
         {# use the first formset which is the opening times #}
         {% with workhours=inlines.0 %}
             {{ formset.management_form }}
             {% for formset in workhours %}
             {% if formset.non_field_errors %}
                 {% for error in formset.non_field_errors %}
-                    <div class="alert alert-danger form-group danger">
-                        <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    <div class="alert alert-danger">
+                        <span class="help-inline"><i class="fas fa-exclamation"></i> {{ error }}</span>
                     </div>
                 {% endfor %}
             {% endif %}
-            <div class="weekday-block well">
+            <div class="weekday-block row">
                 <div class="col-md-2">
                   <label>{{ formset.get_weekday_display }}</label>
                 </div>
@@ -137,28 +127,25 @@
 
                 <div class="col-md-8">
 
-                  <div class="row"></div>
-
                   <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       {{ formset.0.start.label_tag }}
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       {{ formset.0.end.label_tag }}
                     </div>
                   </div>
 
                   {% for form in formset %}
-                  <div class="row hour-input{% if not forloop.first and not form.start.value and not form.end.value %} hide{% endif %}"
-                      style="margin-bottom: 1em">
+                  <div class="row mb-2 hour-input{% if not forloop.first and not form.start.value and not form.end.value %} d-none{% endif %}">
 
-                    <div class="col-md-2">
-                    {{ form.start }}
+                    <div class="col-md-3">
+                        {{ form.start }}
                     </div>
-                    <div class="col-md-2">
-                    {{ form.end }}
+                    <div class="col-md-3">
+                        {{ form.end }}
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label>{{ form.DELETE }} Delete</label>
                     </div>
 
@@ -186,14 +173,7 @@
                   </div>
                   {% endfor %}
 
-                  <div class="row">
-                    <div class="col-md-2">
-                      <button class="btn add-more">+</button>
-                    </div>
-                  </div>
-
-                  <div class="row"></div>
-
+                  <button class="btn btn-primary add-more mb-5">+</button>
                 </div>
 
                 {{ formset.management_form }}
@@ -202,11 +182,11 @@
         {% endwith %}
     </div>
 
-    <div class="form-group">
-        <div class="pull-right">
-            <a href="{% url 'stores-dashboard:store-list' %}">{% trans "Cancel" %}</a>
+    <div class="card card-body">
+        <div class="form-actions">
+            <button class="btn btn-primary btn-lg" type="submit">{% trans "Save" %}</button>
             {% trans "or" %}
-            <button class="btn btn-primary btn-large" type="submit">{% trans "Save" %}</button>
+            <a href="{% url 'stores-dashboard:store-list' %}">{% trans "cancel" %}</a>
         </div>
     </div>
 </form>
