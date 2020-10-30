@@ -3,7 +3,7 @@
 {% with periods=store.opening_periods.all %}
     {% if periods|length %}
         {% regroup periods by weekday as grouped_periods %}
-        <table class='table table-bordered table-striped table-condensed'>
+        <table class='table table-bordered table-striped table-sm'>
             <tbody>
                 {% for weekday in grouped_periods %}
                     <tr>

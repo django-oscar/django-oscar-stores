@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
-from extra_views import CreateWithInlinesView, InlineFormSet, UpdateWithInlinesView
+from extra_views import CreateWithInlinesView, InlineFormSetFactory, UpdateWithInlinesView
 from oscar.core.loading import get_class, get_classes, get_model
 
 MapsContextMixin = get_class('stores.views', 'MapsContextMixin')
@@ -59,7 +59,7 @@ class StoreListView(generic.ListView):
         return qs
 
 
-class StoreAddressInline(InlineFormSet):
+class StoreAddressInline(InlineFormSetFactory):
 
     model = StoreAddress
     form_class = StoreAddressForm
@@ -70,7 +70,7 @@ class StoreAddressInline(InlineFormSet):
     }
 
 
-class OpeningPeriodInline(InlineFormSet):
+class OpeningPeriodInline(InlineFormSetFactory):
     extra = 7
     max_num = 7
     model = OpeningPeriod

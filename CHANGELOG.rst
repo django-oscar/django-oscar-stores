@@ -2,6 +2,14 @@
 Changelog
 =========
 
+3.0
+===
+
+* Add support for Oscar 3.0 and refactor templates to work with Bootstrap 4.
+* Add support for Django 3.1.
+* Drop support for Django 2.1 and lower.
+
+
 2.2
 ===
 

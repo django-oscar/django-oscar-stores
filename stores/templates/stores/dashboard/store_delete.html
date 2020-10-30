@@ -2,21 +2,14 @@
 {% load i18n %}
 
 {% block breadcrumbs %}
-<ul class="breadcrumb">
-    <li>
-        <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
-        <span class="divider">/</span>
-    </li>
-    <li>
-        <a href="{% url 'stores-dashboard:store-list' %}">{% trans "Stores" %}</a>
-        <span class="divider">/</span>
-    </li>
-    <li>
-        {{ object.name }}
-        <span class="divider">/</span>
-    </li>
-    <li class="active">{% trans "Delete store?" %}</li>
-</ul>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'stores-dashboard:store-list' %}">{% trans "Stores" %}</a></li>
+        <li class="breadcrumb-item">{{ object.name }}</li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Delete?" %}</li>
+    </ol>
+</nav>
 {% endblock %}
 
 {% block headertext %}
@@ -24,15 +17,17 @@
 {% endblock %}
 
 {% block dashboard_content %}
-<form action="." method="post">
-    {% csrf_token %}
-    {% blocktrans with store_name=object.name %}
-    <p>Delete store <strong>{{ store_name }}</strong> - are you sure?</p>
-    {% endblocktrans %}
-    <div class="form-actions">
-        <button type="submit" class="btn btn-large btn-danger">{% trans "Delete" %}</button>
-        {% trans "or" %}
-        <a href="{% url 'stores-dashboard:store-list' %}">{% trans "cancel" %}</a>.
-    </div>
-</form>
+<div class="card card-body bg-light">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-actions">
+            {% blocktrans with store_name=object.name %}
+            <p>Delete store <strong>{{ store_name }}</strong> - are you sure?</p>
+            {% endblocktrans %}
+            <button type="submit" class="btn btn-lg btn-danger">{% trans "Delete" %}</button>
+            {% trans "or" %}
+            <a href="{% url 'stores-dashboard:store-group-list' %}">{% trans "cancel" %}</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

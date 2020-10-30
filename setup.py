@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='django-oscar-stores',
-    version="2.2",
+    version="3.0",
     url='https://github.com/django-oscar/django-oscar-stores',
     author="David Winterbottom",
     author_email="david.winterbottom@gmail.com",
@@ -18,7 +18,7 @@ setup(
     packages=find_packages(exclude=["sandbox*", "tests*"]),
     include_package_data=True,
     install_requires=[
-        'django-oscar>=2.0,<2.2',
+        'django-oscar>=3.0a',
         'requests>=1.1',
         'sorl-thumbnail>=12.4.1',
     ],
