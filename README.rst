@@ -108,7 +108,7 @@ Now update your root ``urls.py``:
         path('stores/', apps.get_app_config('stores').urls),
 
         # adds internationalization URLs
-        path('jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalogue'),
+        path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     ]
 
 Settings
