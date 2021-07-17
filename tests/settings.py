@@ -11,7 +11,11 @@ SECRET_KEY = 'not a secret'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'oscar_stores',
+        'NAME': os.environ.get('DATABASE_NAME', 'oscar_stores'),
+        'USER': os.environ.get('DATABASE_USER', None),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', None),
+        'HOST': os.environ.get('DATABASE_HOST', ''),
+        'PORT': os.environ.get('DATABASE_PORT', 5432),
     }
 }
 

@@ -2,8 +2,7 @@
 Oscar stores
 ============
 
-.. image:: https://secure.travis-ci.org/django-oscar/django-oscar-stores.png
-    :target: http://travis-ci.org/#!/django-oscar/django-oscar-stores
+.. image:: https://github.com/django-oscar/django-oscar-stores/workflows/Tests/badge.svg
 
 .. image:: http://codecov.io/github/django-oscar/django-oscar-stores/coverage.svg?branch=master
     :alt: Coverage
