@@ -2,6 +2,12 @@
 Changelog
 =========
 
+3.0.1
+=====
+
+* Add support for Django 3.2, and drop support for Django 3.0.
+* Add support for Python 3.8, drop support for Python 3.6.
+
 3.0
 ===
 
