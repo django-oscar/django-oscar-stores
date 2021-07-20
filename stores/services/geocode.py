@@ -44,7 +44,7 @@ def get_response_exception(status):
     return code_to_exception_map.get(status, UnknownError)
 
 
-class BaseGeoCodeService(object):
+class BaseGeoCodeService:
     """
     Base class to geocode a search query.
     """

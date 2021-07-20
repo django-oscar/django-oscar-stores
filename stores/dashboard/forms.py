@@ -1,12 +1,12 @@
 from django import forms
 from django.contrib.gis.forms import fields
 from django.db.models import Q
-from django.forms import models as modelforms
 from django.utils.encoding import force_text
 from django.utils.translation import gettext_lazy as _
 from oscar.core.loading import get_model
 
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
+Store = get_model('stores', 'Store')
 
 
 class StoreAddressForm(forms.ModelForm):
@@ -21,7 +21,7 @@ class StoreForm(forms.ModelForm):
     location = fields.GeometryField(widget=forms.HiddenInput())
 
     class Meta:
-        model = get_model('stores', 'Store')
+        model = Store
         fields = [
             'name', 'manager_name', 'phone', 'email', 'reference', 'image',
             'description', 'location', 'group', 'is_pickup_store', 'is_active',
@@ -116,20 +116,21 @@ class IsOpenForm(forms.Form):
         return self.__nonzero__()
 
 
-class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
-    extra = 10
-    can_order = False
-    can_delete = True
-    min_num = 0
-    max_num = 30  # Reasonably safe number of maximum period intervals per day
-    absolute_max = 30
-    fk = [f for f in OpeningPeriod._meta.get_fields() if f.name == 'store'][0]
-    form = OpeningPeriodForm
-    model = OpeningPeriod
-    validate_min = True
-    validate_max = True
+BaseOpeningPeriodFormset = forms.inlineformset_factory(
+    Store,
+    OpeningPeriod,
+    form=OpeningPeriodForm,
+    extra=10,
+    min_num=0,
+    max_num=30,     # Reasonably safe number of maximum period intervals per day
+    validate_min=True,
+    validate_max=True
+)
 
-    def __init__(self, weekday, data, instance):
+
+class OpeningPeriodFormset(BaseOpeningPeriodFormset):
+
+    def __init__(self, weekday, data, instance=None):
         self.weekday = weekday
         if instance:
             queryset = instance.opening_periods.all().filter(weekday=weekday)
@@ -163,7 +164,7 @@ class OpeningPeriodFormset(modelforms.BaseInlineFormSet):
             return super().save(*args, **kwargs)
 
 
-class OpeningHoursFormset(object):
+class OpeningHoursFormset:
     def __init__(self, data, instance):
         self.data = data or None
         self.instance = instance
@@ -191,7 +192,7 @@ class OpeningHoursFormset(object):
             form.save()
 
 
-class OpeningHoursInline(object):
+class OpeningHoursInline:
     def __init__(self, model, request, instance, kwargs=None, view=None):
         self.data = request.POST
         self.instance = instance
