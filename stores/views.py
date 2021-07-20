@@ -8,7 +8,7 @@ StoreSearchForm = get_class('stores.forms', 'StoreSearchForm')
 Store = get_model('stores', 'store')
 
 
-class MapsContextMixin(object):
+class MapsContextMixin:
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
