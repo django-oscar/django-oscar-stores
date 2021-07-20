@@ -12,4 +12,4 @@ pinocchio==0.4.3
 psycopg2-binary>=2.8,<2.9
 pytest-cov>=2.12,<2.13
 pytest-django>=4.4,<4.5
-tox>=3.23,<3.24
+tox>=3.23,<3.25
