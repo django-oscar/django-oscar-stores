@@ -201,7 +201,4 @@
 {% block onbodyload %}
     {{ block.super }}
     stores.dashboard.init();
-    $('.nav-list a').on('shown', function (e) {
-        google.maps.event.trigger(stores.dashboard.map, 'resize');
-    })
 {% endblock onbodyload %}

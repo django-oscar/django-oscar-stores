@@ -106,6 +106,10 @@ stores.dashboard = {
         });
 
         stores.dashboard.openingHoursForm();
+
+        $('.nav-list a').on('shown', function (e) {
+            google.maps.event.trigger(stores.dashboard.map, 'resize');
+        })
     },
 
     updateToBestMatch: function(input, marker) {
