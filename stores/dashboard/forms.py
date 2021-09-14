@@ -3,7 +3,7 @@ from django.contrib.gis.forms import fields
 from django.db.models import Q
 from django.utils.encoding import force_text
 from django.utils.translation import gettext_lazy as _
-from oscar.core.loading import get_model
+from oscar.core.loading import get_class, get_model
 
 OpeningPeriod = get_model('stores', 'OpeningPeriod')
 Store = get_model('stores', 'Store')
@@ -178,6 +178,7 @@ class OpeningHoursFormset:
         return self.forms[key]
 
     def construct_sub_formset(self, weekday):
+        OpeningPeriodFormset = get_class('stores.dashboard.forms', 'OpeningPeriodFormset')
         return OpeningPeriodFormset(
             weekday,
             self.data or None,
@@ -198,6 +199,7 @@ class OpeningHoursInline:
         self.instance = instance
 
     def construct_formset(self):
+        OpeningHoursFormset = get_class('stores.dashboard.forms', 'OpeningHoursFormset')
         return OpeningHoursFormset(
             self.data or None,
             self.instance,
