@@ -17,16 +17,12 @@
 
 {% block header %}
 <div class="page-header">
-    <a href="{% url 'stores-dashboard:store-group-create' %}" class="btn btn-primary float-right"><i class="fas fa-plus"></i> {% trans "Create new store group" %}</a>
+    <a href="{% url 'stores-dashboard:store-group-create' %}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> {% trans "Create new store group" %}</a>
     <h1>{% trans "Store Groups" %}</h1>
 </div>
 {% endblock header %}
 
 {% block dashboard_content %}
-
-<div class="sub-header">
-    <h2>{{ queryset_description }}</h2>
-</div>
 
 {% if group_list.all|length %}
 <form method="post" class="order_table">

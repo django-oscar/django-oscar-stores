@@ -28,7 +28,7 @@
             {% blocktrans with group_name=object.name %}
             <p>Delete store group <strong>{{ group_name }}</strong> - are you sure?</p>
             {% endblocktrans %}
-            <button type="submit" class="btn btn-lg btn-danger">{% trans "Delete" %}</button>
+            <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
             {% trans "or" %}
             <a href="{% url 'stores-dashboard:store-group-list' %}">{% trans "cancel" %}</a>
         </div>

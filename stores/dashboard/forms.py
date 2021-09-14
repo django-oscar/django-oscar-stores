@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.gis.forms import fields
 from django.db.models import Q
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy as _
 from oscar.core.loading import get_class, get_model
 
@@ -51,9 +51,6 @@ class OpeningPeriodForm(forms.ModelForm):
         model = OpeningPeriod
         fields = ['start', 'end']
         widgets = {
-            'name': forms.TextInput(
-                attrs={'placeholder': _("e.g. Christmas")}
-            ),
             'start': forms.TimeInput(
                 format='%H:%M',
                 attrs={'placeholder': _("e.g. 9 AM, 11:30, etc.")}
@@ -71,9 +68,7 @@ class OpeningPeriodForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         time_input = ['%H:%M', '%H', '%I:%M%p', '%I%p', '%I:%M %p', '%I %p']
         self.fields['start'].input_formats = time_input
-        self.fields['start'].required = False
         self.fields['end'].input_formats = time_input
-        self.fields['end'].required = False
 
     def save(self, commit=True):
         self.instance.store = self.store
@@ -147,7 +142,7 @@ class OpeningPeriodFormset(BaseOpeningPeriodFormset):
         super().__init__(data=data, instance=instance, prefix=prefix, queryset=queryset)
 
     def get_weekday_display(self):
-        return force_text(OpeningPeriod.WEEK_DAYS[self.weekday])
+        return force_str(OpeningPeriod.WEEK_DAYS[self.weekday])
 
     def get_form_kwargs(self, index):
         return {
