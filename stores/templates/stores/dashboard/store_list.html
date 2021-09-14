@@ -23,7 +23,7 @@
 
 {% block header %}
     <div class="page-header">
-        <a href="{% url 'stores-dashboard:store-create' %}" class="btn btn-primary float-right"><i class="fas fa-plus"></i> {% trans "Create new store" %}</a>
+        <a href="{% url 'stores-dashboard:store-create' %}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> {% trans "Create new store" %}</a>
         <h1>{% trans "Store Management" %}</h1>
     </div>
 {% endblock header %}
@@ -64,31 +64,31 @@
                 {% for store in store_list %}
                     <tr>
                         <th><a href="{% url 'stores-dashboard:store-update' store.pk %}">{{ store.name }}</a></th>
-                        <td>{{ store.address.street }}</td>
+                        <td>{{ store.address.street|linebreaksbr }}</td>
                         <td>{{ store.address.line4 }}</td>
                         <td>{{ store.address.postcode }}</td>
                         <td>{{ store.address.state|default:"-" }}</td>
                         <td>{{ store.address.country }}</td>
                         <td>
                             {% if store.is_pickup_store %}
-                                <span class="label label-success">{% trans "Yes" %}</span>
+                                <span class="badge badge-success">{% trans "Yes" %}</span>
                             {% else %}
-                                <span class="label label-danger">{% trans "No" %}</span>
+                                <span class="badge badge-danger">{% trans "No" %}</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if store.is_active %}
-                                <span class="label label-success">{% trans "Active" %}</span>
+                                <span class="badge badge-success">{% trans "Active" %}</span>
                             {% else %}
-                                <span class="label label-danger">{% trans "Inactive" %}</span>
+                                <span class="badge badge-danger">{% trans "Inactive" %}</span>
                             {% endif %}
                         </td>
                         <td>
                             {% block row_actions %}
                             <div class="btn-group">
                                 <a class="btn btn-info" href="{% url 'stores:detail' store.slug store.id %}">{% trans "View on site" %}</a>
-                                <button class="btn btn-info dropdown-toggle" data-toggle="dropdown"></button>
-                                 <div class="dropdown-menu">
+                                <button type="button" class="btn btn-info dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"></button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="{% url 'stores-dashboard:store-update' store.id %}">{% trans "Edit" %}</a>
                                     <a class="dropdown-item" href="{% url 'stores-dashboard:store-delete' store.id %}">{% trans "Delete" %}</a>
                                 </div>

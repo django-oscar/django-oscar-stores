@@ -30,11 +30,11 @@
     <div class="table-header">
         <h3>{% trans "Store Group Details" %}</h3>
     </div>
-    <div class="card card-body">
+    <div class="card card-body bg-light">
         {% include 'oscar/dashboard/partials/form_fields.html' %}
 
         <div class="form-actions">
-            <button class="btn btn-primary btn-lg" type="submit">{% trans "Save store group" %}</button>
+            <button class="btn btn-primary" type="submit">{% trans "Save store group" %}</button>
             {% trans "or" %}
             <a href="{% url 'stores-dashboard:store-group-list' %}">{% trans "cancel" %}</a>
         </div>

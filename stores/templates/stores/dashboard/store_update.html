@@ -1,6 +1,8 @@
 {% extends 'oscar/dashboard/layout.html' %}
 {% load i18n static %}
 
+{% block body_class %}stores{% endblock %}
+
 {% block title %}
 {{ title }} | {{ block.super }}
 {% endblock %}
@@ -38,7 +40,7 @@
     <div class="table-header">
         <h3>{% trans "Store details" %}</h3>
     </div>
-    <div class="card card-body">
+    <div class="card card-body bg-light">
         {% block store_details_fields %}
         {% include "oscar/dashboard/partials/form_field.html" with field=form.name %}
         {% include "oscar/dashboard/partials/form_field.html" with field=form.description %}
@@ -53,7 +55,7 @@
     <div class="table-header">
         <h3>{% trans "Contact details" %}</h3>
     </div>
-    <div class="card card-body">
+    <div class="card card-body bg-light">
         {% block contact_details_fields %}
         {% include "oscar/dashboard/partials/form_field.html" with field=form.manager_name %}
         {% include "oscar/dashboard/partials/form_field.html" with field=form.phone %}
@@ -64,7 +66,7 @@
     <div class="table-header">
         <h3>{% trans "Address" %}</h3>
     </div>
-    <div class="card card-body">
+    <div class="card card-body bg-light">
         {% block address_fields %}
         {% with formset=inlines.1 %}
             {{ formset.management_form }}
@@ -88,7 +90,7 @@
     <div class="table-header">
         <h3>{% trans "Location" %}</h3>
     </div>
-    <div class="card card-body">
+    <div class="card card-body bg-light">
         {% block location_fields %}
         <p>
             {% blocktrans %}
@@ -111,7 +113,7 @@
         <h3>{% trans "Opening hours" %}</h3>
     </div>
 
-    <div class="card card-body form-horizontal" id="opening_hours_form">
+    <div class="card card-body bg-light form-horizontal" id="opening_hours_form">
         {% block opening_hours_fields %}
         {# use the first formset which is the opening times #}
         {% with workhours=inlines.0 %}
@@ -195,9 +197,9 @@
     {% block extra_field_blocks %}
     {% endblock extra_field_blocks %}
 
-    <div class="card card-body">
+    <div class="card card-body bg-light">
         <div class="form-actions">
-            <button class="btn btn-primary btn-lg" type="submit">{% trans "Save" %}</button>
+            <button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
             {% trans "or" %}
             <a href="{% url 'stores-dashboard:store-list' %}">{% trans "cancel" %}</a>
         </div>
