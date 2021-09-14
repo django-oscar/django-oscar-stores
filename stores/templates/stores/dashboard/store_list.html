@@ -84,6 +84,7 @@
                             {% endif %}
                         </td>
                         <td>
+                            {% block row_actions %}
                             <div class="btn-group">
                                 <a class="btn btn-info" href="{% url 'stores:detail' store.slug store.id %}">{% trans "View on site" %}</a>
                                 <button class="btn btn-info dropdown-toggle" data-toggle="dropdown"></button>
@@ -92,6 +93,7 @@
                                     <a class="dropdown-item" href="{% url 'stores-dashboard:store-delete' store.id %}">{% trans "Delete" %}</a>
                                 </div>
                             </div>
+                            {% endblock row_actions %}
                         </td>
                     </tr>
                 {% endfor %}
