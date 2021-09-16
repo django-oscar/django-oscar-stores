@@ -2,6 +2,14 @@
 Changelog
 =========
 
+3.0.2
+=====
+
+* Minor fixes to dashboard templates.
+* Dynamically load dashboard formsets for easier overriding.
+* Add blocks to dashboard templates for easier overriding.
+* Move Google Maps init code to JavaScript file.
+
 3.0.1
 =====
 
