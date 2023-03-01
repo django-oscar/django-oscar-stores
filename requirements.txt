@@ -5,7 +5,7 @@ flake8>=3.9,<4.1
 isort>=5.9,<5.11
 
 # Testing
-coverage>=5.1,<6.5
+coverage>=5.1,<7.3
 django-webtest>=1.9,<1.10
 factory-boy>=3.2,<3.3
 pinocchio==0.4.3
